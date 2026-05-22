@@ -77,7 +77,7 @@ function Details() {
           <div className="mt-6">
             <h3 className="font-bold mb-3">أبرز المعالم</h3>
             <div className="grid grid-cols-2 gap-2">
-              {d.highlights.map((h) => (
+              {d.highlights.map((h: string) => (
                 <div key={h} className="flex items-center gap-2 text-sm bg-secondary rounded-xl p-3">
                   <Check className="h-4 w-4 text-success shrink-0" />
                   {h}
