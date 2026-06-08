@@ -18,6 +18,7 @@ import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
 import { Route as AppAdminRouteImport } from './routes/_app.admin'
+import { Route as AppAboutRouteImport } from './routes/_app.about'
 import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
 
 const AppRoute = AppRouteImport.update({
@@ -64,6 +65,11 @@ const AppAdminRoute = AppAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAboutRoute = AppAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
   id: '/destinations/$id',
   path: '/destinations/$id',
@@ -72,6 +78,7 @@ const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AppAboutRoute
   '/admin': typeof AppAdminRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AppAboutRoute
   '/admin': typeof AppAdminRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/_app/about': typeof AppAboutRoute
   '/_app/admin': typeof AppAdminRoute
   '/_app/booking': typeof AppBookingRoute
   '/_app/explore': typeof AppExploreRoute
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/admin'
     | '/booking'
     | '/explore'
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/admin'
     | '/booking'
     | '/explore'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
+    | '/_app/about'
     | '/_app/admin'
     | '/_app/booking'
     | '/_app/explore'
@@ -212,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/about': {
+      id: '/_app/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AppAboutRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/destinations/$id': {
       id: '/_app/destinations/$id'
       path: '/destinations/$id'
@@ -223,6 +242,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAboutRoute: typeof AppAboutRoute
   AppAdminRoute: typeof AppAdminRoute
   AppBookingRoute: typeof AppBookingRoute
   AppExploreRoute: typeof AppExploreRoute
@@ -234,6 +254,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAboutRoute: AppAboutRoute,
   AppAdminRoute: AppAdminRoute,
   AppBookingRoute: AppBookingRoute,
   AppExploreRoute: AppExploreRoute,
