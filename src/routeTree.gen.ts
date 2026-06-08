@@ -9,10 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
+import { Route as AppMediaRouteImport } from './routes/_app.media'
 import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
@@ -21,6 +23,11 @@ import { Route as AppAdminRouteImport } from './routes/_app.admin'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
 import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
@@ -38,6 +45,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
 const AppNewsRoute = AppNewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMediaRoute = AppMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
   getParentRoute: () => AppRoute,
 } as any)
 const AppHomeRoute = AppHomeRouteImport.update({
@@ -78,24 +90,28 @@ const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/about': typeof AppAboutRoute
   '/admin': typeof AppAdminRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
+  '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/about': typeof AppAboutRoute
   '/admin': typeof AppAdminRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
+  '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
@@ -104,12 +120,14 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
   '/_app/about': typeof AppAboutRoute
   '/_app/admin': typeof AppAdminRoute
   '/_app/booking': typeof AppBookingRoute
   '/_app/explore': typeof AppExploreRoute
   '/_app/favorites': typeof AppFavoritesRoute
   '/_app/home': typeof AppHomeRoute
+  '/_app/media': typeof AppMediaRoute
   '/_app/news': typeof AppNewsRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/destinations/$id': typeof AppDestinationsIdRoute
@@ -118,24 +136,28 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/about'
     | '/admin'
     | '/booking'
     | '/explore'
     | '/favorites'
     | '/home'
+    | '/media'
     | '/news'
     | '/profile'
     | '/destinations/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/about'
     | '/admin'
     | '/booking'
     | '/explore'
     | '/favorites'
     | '/home'
+    | '/media'
     | '/news'
     | '/profile'
     | '/destinations/$id'
@@ -143,12 +165,14 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
+    | '/auth'
     | '/_app/about'
     | '/_app/admin'
     | '/_app/booking'
     | '/_app/explore'
     | '/_app/favorites'
     | '/_app/home'
+    | '/_app/media'
     | '/_app/news'
     | '/_app/profile'
     | '/_app/destinations/$id'
@@ -157,10 +181,18 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app': {
       id: '/_app'
       path: ''
@@ -187,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof AppNewsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/media': {
+      id: '/_app/media'
+      path: '/media'
+      fullPath: '/media'
+      preLoaderRoute: typeof AppMediaRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/home': {
@@ -248,6 +287,7 @@ interface AppRouteChildren {
   AppExploreRoute: typeof AppExploreRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
   AppHomeRoute: typeof AppHomeRoute
+  AppMediaRoute: typeof AppMediaRoute
   AppNewsRoute: typeof AppNewsRoute
   AppProfileRoute: typeof AppProfileRoute
   AppDestinationsIdRoute: typeof AppDestinationsIdRoute
@@ -260,6 +300,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppExploreRoute: AppExploreRoute,
   AppFavoritesRoute: AppFavoritesRoute,
   AppHomeRoute: AppHomeRoute,
+  AppMediaRoute: AppMediaRoute,
   AppNewsRoute: AppNewsRoute,
   AppProfileRoute: AppProfileRoute,
   AppDestinationsIdRoute: AppDestinationsIdRoute,
@@ -270,6 +311,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
