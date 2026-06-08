@@ -1,8 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Heart, Star, MapPin } from "lucide-react";
 import type { Destination } from "@/data/destinations";
+import { useFavorites } from "@/hooks/useFavorites";
 
 export function DestinationCard({ d, large = false }: { d: Destination; large?: boolean }) {
+  const { favorites, toggle } = useFavorites();
+  const isFav = favorites.has(d.id);
+
   return (
     <Link
       to="/destinations/$id"
@@ -21,11 +25,11 @@ export function DestinationCard({ d, large = false }: { d: Destination; large?: 
           />
           <button
             type="button"
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(d.id); }}
             className="absolute top-3 left-3 h-9 w-9 rounded-full bg-background/90 backdrop-blur flex items-center justify-center hover:scale-110 transition-transform"
             aria-label="إضافة للمفضلة"
           >
-            <Heart className="h-4 w-4 text-foreground" />
+            <Heart className={`h-4 w-4 transition-colors ${isFav ? "fill-destructive text-destructive" : "text-foreground"}`} />
           </button>
           <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-background/90 backdrop-blur flex items-center gap-1 text-xs font-semibold">
             <Star className="h-3 w-3 fill-warning text-warning" />
