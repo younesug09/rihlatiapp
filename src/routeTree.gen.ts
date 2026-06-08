@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
+import { Route as AppMediaRouteImport } from './routes/_app.media'
 import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
@@ -44,6 +45,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
 const AppNewsRoute = AppNewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMediaRoute = AppMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
   getParentRoute: () => AppRoute,
 } as any)
 const AppHomeRoute = AppHomeRouteImport.update({
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
+  '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
+  '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/_app/explore': typeof AppExploreRoute
   '/_app/favorites': typeof AppFavoritesRoute
   '/_app/home': typeof AppHomeRoute
+  '/_app/media': typeof AppMediaRoute
   '/_app/news': typeof AppNewsRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/destinations/$id': typeof AppDestinationsIdRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/explore'
     | '/favorites'
     | '/home'
+    | '/media'
     | '/news'
     | '/profile'
     | '/destinations/$id'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/explore'
     | '/favorites'
     | '/home'
+    | '/media'
     | '/news'
     | '/profile'
     | '/destinations/$id'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/_app/explore'
     | '/_app/favorites'
     | '/_app/home'
+    | '/_app/media'
     | '/_app/news'
     | '/_app/profile'
     | '/_app/destinations/$id'
@@ -207,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof AppNewsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/media': {
+      id: '/_app/media'
+      path: '/media'
+      fullPath: '/media'
+      preLoaderRoute: typeof AppMediaRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/home': {
@@ -268,6 +287,7 @@ interface AppRouteChildren {
   AppExploreRoute: typeof AppExploreRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
   AppHomeRoute: typeof AppHomeRoute
+  AppMediaRoute: typeof AppMediaRoute
   AppNewsRoute: typeof AppNewsRoute
   AppProfileRoute: typeof AppProfileRoute
   AppDestinationsIdRoute: typeof AppDestinationsIdRoute
@@ -280,6 +300,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppExploreRoute: AppExploreRoute,
   AppFavoritesRoute: AppFavoritesRoute,
   AppHomeRoute: AppHomeRoute,
+  AppMediaRoute: AppMediaRoute,
   AppNewsRoute: AppNewsRoute,
   AppProfileRoute: AppProfileRoute,
   AppDestinationsIdRoute: AppDestinationsIdRoute,
@@ -295,3 +316,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
