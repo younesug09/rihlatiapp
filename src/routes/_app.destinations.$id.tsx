@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowRight, Star, MapPin, Heart, Share2, Check } from "lucide-react";
+import { ArrowRight, Star, MapPin, Heart, Share2, Check, Wifi, Coffee, Car, Waves } from "lucide-react";
 import { destinations } from "@/data/destinations";
+import { hotelsByDestination, type Hotel } from "@/data/hotels";
 
 export const Route = createFileRoute("/_app/destinations/$id")({
   loader: ({ params }) => {
@@ -87,6 +88,18 @@ function Details() {
           </div>
 
           <div className="mt-6 border-t border-border pt-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg">أماكن الإقامة المتاحة</h3>
+              <span className="text-xs text-muted-foreground">{hotelsByDestination(d.id).length} خيار</span>
+            </div>
+            <div className="space-y-3">
+              {hotelsByDestination(d.id).map((h) => (
+                <HotelCard key={h.id} hotel={h} destId={d.id} />
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 border-t border-border pt-6">
             <h3 className="font-bold mb-4">آراء المسافرين</h3>
             <div className="space-y-4">
               {reviews.map((r, i) => (
@@ -130,6 +143,68 @@ function Details() {
           >
             احجز الآن
           </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function amenityIcon(a: string) {
+  if (a.includes("واي")) return <Wifi className="h-3 w-3" />;
+  if (a.includes("فطار") || a.includes("مطعم")) return <Coffee className="h-3 w-3" />;
+  if (a.includes("موقف") || a.includes("سيارات")) return <Car className="h-3 w-3" />;
+  if (a.includes("مسبح") || a.includes("شاطئ") || a.includes("بحر")) return <Waves className="h-3 w-3" />;
+  return <Check className="h-3 w-3" />;
+}
+
+function HotelCard({ hotel, destId }: { hotel: Hotel; destId: string }) {
+  return (
+    <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-soft hover:shadow-card transition-all group">
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative sm:w-48 h-40 sm:h-auto shrink-0">
+          <img src={hotel.image} alt={hotel.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <span className="absolute top-2 right-2 bg-primary text-primary-foreground text-[10px] font-bold px-2 py-1 rounded-full">{hotel.type}</span>
+        </div>
+        <div className="flex-1 p-3 sm:p-4 flex flex-col">
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <h4 className="font-bold leading-tight">{hotel.name}</h4>
+              <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                <MapPin className="h-3 w-3" /> {hotel.distance}
+              </p>
+            </div>
+            <div className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-lg text-xs font-bold shrink-0">
+              <Star className="h-3 w-3 fill-primary" /> {hotel.rating}
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {hotel.amenities.slice(0, 4).map((a) => (
+              <span key={a} className="inline-flex items-center gap-1 text-[10px] bg-secondary text-muted-foreground px-2 py-1 rounded-full">
+                {amenityIcon(a)} {a}
+              </span>
+            ))}
+          </div>
+          {hotel.freeCancellation && (
+            <p className="text-[11px] text-success font-semibold mt-2 flex items-center gap-1">
+              <Check className="h-3 w-3" /> إلغاء مجاني
+            </p>
+          )}
+          <div className="mt-auto pt-3 flex items-end justify-between">
+            <div>
+              <p className="text-[10px] text-muted-foreground">{hotel.reviews.toLocaleString("ar")} تقييم</p>
+              <p className="font-black text-primary text-lg leading-none">
+                {hotel.pricePerNight.toLocaleString("ar")}<span className="text-[11px] font-normal text-muted-foreground"> دج/ليلة</span>
+              </p>
+            </div>
+            <Link
+              to="/booking"
+              search={{ id: destId, hotel: hotel.id }}
+              className="px-4 py-2 rounded-xl text-sm font-bold text-primary-foreground hover:scale-105 transition-transform"
+              style={{ background: "var(--gradient-primary)" }}
+            >
+              احجز
+            </Link>
+          </div>
         </div>
       </div>
     </div>
