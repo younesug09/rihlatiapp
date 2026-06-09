@@ -32,7 +32,7 @@ function Splash() {
     <div
       className="fixed inset-0 flex flex-col items-center justify-center text-primary-foreground overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
-      onClick={() => { setShow(false); navigate({ to: "/home" }); }}
+      onClick={async () => { setShow(false); const { data } = await supabase.auth.getSession(); navigate({ to: data.session ? "/home" : "/auth" }); }}
     >
       {/* Floating circles */}
       <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-white/10 blur-3xl animate-float" />
@@ -51,8 +51,8 @@ function Splash() {
         </div>
       </div>
 
-      <Link to="/home" className="absolute bottom-8 text-white/70 text-sm hover:text-white transition-colors">
-        تخطّي
+      <Link to="/auth" className="absolute bottom-8 text-white/70 text-sm hover:text-white transition-colors">
+        ابدأ الآن
       </Link>
     </div>
   );
