@@ -135,7 +135,7 @@ function Booking() {
 
         <div className="bg-card rounded-2xl p-4 shadow-soft">
           <div className="flex justify-between text-sm mb-1">
-            <span className="text-muted-foreground">{d.price.toLocaleString("ar")} × {nights} × {guests}</span>
+            <span className="text-muted-foreground">{nightlyPrice.toLocaleString("ar")} × {nights} × {guests}</span>
             <span>{total.toLocaleString("ar")} دج</span>
           </div>
           <div className="flex justify-between text-sm mb-3">
