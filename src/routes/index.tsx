@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/")({
@@ -18,9 +19,10 @@ function Splash() {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      navigate({ to: "/home" });
-    }, 2200);
+    const t = setTimeout(async () => {
+      const { data } = await supabase.auth.getSession();
+      navigate({ to: data.session ? "/home" : "/auth" });
+    }, 2000);
     return () => clearTimeout(t);
   }, [navigate]);
 
@@ -30,7 +32,7 @@ function Splash() {
     <div
       className="fixed inset-0 flex flex-col items-center justify-center text-primary-foreground overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
-      onClick={() => { setShow(false); navigate({ to: "/home" }); }}
+      onClick={async () => { setShow(false); const { data } = await supabase.auth.getSession(); navigate({ to: data.session ? "/home" : "/auth" }); }}
     >
       {/* Floating circles */}
       <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-white/10 blur-3xl animate-float" />
@@ -49,8 +51,8 @@ function Splash() {
         </div>
       </div>
 
-      <Link to="/home" className="absolute bottom-8 text-white/70 text-sm hover:text-white transition-colors">
-        تخطّي
+      <Link to="/auth" className="absolute bottom-8 text-white/70 text-sm hover:text-white transition-colors">
+        ابدأ الآن
       </Link>
     </div>
   );

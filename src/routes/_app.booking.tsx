@@ -1,23 +1,26 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
-import { Calendar, Users, CreditCard, CheckCircle2 } from "lucide-react";
+import { Calendar, Users, CreditCard, CheckCircle2, MapPin, Star } from "lucide-react";
 import { destinations } from "@/data/destinations";
+import { hotels } from "@/data/hotels";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/booking")({
-  validateSearch: z.object({ id: z.string().optional() }),
+  validateSearch: z.object({ id: z.string().optional(), hotel: z.string().optional() }),
   head: () => ({ meta: [{ title: "احجز رحلتك — رحلتي" }] }),
   component: Booking,
 });
 
 function Booking() {
-  const { id } = Route.useSearch();
+  const { id, hotel: hotelId } = Route.useSearch();
   const navigate = useNavigate();
   const { user } = useAuth();
   const d = destinations.find((x) => x.id === id) ?? destinations[0];
+  const hotel = hotelId ? hotels.find((h) => h.id === hotelId) : undefined;
+  const nightlyPrice = hotel?.pricePerNight ?? d.price;
   const [guests, setGuests] = useState(2);
   const [nights, setNights] = useState(3);
   const [checkIn, setCheckIn] = useState("");
@@ -25,7 +28,7 @@ function Booking() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
-  const total = d.price * nights * guests;
+  const total = nightlyPrice * nights * guests;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,13 +72,24 @@ function Booking() {
     <div className="mx-auto max-w-2xl px-4 py-6 animate-fade-in">
       <h1 className="text-2xl font-bold mb-5">إكمال الحجز</h1>
 
-      {/* Destination summary */}
-      <div className="bg-card rounded-2xl shadow-soft p-3 flex gap-3 mb-5">
-        <img src={d.image} alt={d.name} width={96} height={96} loading="lazy" className="h-24 w-24 rounded-xl object-cover" />
-        <div className="flex-1">
-          <h3 className="font-bold">{d.name}</h3>
-          <p className="text-sm text-muted-foreground">{d.country}</p>
-          <p className="text-sm text-primary font-semibold mt-2">{d.price.toLocaleString("ar")} دج / ليلة</p>
+      {/* Summary */}
+      <div className="bg-card rounded-2xl shadow-soft p-3 flex gap-3 mb-5 border border-border">
+        <img src={hotel?.image ?? d.image} alt={hotel?.name ?? d.name} width={96} height={96} loading="lazy" className="h-24 w-24 rounded-xl object-cover" />
+        <div className="flex-1 min-w-0">
+          {hotel ? (
+            <>
+              <span className="inline-block text-[10px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full mb-1">{hotel.type}</span>
+              <h3 className="font-bold leading-tight truncate">{hotel.name}</h3>
+              <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1"><MapPin className="h-3 w-3" /> {d.name} — {hotel.distance}</p>
+              <p className="text-xs flex items-center gap-1 mt-1 text-warning"><Star className="h-3 w-3 fill-warning" /> {hotel.rating} · {hotel.reviews.toLocaleString("ar")} تقييم</p>
+            </>
+          ) : (
+            <>
+              <h3 className="font-bold">{d.name}</h3>
+              <p className="text-sm text-muted-foreground">{d.country}</p>
+            </>
+          )}
+          <p className="text-sm text-primary font-semibold mt-2">{nightlyPrice.toLocaleString("ar")} دج / ليلة</p>
         </div>
       </div>
 
@@ -121,7 +135,7 @@ function Booking() {
 
         <div className="bg-card rounded-2xl p-4 shadow-soft">
           <div className="flex justify-between text-sm mb-1">
-            <span className="text-muted-foreground">{d.price.toLocaleString("ar")} × {nights} × {guests}</span>
+            <span className="text-muted-foreground">{nightlyPrice.toLocaleString("ar")} × {nights} × {guests}</span>
             <span>{total.toLocaleString("ar")} دج</span>
           </div>
           <div className="flex justify-between text-sm mb-3">
