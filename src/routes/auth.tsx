@@ -106,11 +106,10 @@ function AuthPage() {
 
         <div className="w-full max-w-md">
           <div className="text-center mb-5 lg:hidden animate-fade-in">
-            <div className="h-20 w-20 mx-auto rounded-3xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-glow mb-3 border border-white/20">
-              <img src={logo} alt="رحلتي" className="h-14 w-14" />
+            <div className="h-24 w-24 mx-auto rounded-3xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-glow mb-3 border border-white/20">
+              <img src={logo} alt="رحلتي" className="h-16 w-16" />
             </div>
             <h1 className="text-3xl font-black text-white">رحلتي</h1>
-            <p className="text-sm text-white/80 mt-1">منصة السياحة والتواصل الإعلامي</p>
           </div>
 
           <div className="bg-card/95 backdrop-blur-2xl rounded-3xl shadow-card p-7 animate-scale-in border border-white/40">
