@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Settings, Bell, CreditCard, HelpCircle, LogOut, ChevronLeft, Shield, Globe } from "lucide-react";
+import { Settings, Bell, CreditCard, HelpCircle, LogOut, ChevronLeft, Globe, Info, Sparkles, MapPin, BedDouble, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -13,10 +13,10 @@ export const Route = createFileRoute("/_app/profile")({
 const items = [
   { icon: Bell, label: "الإشعارات", to: "/profile" as const },
   { icon: CreditCard, label: "حجوزاتي", to: "/profile" as const },
+  { icon: BedDouble, label: "إقاماتي", to: "/hotels" as const },
   { icon: Globe, label: "اللغة", to: "/profile" as const },
   { icon: Settings, label: "الإعدادات", to: "/profile" as const },
   { icon: HelpCircle, label: "المساعدة والدعم", to: "/profile" as const },
-  { icon: Shield, label: "لوحة المشرف", to: "/admin" as const },
 ];
 
 function Profile() {
@@ -110,9 +110,56 @@ function Profile() {
         </button>
       )}
 
-      <p className="text-center text-xs text-muted-foreground mt-8">
-        رحلتي — مشروع تخرج ماستر علوم الإعلام والاتصال
-      </p>
+      {/* About the app */}
+      <div className="mt-8 bg-card rounded-3xl shadow-soft overflow-hidden border border-border">
+        <div className="p-5 text-primary-foreground relative overflow-hidden" style={{ background: "var(--gradient-primary)" }}>
+          <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-white/15 blur-xl" />
+          <div className="relative flex items-center gap-3">
+            <div className="h-12 w-12 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center">
+              <Info className="h-6 w-6" />
+            </div>
+            <div>
+              <h3 className="font-black text-lg">عن تطبيق رحلتي</h3>
+              <p className="text-xs text-white/85">منصتك الذكية للسفر والاكتشاف</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-5 space-y-4">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            <b className="text-foreground">رحلتي</b> منصة سياحية وإعلامية حديثة تتيح لك اكتشاف أجمل الوجهات في الجزائر والعالم، وحجز الفنادق والمراقد والشقق والغرف بسهولة، ومتابعة آخر الأخبار والمحتوى المرئي حول السفر والسياحة.
+          </p>
+
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { icon: MapPin, label: "+13 وجهة" },
+              { icon: BedDouble, label: "إقامات متنوعة" },
+              { icon: Sparkles, label: "تجربة عربية" },
+            ].map((f) => (
+              <div key={f.label} className="bg-secondary rounded-2xl p-3 text-center">
+                <f.icon className="h-5 w-5 mx-auto text-primary mb-1" />
+                <p className="text-[11px] font-semibold">{f.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="bg-secondary rounded-xl p-3">
+              <p className="text-muted-foreground">الإصدار</p>
+              <p className="font-bold mt-0.5">1.0.0</p>
+            </div>
+            <div className="bg-secondary rounded-xl p-3">
+              <p className="text-muted-foreground">اللغات المدعومة</p>
+              <p className="font-bold mt-0.5">9 لغات</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 text-[11px] text-muted-foreground border-t border-border pt-3">
+            <Shield className="h-3.5 w-3.5" />
+            بياناتك محمية ومشفّرة بالكامل
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

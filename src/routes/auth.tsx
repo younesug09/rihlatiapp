@@ -106,11 +106,10 @@ function AuthPage() {
 
         <div className="w-full max-w-md">
           <div className="text-center mb-5 lg:hidden animate-fade-in">
-            <div className="h-20 w-20 mx-auto rounded-3xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-glow mb-3 border border-white/20">
-              <img src={logo} alt="رحلتي" className="h-14 w-14" />
+            <div className="h-24 w-24 mx-auto rounded-3xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-glow mb-3 border border-white/20">
+              <img src={logo} alt="رحلتي" className="h-16 w-16" />
             </div>
             <h1 className="text-3xl font-black text-white">رحلتي</h1>
-            <p className="text-sm text-white/80 mt-1">منصة السياحة والتواصل الإعلامي</p>
           </div>
 
           <div className="bg-card/95 backdrop-blur-2xl rounded-3xl shadow-card p-7 animate-scale-in border border-white/40">
@@ -161,16 +160,18 @@ function AuthPage() {
               <button type="submit" disabled={loading} className="w-full py-3.5 rounded-2xl font-bold text-primary-foreground shadow-glow disabled:opacity-50 transition-transform hover:scale-[1.01] active:scale-[0.99] relative overflow-hidden" style={{ background: "var(--gradient-primary)" }}>
                 <span className="relative z-10">{loading ? "..." : mode === "signin" ? "تسجيل الدخول" : "إنشاء الحساب"}</span>
               </button>
+
+              {mode === "signin" && (
+                <Link to="/forgot-password" className="block text-center text-xs text-primary font-semibold hover:underline mt-1">
+                  نسيت كلمة المرور؟
+                </Link>
+              )}
             </form>
 
             <p className="text-center text-[11px] text-muted-foreground mt-5">
               بمتابعتك فأنت توافق على شروط الاستخدام وسياسة الخصوصية لمنصّة رحلتي.
             </p>
           </div>
-
-          <p className="text-center text-xs text-white/80 mt-5 lg:hidden">
-            رحلتي — مشروع تخرّج ماستر علوم الإعلام والاتصال
-          </p>
         </div>
       </div>
     </div>

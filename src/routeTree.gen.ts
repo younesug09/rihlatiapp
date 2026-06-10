@@ -9,20 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
 import { Route as AppMediaRouteImport } from './routes/_app.media'
+import { Route as AppHotelsRouteImport } from './routes/_app.hotels'
 import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
-import { Route as AppAdminRouteImport } from './routes/_app.admin'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
 import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
 
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -52,6 +64,11 @@ const AppMediaRoute = AppMediaRouteImport.update({
   path: '/media',
   getParentRoute: () => AppRoute,
 } as any)
+const AppHotelsRoute = AppHotelsRouteImport.update({
+  id: '/hotels',
+  path: '/hotels',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppHomeRoute = AppHomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -72,11 +89,6 @@ const AppBookingRoute = AppBookingRouteImport.update({
   path: '/booking',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAdminRoute = AppAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppAboutRoute = AppAboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -91,12 +103,14 @@ const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/about': typeof AppAboutRoute
-  '/admin': typeof AppAdminRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
+  '/hotels': typeof AppHotelsRoute
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRoute
@@ -105,12 +119,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/about': typeof AppAboutRoute
-  '/admin': typeof AppAdminRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
+  '/hotels': typeof AppHotelsRoute
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRoute
@@ -121,12 +137,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/_app/about': typeof AppAboutRoute
-  '/_app/admin': typeof AppAdminRoute
   '/_app/booking': typeof AppBookingRoute
   '/_app/explore': typeof AppExploreRoute
   '/_app/favorites': typeof AppFavoritesRoute
   '/_app/home': typeof AppHomeRoute
+  '/_app/hotels': typeof AppHotelsRoute
   '/_app/media': typeof AppMediaRoute
   '/_app/news': typeof AppNewsRoute
   '/_app/profile': typeof AppProfileRoute
@@ -137,12 +155,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
     | '/about'
-    | '/admin'
     | '/booking'
     | '/explore'
     | '/favorites'
     | '/home'
+    | '/hotels'
     | '/media'
     | '/news'
     | '/profile'
@@ -151,12 +171,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
     | '/about'
-    | '/admin'
     | '/booking'
     | '/explore'
     | '/favorites'
     | '/home'
+    | '/hotels'
     | '/media'
     | '/news'
     | '/profile'
@@ -166,12 +188,14 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
     | '/_app/about'
-    | '/_app/admin'
     | '/_app/booking'
     | '/_app/explore'
     | '/_app/favorites'
     | '/_app/home'
+    | '/_app/hotels'
     | '/_app/media'
     | '/_app/news'
     | '/_app/profile'
@@ -182,10 +206,26 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -228,6 +268,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMediaRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/hotels': {
+      id: '/_app/hotels'
+      path: '/hotels'
+      fullPath: '/hotels'
+      preLoaderRoute: typeof AppHotelsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/home': {
       id: '/_app/home'
       path: '/home'
@@ -256,13 +303,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppBookingRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/admin': {
-      id: '/_app/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AppAdminRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/about': {
       id: '/_app/about'
       path: '/about'
@@ -282,11 +322,11 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
-  AppAdminRoute: typeof AppAdminRoute
   AppBookingRoute: typeof AppBookingRoute
   AppExploreRoute: typeof AppExploreRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
   AppHomeRoute: typeof AppHomeRoute
+  AppHotelsRoute: typeof AppHotelsRoute
   AppMediaRoute: typeof AppMediaRoute
   AppNewsRoute: typeof AppNewsRoute
   AppProfileRoute: typeof AppProfileRoute
@@ -295,11 +335,11 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAboutRoute: AppAboutRoute,
-  AppAdminRoute: AppAdminRoute,
   AppBookingRoute: AppBookingRoute,
   AppExploreRoute: AppExploreRoute,
   AppFavoritesRoute: AppFavoritesRoute,
   AppHomeRoute: AppHomeRoute,
+  AppHotelsRoute: AppHotelsRoute,
   AppMediaRoute: AppMediaRoute,
   AppNewsRoute: AppNewsRoute,
   AppProfileRoute: AppProfileRoute,
@@ -312,6 +352,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

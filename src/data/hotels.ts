@@ -37,6 +37,30 @@ export const hotels: Hotel[] = [
   { id: "ora-h1", destinationId: "oran", name: "فندق الميريديان وهران", type: "فندق", image: img("photo-1571896349842-33c89424de2d"), rating: 4.7, reviews: 1600, pricePerNight: 19000, amenities: ["شاطئ خاص", "مسبح", "مطعم"], distance: "الواجهة البحرية", freeCancellation: true },
   { id: "ora-h2", destinationId: "oran", name: "شقة عين الترك", type: "شقة", image: img("photo-1522708323590-d24dbb6b0267"), rating: 4.5, reviews: 320, pricePerNight: 8500, amenities: ["مطبخ", "قرب الشاطئ", "موقف"], distance: "عين الترك" },
 
+  // Bejaia
+  { id: "bej-h1", destinationId: "bejaia", name: "فندق كاب كربون", type: "فندق", image: img("photo-1564501049412-61c2a3083791"), rating: 4.7, reviews: 540, pricePerNight: 14500, amenities: ["مسبح", "إفطار", "إطلالة بحرية"], distance: "بجوار كاب كربون", freeCancellation: true },
+  { id: "bej-h2", destinationId: "bejaia", name: "مرقد تيشي", type: "مرقد", image: img("photo-1551882547-ff40c63fe5fa"), rating: 4.2, reviews: 180, pricePerNight: 3200, amenities: ["واي فاي", "إفطار"], distance: "شاطئ تيشي" },
+  { id: "bej-h3", destinationId: "bejaia", name: "شقة كورنيش بجاية", type: "شقة", image: img("photo-1502672260266-1c1ef2d93688"), rating: 4.6, reviews: 210, pricePerNight: 6800, amenities: ["مطبخ", "إطلالة"], distance: "الكورنيش" },
+
+  // Setif
+  { id: "set-h1", destinationId: "setif", name: "فندق المتحف", type: "فندق", image: img("photo-1542314831-068cd1dbfeeb"), rating: 4.5, reviews: 410, pricePerNight: 11000, amenities: ["إفطار", "صالة رياضية", "واي فاي"], distance: "وسط المدينة", freeCancellation: true },
+  { id: "set-h2", destinationId: "setif", name: "غرف عين الفوارة", type: "غرفة", image: img("photo-1505693416388-ac5ce068fe85"), rating: 4.3, reviews: 160, pricePerNight: 4500, amenities: ["واي فاي", "تكييف"], distance: "بجوار عين الفوارة" },
+  { id: "set-h3", destinationId: "setif", name: "نزل جميلة الأثري", type: "نُزل", image: img("photo-1455587734955-081b22074882"), rating: 4.4, reviews: 95, pricePerNight: 5200, amenities: ["إفطار", "جولة سياحية"], distance: "قرب آثار جميلة" },
+
+  // Jijel
+  { id: "jij-h1", destinationId: "jijel", name: "فندق المغارات", type: "فندق", image: img("photo-1571896349842-33c89424de2d"), rating: 4.8, reviews: 690, pricePerNight: 13500, amenities: ["شاطئ خاص", "مسبح", "إفطار"], distance: "قرب المغارات", freeCancellation: true },
+  { id: "jij-h2", destinationId: "jijel", name: "شقة كورنيش جيجل", type: "شقة", image: img("photo-1560448204-e02f11c3d0e2"), rating: 4.6, reviews: 280, pricePerNight: 7200, amenities: ["مطبخ", "إطلالة بحرية"], distance: "الكورنيش" },
+  { id: "jij-h3", destinationId: "jijel", name: "مرقد رأس عفية", type: "مرقد", image: img("photo-1551882547-ff40c63fe5fa"), rating: 4.1, reviews: 110, pricePerNight: 2800, amenities: ["واي فاي"], distance: "رأس عفية" },
+
+  // Skikda
+  { id: "ski-h1", destinationId: "skikda", name: "فندق ستورا", type: "فندق", image: img("photo-1566073771259-6a8506099945"), rating: 4.5, reviews: 380, pricePerNight: 10500, amenities: ["إطلالة بحرية", "إفطار", "موقف"], distance: "ستورا", freeCancellation: true },
+  { id: "ski-h2", destinationId: "skikda", name: "غرفة كورنيش سكيكدة", type: "غرفة", image: img("photo-1505693416388-ac5ce068fe85"), rating: 4.2, reviews: 140, pricePerNight: 3800, amenities: ["واي فاي", "تكييف"], distance: "الكورنيش" },
+
+  // Annaba
+  { id: "ann-h1", destinationId: "annaba", name: "فندق سيبوس", type: "فندق", image: img("photo-1551918120-9739cb430c6d"), rating: 4.7, reviews: 820, pricePerNight: 15500, amenities: ["مسبح", "سبا", "إفطار"], distance: "وسط المدينة", freeCancellation: true },
+  { id: "ann-h2", destinationId: "annaba", name: "شقة ريزي عمر", type: "شقة", image: img("photo-1502672260266-1c1ef2d93688"), rating: 4.5, reviews: 240, pricePerNight: 7800, amenities: ["مطبخ", "قرب الشاطئ"], distance: "شاطئ ريزي عمر" },
+  { id: "ann-h3", destinationId: "annaba", name: "نزل هيبون التراثي", type: "نُزل", image: img("photo-1455587734955-081b22074882"), rating: 4.3, reviews: 130, pricePerNight: 4900, amenities: ["إفطار", "واي فاي"], distance: "قرب هيبون" },
+
   // Santorini
   { id: "san-h1", destinationId: "santorini", name: "Caldera Suites Oia", type: "فندق", image: img("photo-1570213489059-0aac6626cade"), rating: 4.9, reviews: 3200, pricePerNight: 145000, amenities: ["جاكوزي خاص", "إفطار", "إطلالة غروب"], distance: "أويا", freeCancellation: true },
   { id: "san-h2", destinationId: "santorini", name: "Cliffside Cave Room", type: "غرفة", image: img("photo-1611892440504-42a792e24d32"), rating: 4.7, reviews: 980, pricePerNight: 88000, amenities: ["إطلالة بحرية", "إفطار"], distance: "فيرا" },
