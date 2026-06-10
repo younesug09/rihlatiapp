@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Settings, Bell, CreditCard, HelpCircle, LogOut, ChevronLeft, Shield, Globe } from "lucide-react";
+import { Settings, Bell, CreditCard, HelpCircle, LogOut, ChevronLeft, Globe, Info, Sparkles, MapPin, BedDouble, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -13,10 +13,10 @@ export const Route = createFileRoute("/_app/profile")({
 const items = [
   { icon: Bell, label: "الإشعارات", to: "/profile" as const },
   { icon: CreditCard, label: "حجوزاتي", to: "/profile" as const },
+  { icon: BedDouble, label: "إقاماتي", to: "/hotels" as const },
   { icon: Globe, label: "اللغة", to: "/profile" as const },
   { icon: Settings, label: "الإعدادات", to: "/profile" as const },
   { icon: HelpCircle, label: "المساعدة والدعم", to: "/profile" as const },
-  { icon: Shield, label: "لوحة المشرف", to: "/admin" as const },
 ];
 
 function Profile() {
