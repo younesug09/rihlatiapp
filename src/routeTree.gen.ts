@@ -9,12 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
 import { Route as AppMediaRouteImport } from './routes/_app.media'
+import { Route as AppHotelsRouteImport } from './routes/_app.hotels'
 import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
@@ -22,6 +25,16 @@ import { Route as AppBookingRouteImport } from './routes/_app.booking'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
 import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
 
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -49,6 +62,11 @@ const AppNewsRoute = AppNewsRouteImport.update({
 const AppMediaRoute = AppMediaRouteImport.update({
   id: '/media',
   path: '/media',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHotelsRoute = AppHotelsRouteImport.update({
+  id: '/hotels',
+  path: '/hotels',
   getParentRoute: () => AppRoute,
 } as any)
 const AppHomeRoute = AppHomeRouteImport.update({
@@ -85,11 +103,14 @@ const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/about': typeof AppAboutRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
+  '/hotels': typeof AppHotelsRoute
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRoute
@@ -98,11 +119,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/about': typeof AppAboutRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
+  '/hotels': typeof AppHotelsRoute
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRoute
@@ -113,11 +137,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/_app/about': typeof AppAboutRoute
   '/_app/booking': typeof AppBookingRoute
   '/_app/explore': typeof AppExploreRoute
   '/_app/favorites': typeof AppFavoritesRoute
   '/_app/home': typeof AppHomeRoute
+  '/_app/hotels': typeof AppHotelsRoute
   '/_app/media': typeof AppMediaRoute
   '/_app/news': typeof AppNewsRoute
   '/_app/profile': typeof AppProfileRoute
@@ -128,11 +155,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
     | '/about'
     | '/booking'
     | '/explore'
     | '/favorites'
     | '/home'
+    | '/hotels'
     | '/media'
     | '/news'
     | '/profile'
@@ -141,11 +171,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
     | '/about'
     | '/booking'
     | '/explore'
     | '/favorites'
     | '/home'
+    | '/hotels'
     | '/media'
     | '/news'
     | '/profile'
@@ -155,11 +188,14 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
     | '/_app/about'
     | '/_app/booking'
     | '/_app/explore'
     | '/_app/favorites'
     | '/_app/home'
+    | '/_app/hotels'
     | '/_app/media'
     | '/_app/news'
     | '/_app/profile'
@@ -170,10 +206,26 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -214,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/media'
       fullPath: '/media'
       preLoaderRoute: typeof AppMediaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hotels': {
+      id: '/_app/hotels'
+      path: '/hotels'
+      fullPath: '/hotels'
+      preLoaderRoute: typeof AppHotelsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/home': {
@@ -267,6 +326,7 @@ interface AppRouteChildren {
   AppExploreRoute: typeof AppExploreRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
   AppHomeRoute: typeof AppHomeRoute
+  AppHotelsRoute: typeof AppHotelsRoute
   AppMediaRoute: typeof AppMediaRoute
   AppNewsRoute: typeof AppNewsRoute
   AppProfileRoute: typeof AppProfileRoute
@@ -279,6 +339,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppExploreRoute: AppExploreRoute,
   AppFavoritesRoute: AppFavoritesRoute,
   AppHomeRoute: AppHomeRoute,
+  AppHotelsRoute: AppHotelsRoute,
   AppMediaRoute: AppMediaRoute,
   AppNewsRoute: AppNewsRoute,
   AppProfileRoute: AppProfileRoute,
@@ -291,7 +352,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
