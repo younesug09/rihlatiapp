@@ -19,7 +19,6 @@ import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
-import { Route as AppAdminRouteImport } from './routes/_app.admin'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
 import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
 
@@ -72,11 +71,6 @@ const AppBookingRoute = AppBookingRouteImport.update({
   path: '/booking',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAdminRoute = AppAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppAboutRoute = AppAboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -92,7 +86,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/about': typeof AppAboutRoute
-  '/admin': typeof AppAdminRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
@@ -106,7 +99,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/about': typeof AppAboutRoute
-  '/admin': typeof AppAdminRoute
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
@@ -122,7 +114,6 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/_app/about': typeof AppAboutRoute
-  '/_app/admin': typeof AppAdminRoute
   '/_app/booking': typeof AppBookingRoute
   '/_app/explore': typeof AppExploreRoute
   '/_app/favorites': typeof AppFavoritesRoute
@@ -138,7 +129,6 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/about'
-    | '/admin'
     | '/booking'
     | '/explore'
     | '/favorites'
@@ -152,7 +142,6 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/about'
-    | '/admin'
     | '/booking'
     | '/explore'
     | '/favorites'
@@ -167,7 +156,6 @@ export interface FileRouteTypes {
     | '/_app'
     | '/auth'
     | '/_app/about'
-    | '/_app/admin'
     | '/_app/booking'
     | '/_app/explore'
     | '/_app/favorites'
@@ -256,13 +244,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppBookingRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/admin': {
-      id: '/_app/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AppAdminRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/about': {
       id: '/_app/about'
       path: '/about'
@@ -282,7 +263,6 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
-  AppAdminRoute: typeof AppAdminRoute
   AppBookingRoute: typeof AppBookingRoute
   AppExploreRoute: typeof AppExploreRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
@@ -295,7 +275,6 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAboutRoute: AppAboutRoute,
-  AppAdminRoute: AppAdminRoute,
   AppBookingRoute: AppBookingRoute,
   AppExploreRoute: AppExploreRoute,
   AppFavoritesRoute: AppFavoritesRoute,
@@ -316,3 +295,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
