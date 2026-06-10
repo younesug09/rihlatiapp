@@ -143,7 +143,7 @@ export const destinations: Destination[] = [
     id: "annaba",
     name: "عنابة",
     country: "الجزائر",
-    region: "city",
+    region: "algeria",
     category: "city",
     image: "https://images.unsplash.com/photo-1601751848169-99c1bcc1d4e8?auto=format&fit=crop&w=1200&q=70",
     rating: 4.7,
