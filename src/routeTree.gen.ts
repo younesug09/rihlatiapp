@@ -23,6 +23,11 @@ import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
+import { Route as AppProfileSettingsRouteImport } from './routes/_app.profile.settings'
+import { Route as AppProfileNotificationsRouteImport } from './routes/_app.profile.notifications'
+import { Route as AppProfileLanguageRouteImport } from './routes/_app.profile.language'
+import { Route as AppProfileHelpRouteImport } from './routes/_app.profile.help'
+import { Route as AppProfileBookingsRouteImport } from './routes/_app.profile.bookings'
 import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -94,6 +99,31 @@ const AppAboutRoute = AppAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => AppRoute,
 } as any)
+const AppProfileSettingsRoute = AppProfileSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppProfileRoute,
+} as any)
+const AppProfileNotificationsRoute = AppProfileNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AppProfileRoute,
+} as any)
+const AppProfileLanguageRoute = AppProfileLanguageRouteImport.update({
+  id: '/language',
+  path: '/language',
+  getParentRoute: () => AppProfileRoute,
+} as any)
+const AppProfileHelpRoute = AppProfileHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => AppProfileRoute,
+} as any)
+const AppProfileBookingsRoute = AppProfileBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AppProfileRoute,
+} as any)
 const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
   id: '/destinations/$id',
   path: '/destinations/$id',
@@ -113,8 +143,13 @@ export interface FileRoutesByFullPath {
   '/hotels': typeof AppHotelsRoute
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
-  '/profile': typeof AppProfileRoute
+  '/profile': typeof AppProfileRouteWithChildren
   '/destinations/$id': typeof AppDestinationsIdRoute
+  '/profile/bookings': typeof AppProfileBookingsRoute
+  '/profile/help': typeof AppProfileHelpRoute
+  '/profile/language': typeof AppProfileLanguageRoute
+  '/profile/notifications': typeof AppProfileNotificationsRoute
+  '/profile/settings': typeof AppProfileSettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -129,8 +164,13 @@ export interface FileRoutesByTo {
   '/hotels': typeof AppHotelsRoute
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
-  '/profile': typeof AppProfileRoute
+  '/profile': typeof AppProfileRouteWithChildren
   '/destinations/$id': typeof AppDestinationsIdRoute
+  '/profile/bookings': typeof AppProfileBookingsRoute
+  '/profile/help': typeof AppProfileHelpRoute
+  '/profile/language': typeof AppProfileLanguageRoute
+  '/profile/notifications': typeof AppProfileNotificationsRoute
+  '/profile/settings': typeof AppProfileSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -147,8 +187,13 @@ export interface FileRoutesById {
   '/_app/hotels': typeof AppHotelsRoute
   '/_app/media': typeof AppMediaRoute
   '/_app/news': typeof AppNewsRoute
-  '/_app/profile': typeof AppProfileRoute
+  '/_app/profile': typeof AppProfileRouteWithChildren
   '/_app/destinations/$id': typeof AppDestinationsIdRoute
+  '/_app/profile/bookings': typeof AppProfileBookingsRoute
+  '/_app/profile/help': typeof AppProfileHelpRoute
+  '/_app/profile/language': typeof AppProfileLanguageRoute
+  '/_app/profile/notifications': typeof AppProfileNotificationsRoute
+  '/_app/profile/settings': typeof AppProfileSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -167,6 +212,11 @@ export interface FileRouteTypes {
     | '/news'
     | '/profile'
     | '/destinations/$id'
+    | '/profile/bookings'
+    | '/profile/help'
+    | '/profile/language'
+    | '/profile/notifications'
+    | '/profile/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -183,6 +233,11 @@ export interface FileRouteTypes {
     | '/news'
     | '/profile'
     | '/destinations/$id'
+    | '/profile/bookings'
+    | '/profile/help'
+    | '/profile/language'
+    | '/profile/notifications'
+    | '/profile/settings'
   id:
     | '__root__'
     | '/'
@@ -200,6 +255,11 @@ export interface FileRouteTypes {
     | '/_app/news'
     | '/_app/profile'
     | '/_app/destinations/$id'
+    | '/_app/profile/bookings'
+    | '/_app/profile/help'
+    | '/_app/profile/language'
+    | '/_app/profile/notifications'
+    | '/_app/profile/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -310,6 +370,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAboutRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/profile/settings': {
+      id: '/_app/profile/settings'
+      path: '/settings'
+      fullPath: '/profile/settings'
+      preLoaderRoute: typeof AppProfileSettingsRouteImport
+      parentRoute: typeof AppProfileRoute
+    }
+    '/_app/profile/notifications': {
+      id: '/_app/profile/notifications'
+      path: '/notifications'
+      fullPath: '/profile/notifications'
+      preLoaderRoute: typeof AppProfileNotificationsRouteImport
+      parentRoute: typeof AppProfileRoute
+    }
+    '/_app/profile/language': {
+      id: '/_app/profile/language'
+      path: '/language'
+      fullPath: '/profile/language'
+      preLoaderRoute: typeof AppProfileLanguageRouteImport
+      parentRoute: typeof AppProfileRoute
+    }
+    '/_app/profile/help': {
+      id: '/_app/profile/help'
+      path: '/help'
+      fullPath: '/profile/help'
+      preLoaderRoute: typeof AppProfileHelpRouteImport
+      parentRoute: typeof AppProfileRoute
+    }
+    '/_app/profile/bookings': {
+      id: '/_app/profile/bookings'
+      path: '/bookings'
+      fullPath: '/profile/bookings'
+      preLoaderRoute: typeof AppProfileBookingsRouteImport
+      parentRoute: typeof AppProfileRoute
+    }
     '/_app/destinations/$id': {
       id: '/_app/destinations/$id'
       path: '/destinations/$id'
@@ -320,6 +415,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppProfileRouteChildren {
+  AppProfileBookingsRoute: typeof AppProfileBookingsRoute
+  AppProfileHelpRoute: typeof AppProfileHelpRoute
+  AppProfileLanguageRoute: typeof AppProfileLanguageRoute
+  AppProfileNotificationsRoute: typeof AppProfileNotificationsRoute
+  AppProfileSettingsRoute: typeof AppProfileSettingsRoute
+}
+
+const AppProfileRouteChildren: AppProfileRouteChildren = {
+  AppProfileBookingsRoute: AppProfileBookingsRoute,
+  AppProfileHelpRoute: AppProfileHelpRoute,
+  AppProfileLanguageRoute: AppProfileLanguageRoute,
+  AppProfileNotificationsRoute: AppProfileNotificationsRoute,
+  AppProfileSettingsRoute: AppProfileSettingsRoute,
+}
+
+const AppProfileRouteWithChildren = AppProfileRoute._addFileChildren(
+  AppProfileRouteChildren,
+)
+
 interface AppRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
   AppBookingRoute: typeof AppBookingRoute
@@ -329,7 +444,7 @@ interface AppRouteChildren {
   AppHotelsRoute: typeof AppHotelsRoute
   AppMediaRoute: typeof AppMediaRoute
   AppNewsRoute: typeof AppNewsRoute
-  AppProfileRoute: typeof AppProfileRoute
+  AppProfileRoute: typeof AppProfileRouteWithChildren
   AppDestinationsIdRoute: typeof AppDestinationsIdRoute
 }
 
@@ -342,7 +457,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppHotelsRoute: AppHotelsRoute,
   AppMediaRoute: AppMediaRoute,
   AppNewsRoute: AppNewsRoute,
-  AppProfileRoute: AppProfileRoute,
+  AppProfileRoute: AppProfileRouteWithChildren,
   AppDestinationsIdRoute: AppDestinationsIdRoute,
 }
 

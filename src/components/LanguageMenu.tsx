@@ -11,7 +11,7 @@ import { useLanguage, languages } from "@/hooks/useLanguage";
 import { toast } from "sonner";
 
 export function LanguageMenu() {
-  const { lang, setLang } = useLanguage();
+  const { lang, setLang, t } = useLanguage();
   const current = languages.find((l) => l.code === lang) ?? languages[0];
 
   return (
@@ -19,14 +19,14 @@ export function LanguageMenu() {
       <DropdownMenuTrigger asChild>
         <button
           className="h-9 px-2 rounded-full flex items-center gap-1 hover:bg-secondary transition-colors"
-          aria-label="اللغة"
+          aria-label={t("language")}
         >
           <Globe className="h-4 w-4 text-foreground" />
           <span className="text-[11px] font-bold uppercase">{current.code}</span>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>اختر اللغة</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("chooseLanguage")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {languages.map((l) => (
           <DropdownMenuItem
