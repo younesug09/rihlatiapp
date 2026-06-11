@@ -14,8 +14,18 @@ export const Route = createFileRoute("/_app/profile")({
 function Profile() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [stats, setStats] = useState({ bookings: 0, favorites: 0, reviews: 0 });
   const [profile, setProfile] = useState<{ full_name: string | null } | null>(null);
+
+  const items = [
+    { icon: Bell, label: t("notifications"), to: "/profile/notifications" as const },
+    { icon: CreditCard, label: t("myBookings"), to: "/profile/bookings" as const },
+    { icon: BedDouble, label: t("myStays"), to: "/hotels" as const },
+    { icon: Globe, label: t("language"), to: "/profile/language" as const },
+    { icon: Settings, label: t("settings"), to: "/profile/settings" as const },
+    { icon: HelpCircle, label: t("help"), to: "/profile/help" as const },
+  ];
 
   useEffect(() => {
     if (!user) return;
