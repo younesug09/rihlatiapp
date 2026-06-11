@@ -4,20 +4,12 @@ import { Settings, Bell, CreditCard, HelpCircle, LogOut, ChevronLeft, Globe, Inf
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/profile")({
   head: () => ({ meta: [{ title: "حسابي — رحلتي" }] }),
   component: Profile,
 });
-
-const items = [
-  { icon: Bell, label: "الإشعارات", to: "/profile" as const },
-  { icon: CreditCard, label: "حجوزاتي", to: "/profile" as const },
-  { icon: BedDouble, label: "إقاماتي", to: "/hotels" as const },
-  { icon: Globe, label: "اللغة", to: "/profile" as const },
-  { icon: Settings, label: "الإعدادات", to: "/profile" as const },
-  { icon: HelpCircle, label: "المساعدة والدعم", to: "/profile" as const },
-];
 
 function Profile() {
   const { user, loading } = useAuth();
