@@ -43,11 +43,11 @@ function Profile() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    toast.success("تم تسجيل الخروج");
+    toast.success(t("signedOut"));
     navigate({ to: "/home" });
   };
 
-  const displayName = profile?.full_name || user?.email?.split("@")[0] || "ضيف رحلتي";
+  const displayName = profile?.full_name || user?.email?.split("@")[0] || t("guestUser");
   const initial = displayName.charAt(0).toUpperCase();
 
   return (
@@ -67,11 +67,11 @@ function Profile() {
             </>
           ) : (
             <>
-              <h2 className="text-xl font-bold">ضيف رحلتي</h2>
-              <p className="text-sm text-white/80 mb-4">سجّل الدخول للوصول إلى كامل المزايا</p>
+              <h2 className="text-xl font-bold">{t("guestUser")}</h2>
+              <p className="text-sm text-white/80 mb-4">{t("signInToAccess")}</p>
               <div className="flex gap-2 justify-center">
-                <Link to="/auth" className="px-5 py-2 rounded-xl bg-white text-primary text-sm font-bold">تسجيل الدخول</Link>
-                <Link to="/auth" className="px-5 py-2 rounded-xl bg-white/15 backdrop-blur border border-white/30 text-sm font-bold">حساب جديد</Link>
+                <Link to="/auth" className="px-5 py-2 rounded-xl bg-white text-primary text-sm font-bold">{t("signIn")}</Link>
+                <Link to="/auth" className="px-5 py-2 rounded-xl bg-white/15 backdrop-blur border border-white/30 text-sm font-bold">{t("signUp")}</Link>
               </div>
             </>
           )}
@@ -80,9 +80,9 @@ function Profile() {
 
       <div className="grid grid-cols-3 gap-3 mb-6">
         {[
-          { v: stats.bookings, l: "حجوزات" },
-          { v: stats.favorites, l: "مفضلة" },
-          { v: stats.reviews, l: "مراجعات" },
+          { v: stats.bookings, l: t("statBookings") },
+          { v: stats.favorites, l: t("statFavs") },
+          { v: stats.reviews, l: t("statReviews") },
         ].map((s) => (
           <div key={s.l} className="bg-card rounded-2xl p-4 text-center shadow-soft">
             <p className="text-2xl font-bold text-primary">{s.v}</p>
@@ -108,7 +108,7 @@ function Profile() {
 
       {user && (
         <button onClick={handleSignOut} className="w-full mt-4 py-4 rounded-2xl bg-destructive/10 text-destructive font-semibold flex items-center justify-center gap-2">
-          <LogOut className="h-4 w-4" /> تسجيل الخروج
+          <LogOut className="h-4 w-4" /> {t("signOut")}
         </button>
       )}
 
@@ -121,22 +121,22 @@ function Profile() {
               <Info className="h-6 w-6" />
             </div>
             <div>
-              <h3 className="font-black text-lg">عن تطبيق رحلتي</h3>
-              <p className="text-xs text-white/85">منصتك الذكية للسفر والاكتشاف</p>
+              <h3 className="font-black text-lg">{t("aboutRihlati")}</h3>
+              <p className="text-xs text-white/85">{t("smartTravel")}</p>
             </div>
           </div>
         </div>
 
         <div className="p-5 space-y-4">
           <p className="text-sm leading-relaxed text-muted-foreground">
-            <b className="text-foreground">رحلتي</b> منصة سياحية وإعلامية حديثة تتيح لك اكتشاف أجمل الوجهات في الجزائر والعالم، وحجز الفنادق والمراقد والشقق والغرف بسهولة، ومتابعة آخر الأخبار والمحتوى المرئي حول السفر والسياحة.
+            <b className="text-foreground">{t("appName")}</b> — {t("aboutBody")}
           </p>
 
           <div className="grid grid-cols-3 gap-2">
             {[
-              { icon: MapPin, label: "+13 وجهة" },
-              { icon: BedDouble, label: "إقامات متنوعة" },
-              { icon: Sparkles, label: "تجربة عربية" },
+              { icon: MapPin, label: t("destBadge13") },
+              { icon: BedDouble, label: t("variousStays") },
+              { icon: Sparkles, label: t("arabicExp") },
             ].map((f) => (
               <div key={f.label} className="bg-secondary rounded-2xl p-3 text-center">
                 <f.icon className="h-5 w-5 mx-auto text-primary mb-1" />
@@ -147,18 +147,18 @@ function Profile() {
 
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div className="bg-secondary rounded-xl p-3">
-              <p className="text-muted-foreground">الإصدار</p>
+              <p className="text-muted-foreground">{t("version")}</p>
               <p className="font-bold mt-0.5">1.0.0</p>
             </div>
             <div className="bg-secondary rounded-xl p-3">
-              <p className="text-muted-foreground">اللغات المدعومة</p>
-              <p className="font-bold mt-0.5">9 لغات</p>
+              <p className="text-muted-foreground">{t("langSupported")}</p>
+              <p className="font-bold mt-0.5">{t("langs9")}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 text-[11px] text-muted-foreground border-t border-border pt-3">
             <Shield className="h-3.5 w-3.5" />
-            بياناتك محمية ومشفّرة بالكامل
+            {t("dataProtected")}
           </div>
         </div>
       </div>

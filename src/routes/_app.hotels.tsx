@@ -3,15 +3,20 @@ import { useMemo, useState } from "react";
 import { Search, Star, MapPin, BedDouble } from "lucide-react";
 import { hotels, type Hotel } from "@/data/hotels";
 import { destinations } from "@/data/destinations";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/hotels")({
   head: () => ({ meta: [{ title: "الفنادق والمراقد — رحلتي" }] }),
   component: HotelsPage,
 });
 
-const types: Array<Hotel["type"] | "الكل"> = ["الكل", "فندق", "مرقد", "غرفة", "شقة", "نُزل"];
-
 function HotelsPage() {
+  const { t } = useLanguage();
+  const typeMap: Record<string, string> = {
+    "الكل": t("tAll"), "فندق": t("tHotel"), "مرقد": t("tLodge"),
+    "غرفة": t("tRoom"), "شقة": t("tApt"), "نُزل": t("tHostel"),
+  };
+  const types: Array<Hotel["type"] | "الكل"> = ["الكل", "فندق", "مرقد", "غرفة", "شقة", "نُزل"];
   const [query, setQuery] = useState("");
   const [type, setType] = useState<(typeof types)[number]>("الكل");
 
@@ -34,9 +39,9 @@ function HotelsPage() {
     <div className="mx-auto max-w-6xl px-4 py-6 animate-fade-in">
       <div className="mb-5">
         <h1 className="text-2xl font-black flex items-center gap-2">
-          <BedDouble className="h-6 w-6 text-primary" /> الفنادق والمراقد
+          <BedDouble className="h-6 w-6 text-primary" /> {t("hotelsTitle")}
         </h1>
-        <p className="text-sm text-muted-foreground">احجز إقامتك المثالية — فنادق، مراقد، شقق وغرف</p>
+        <p className="text-sm text-muted-foreground">{t("bookYourStay")}</p>
       </div>
 
       <div className="flex items-center gap-2 bg-card rounded-2xl px-4 py-3 shadow-soft border border-border mb-4">
@@ -44,23 +49,23 @@ function HotelsPage() {
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="ابحث عن فندق أو مدينة..."
+          placeholder={t("searchHotelCity")}
           className="flex-1 bg-transparent outline-none text-sm"
         />
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-3 mb-5 -mx-1 px-1">
-        {types.map((t) => (
+        {types.map((tp) => (
           <button
-            key={t}
-            onClick={() => setType(t)}
+            key={tp}
+            onClick={() => setType(tp)}
             className={`shrink-0 px-4 py-2 rounded-full text-xs font-semibold transition ${
-              type === t
+              type === tp
                 ? "bg-primary text-primary-foreground shadow-soft"
                 : "bg-secondary text-secondary-foreground hover:bg-accent"
             }`}
           >
-            {t}
+            {typeMap[tp] ?? tp}
           </button>
         ))}
       </div>
@@ -76,11 +81,11 @@ function HotelsPage() {
             <div className="relative aspect-[16/10] overflow-hidden">
               <img src={h.image} alt={h.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
               <span className="absolute top-2 right-2 px-2 py-1 rounded-full bg-card/90 backdrop-blur text-[10px] font-bold text-primary">
-                {h.type}
+                {typeMap[h.type] ?? h.type}
               </span>
               {h.freeCancellation && (
                 <span className="absolute bottom-2 right-2 px-2 py-1 rounded-full bg-success text-success-foreground text-[10px] font-bold">
-                  إلغاء مجاني
+                  {t("freeCancel")}
                 </span>
               )}
             </div>
@@ -96,10 +101,10 @@ function HotelsPage() {
                 <MapPin className="h-3 w-3" /> {destName(h.destinationId)} · {h.distance}
               </p>
               <div className="flex items-end justify-between mt-2 pt-2 border-t border-border">
-                <span className="text-[10px] text-muted-foreground">{h.reviews} تقييم</span>
+                <span className="text-[10px] text-muted-foreground">{h.reviews} {t("reviewsWord")}</span>
                 <div className="text-left">
-                  <p className="text-base font-black text-primary leading-none">{h.pricePerNight.toLocaleString()} دج</p>
-                  <p className="text-[10px] text-muted-foreground">الليلة</p>
+                  <p className="text-base font-black text-primary leading-none">{h.pricePerNight.toLocaleString()} {t("currency")}</p>
+                  <p className="text-[10px] text-muted-foreground">{t("perNight")}</p>
                 </div>
               </div>
             </div>
@@ -108,7 +113,7 @@ function HotelsPage() {
       </div>
 
       {filtered.length === 0 && (
-        <p className="text-center text-muted-foreground py-12">لا توجد نتائج مطابقة</p>
+        <p className="text-center text-muted-foreground py-12">{t("noResults")}</p>
       )}
     </div>
   );
