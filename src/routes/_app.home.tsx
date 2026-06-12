@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Search, Bell, Sparkles, TrendingUp } from "lucide-react";
 import { destinations, categories } from "@/data/destinations";
 import { DestinationCard } from "@/components/DestinationCard";
+import { useLanguage } from "@/hooks/useLanguage";
 import heroSahara from "@/assets/hero-sahara.jpg";
 
 export const Route = createFileRoute("/_app/home")({
