@@ -134,9 +134,9 @@ function Profile() {
 
           <div className="grid grid-cols-3 gap-2">
             {[
-              { icon: MapPin, label: "+13 وجهة" },
-              { icon: BedDouble, label: "إقامات متنوعة" },
-              { icon: Sparkles, label: "تجربة عربية" },
+              { icon: MapPin, label: t("destBadge13") },
+              { icon: BedDouble, label: t("variousStays") },
+              { icon: Sparkles, label: t("arabicExp") },
             ].map((f) => (
               <div key={f.label} className="bg-secondary rounded-2xl p-3 text-center">
                 <f.icon className="h-5 w-5 mx-auto text-primary mb-1" />
