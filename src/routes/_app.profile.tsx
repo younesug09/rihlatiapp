@@ -43,11 +43,11 @@ function Profile() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    toast.success("تم تسجيل الخروج");
+    toast.success(t("signedOut"));
     navigate({ to: "/home" });
   };
 
-  const displayName = profile?.full_name || user?.email?.split("@")[0] || "ضيف رحلتي";
+  const displayName = profile?.full_name || user?.email?.split("@")[0] || t("guestUser");
   const initial = displayName.charAt(0).toUpperCase();
 
   return (
