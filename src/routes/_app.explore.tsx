@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { destinations, categories } from "@/data/destinations";
 import { DestinationCard } from "@/components/DestinationCard";
+import { useLanguage } from "@/hooks/useLanguage";
 import { z } from "zod";
 
 const search = z.object({ category: z.string().optional() });
@@ -12,13 +13,14 @@ export const Route = createFileRoute("/_app/explore")({
   head: () => ({
     meta: [
       { title: "اكتشف الوجهات — رحلتي" },
-      { name: "description", content: "تصفح وجهات سياحية مذهلة في الجزائر والعالم. ابحث وفلتر حسب الفئة." },
+      { name: "description", content: "تصفح وجهات سياحية مذهلة في الجزائر والعالم." },
     ],
   }),
   component: Explore,
 });
 
 function Explore() {
+  const { t } = useLanguage();
   const { category } = Route.useSearch();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState(category ?? "all");
@@ -33,8 +35,8 @@ function Explore() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 animate-fade-in">
-      <h1 className="text-2xl font-bold mb-1">اكتشف الوجهات</h1>
-      <p className="text-sm text-muted-foreground mb-5">ابحث عن مغامرتك القادمة</p>
+      <h1 className="text-2xl font-bold mb-1">{t("exploreDestinations")}</h1>
+      <p className="text-sm text-muted-foreground mb-5">{t("findNextAdventure")}</p>
 
       <div className="flex gap-2 mb-4">
         <div className="flex-1 flex items-center gap-2 bg-card border border-border rounded-2xl px-4 py-3 focus-within:border-primary transition-colors">
@@ -42,21 +44,20 @@ function Explore() {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="ابحث عن مدينة أو بلد..."
+            placeholder={t("searchCityCountry")}
             className="flex-1 bg-transparent outline-none text-sm"
           />
         </div>
-        <button className="h-12 w-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-soft" aria-label="فلاتر">
+        <button className="h-12 w-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-soft" aria-label="filters">
           <SlidersHorizontal className="h-4 w-4" />
         </button>
       </div>
 
-      {/* Region tabs */}
       <div className="flex gap-2 mb-4 p-1 bg-muted rounded-2xl">
         {[
-          { id: "all", label: "الكل" },
-          { id: "algeria", label: "🇩🇿 الجزائر" },
-          { id: "world", label: "🌍 العالم" },
+          { id: "all", label: t("all") },
+          { id: "algeria", label: t("algeriaTab") },
+          { id: "world", label: t("worldTab") },
         ].map((r) => (
           <button
             key={r.id}
@@ -70,7 +71,6 @@ function Explore() {
         ))}
       </div>
 
-      {/* Categories */}
       <div className="flex gap-2 overflow-x-auto pb-2 mb-5 -mx-4 px-4 scrollbar-hide">
         {categories.map((c) => (
           <button
@@ -88,7 +88,7 @@ function Explore() {
         ))}
       </div>
 
-      <p className="text-sm text-muted-foreground mb-3">{filtered.length} وجهة</p>
+      <p className="text-sm text-muted-foreground mb-3">{filtered.length} {t("destinationsLabel")}</p>
 
       <div className="grid grid-cols-2 gap-3">
         {filtered.map((d) => <DestinationCard key={d.id} d={d} />)}
@@ -96,7 +96,7 @@ function Explore() {
 
       {filtered.length === 0 && (
         <div className="text-center py-16 text-muted-foreground">
-          <p>لا توجد نتائج مطابقة</p>
+          <p>{t("noResults")}</p>
         </div>
       )}
     </div>
