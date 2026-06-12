@@ -80,9 +80,9 @@ function Profile() {
 
       <div className="grid grid-cols-3 gap-3 mb-6">
         {[
-          { v: stats.bookings, l: "حجوزات" },
-          { v: stats.favorites, l: "مفضلة" },
-          { v: stats.reviews, l: "مراجعات" },
+          { v: stats.bookings, l: t("statBookings") },
+          { v: stats.favorites, l: t("statFavs") },
+          { v: stats.reviews, l: t("statReviews") },
         ].map((s) => (
           <div key={s.l} className="bg-card rounded-2xl p-4 text-center shadow-soft">
             <p className="text-2xl font-bold text-primary">{s.v}</p>
