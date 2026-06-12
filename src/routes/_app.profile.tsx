@@ -121,8 +121,8 @@ function Profile() {
               <Info className="h-6 w-6" />
             </div>
             <div>
-              <h3 className="font-black text-lg">عن تطبيق رحلتي</h3>
-              <p className="text-xs text-white/85">منصتك الذكية للسفر والاكتشاف</p>
+              <h3 className="font-black text-lg">{t("aboutRihlati")}</h3>
+              <p className="text-xs text-white/85">{t("smartTravel")}</p>
             </div>
           </div>
         </div>
