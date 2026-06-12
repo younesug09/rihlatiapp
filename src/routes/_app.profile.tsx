@@ -67,11 +67,11 @@ function Profile() {
             </>
           ) : (
             <>
-              <h2 className="text-xl font-bold">ضيف رحلتي</h2>
-              <p className="text-sm text-white/80 mb-4">سجّل الدخول للوصول إلى كامل المزايا</p>
+              <h2 className="text-xl font-bold">{t("guestUser")}</h2>
+              <p className="text-sm text-white/80 mb-4">{t("signInToAccess")}</p>
               <div className="flex gap-2 justify-center">
-                <Link to="/auth" className="px-5 py-2 rounded-xl bg-white text-primary text-sm font-bold">تسجيل الدخول</Link>
-                <Link to="/auth" className="px-5 py-2 rounded-xl bg-white/15 backdrop-blur border border-white/30 text-sm font-bold">حساب جديد</Link>
+                <Link to="/auth" className="px-5 py-2 rounded-xl bg-white text-primary text-sm font-bold">{t("signIn")}</Link>
+                <Link to="/auth" className="px-5 py-2 rounded-xl bg-white/15 backdrop-blur border border-white/30 text-sm font-bold">{t("signUp")}</Link>
               </div>
             </>
           )}
