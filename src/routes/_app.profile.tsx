@@ -129,7 +129,7 @@ function Profile() {
 
         <div className="p-5 space-y-4">
           <p className="text-sm leading-relaxed text-muted-foreground">
-            <b className="text-foreground">رحلتي</b> منصة سياحية وإعلامية حديثة تتيح لك اكتشاف أجمل الوجهات في الجزائر والعالم، وحجز الفنادق والمراقد والشقق والغرف بسهولة، ومتابعة آخر الأخبار والمحتوى المرئي حول السفر والسياحة.
+            <b className="text-foreground">{t("appName")}</b> — {t("aboutBody")}
           </p>
 
           <div className="grid grid-cols-3 gap-2">
