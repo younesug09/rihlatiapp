@@ -108,7 +108,7 @@ function Profile() {
 
       {user && (
         <button onClick={handleSignOut} className="w-full mt-4 py-4 rounded-2xl bg-destructive/10 text-destructive font-semibold flex items-center justify-center gap-2">
-          <LogOut className="h-4 w-4" /> تسجيل الخروج
+          <LogOut className="h-4 w-4" /> {t("signOut")}
         </button>
       )}
 
