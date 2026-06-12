@@ -147,18 +147,19 @@ function Profile() {
 
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div className="bg-secondary rounded-xl p-3">
-              <p className="text-muted-foreground">الإصدار</p>
+              <p className="text-muted-foreground">{t("version")}</p>
               <p className="font-bold mt-0.5">1.0.0</p>
             </div>
             <div className="bg-secondary rounded-xl p-3">
-              <p className="text-muted-foreground">اللغات المدعومة</p>
-              <p className="font-bold mt-0.5">9 لغات</p>
+              <p className="text-muted-foreground">{t("langSupported")}</p>
+              <p className="font-bold mt-0.5">{t("langs9")}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 text-[11px] text-muted-foreground border-t border-border pt-3">
             <Shield className="h-3.5 w-3.5" />
-            بياناتك محمية ومشفّرة بالكامل
+            {t("dataProtected")}
+          </div>
           </div>
         </div>
       </div>
