@@ -62,6 +62,10 @@ function Home() {
         </Link>
       </div>
 
+      <div className="mx-auto max-w-6xl px-4 mt-5">
+        <DemoNotice />
+      </div>
+
       {/* Categories */}
       <section className="mx-auto max-w-6xl px-4 mt-8">
         <h2 className="text-lg font-bold mb-3 flex items-center gap-2">
