@@ -14,6 +14,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppTrustRouteImport } from './routes/_app.trust'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
 import { Route as AppMediaRouteImport } from './routes/_app.media'
@@ -53,6 +54,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppTrustRoute = AppTrustRouteImport.update({
+  id: '/trust',
+  path: '/trust',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppProfileRoute = AppProfileRouteImport.update({
   id: '/profile',
@@ -144,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRouteWithChildren
+  '/trust': typeof AppTrustRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRouteWithChildren
+  '/trust': typeof AppTrustRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/_app/media': typeof AppMediaRoute
   '/_app/news': typeof AppNewsRoute
   '/_app/profile': typeof AppProfileRouteWithChildren
+  '/_app/trust': typeof AppTrustRoute
   '/_app/destinations/$id': typeof AppDestinationsIdRoute
   '/_app/profile/bookings': typeof AppProfileBookingsRoute
   '/_app/profile/help': typeof AppProfileHelpRoute
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/media'
     | '/news'
     | '/profile'
+    | '/trust'
     | '/destinations/$id'
     | '/profile/bookings'
     | '/profile/help'
@@ -232,6 +242,7 @@ export interface FileRouteTypes {
     | '/media'
     | '/news'
     | '/profile'
+    | '/trust'
     | '/destinations/$id'
     | '/profile/bookings'
     | '/profile/help'
@@ -254,6 +265,7 @@ export interface FileRouteTypes {
     | '/_app/media'
     | '/_app/news'
     | '/_app/profile'
+    | '/_app/trust'
     | '/_app/destinations/$id'
     | '/_app/profile/bookings'
     | '/_app/profile/help'
@@ -306,6 +318,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/trust': {
+      id: '/_app/trust'
+      path: '/trust'
+      fullPath: '/trust'
+      preLoaderRoute: typeof AppTrustRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/profile': {
       id: '/_app/profile'
@@ -445,6 +464,7 @@ interface AppRouteChildren {
   AppMediaRoute: typeof AppMediaRoute
   AppNewsRoute: typeof AppNewsRoute
   AppProfileRoute: typeof AppProfileRouteWithChildren
+  AppTrustRoute: typeof AppTrustRoute
   AppDestinationsIdRoute: typeof AppDestinationsIdRoute
 }
 
@@ -458,6 +478,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppMediaRoute: AppMediaRoute,
   AppNewsRoute: AppNewsRoute,
   AppProfileRoute: AppProfileRouteWithChildren,
+  AppTrustRoute: AppTrustRoute,
   AppDestinationsIdRoute: AppDestinationsIdRoute,
 }
 

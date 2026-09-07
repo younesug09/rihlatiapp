@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search, Bell, Sparkles, TrendingUp } from "lucide-react";
+import { Search, Sparkles, TrendingUp } from "lucide-react";
 import { destinations, categories } from "@/data/destinations";
 import { DestinationCard } from "@/components/DestinationCard";
 import { useLanguage } from "@/hooks/useLanguage";
+import { DemoNotice } from "@/components/DemoBadge";
 import heroSahara from "@/assets/hero-sahara.jpg";
 
 export const Route = createFileRoute("/_app/home")({
@@ -24,24 +25,29 @@ function Home() {
   return (
     <div className="animate-fade-in">
       {/* Hero */}
-      <section className="relative h-72 sm:h-96 overflow-hidden">
+      <section className="relative h-[26rem] sm:h-[32rem] overflow-hidden">
         <img
           src={heroSahara}
-          alt={t("appName")}
+          alt="كثبان الصحراء الجزائرية عند الغروب"
           width={1920}
           height={1080}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent" />
-        <div className="relative h-full mx-auto max-w-6xl px-4 flex flex-col justify-end pb-6 text-primary-foreground">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-sm text-white/80">{t("welcomeTo")}</p>
-            <button className="h-10 w-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center" aria-label={t("notifications")}>
-              <Bell className="h-5 w-5" />
-            </button>
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/45 to-primary/20" />
+        <div className="relative h-full mx-auto max-w-6xl px-4 flex flex-col justify-end pb-8 text-primary-foreground">
+          <p className="text-[11px] font-bold tracking-[0.3em] text-white/70 mb-3">RIHLA — اكتشف. عِش. شارك.</p>
+          <h1 className="text-4xl sm:text-6xl font-bold leading-[1.15] mb-3">الجزائر… أقرب مما تتخيل.</h1>
+          <p className="text-white/85 mb-5 max-w-md leading-relaxed">
+            وجهات، قصص، وإقامات من كل ولاية — منصة اتصال سياحي رقمية جزائرية.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Link to="/explore" className="rounded-2xl bg-card text-primary px-5 py-3 text-sm font-bold shadow-card hover:scale-[1.03] transition-transform">
+              اكتشف الجزائر
+            </Link>
+            <Link to="/hotels" className="rounded-2xl border border-white/50 px-5 py-3 text-sm font-bold hover:bg-white/15 transition-colors">
+              خطّط رحلتي
+            </Link>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-2">{t("heroTitle")}</h1>
-          <p className="text-white/85 mb-4">{t("heroSubtitle")}</p>
         </div>
       </section>
 
@@ -55,6 +61,10 @@ function Home() {
           <span className="text-muted-foreground flex-1">{t("searchPlaceholder")}</span>
           <span className="text-xs bg-primary text-primary-foreground px-3 py-1.5 rounded-full font-semibold">{t("search")}</span>
         </Link>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-4 mt-5">
+        <DemoNotice />
       </div>
 
       {/* Categories */}
