@@ -3,6 +3,7 @@ import { Home, Compass, Heart, BedDouble, User, Bell, Moon, Sun } from "lucide-r
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
 import { LanguageMenu } from "@/components/LanguageMenu";
+import { AppFooter } from "@/components/AppFooter";
 import { useLanguage } from "@/hooks/useLanguage";
 import {
   DropdownMenu,
@@ -103,8 +104,10 @@ export function Layout() {
         </div>
       </header>
 
-      <main className="flex-1 pb-24">
+      <main className="flex-1">
         <Outlet />
+        <AppFooter />
+        <div className="h-24" />
       </main>
 
       {/* Clean glass bottom navigation */}
