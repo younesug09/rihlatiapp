@@ -14,6 +14,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppWilayasRouteImport } from './routes/_app.wilayas'
 import { Route as AppTrustRouteImport } from './routes/_app.trust'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
@@ -24,6 +25,7 @@ import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
+import { Route as AppWilayasIdRouteImport } from './routes/_app.wilayas.$id'
 import { Route as AppProfileSettingsRouteImport } from './routes/_app.profile.settings'
 import { Route as AppProfileNotificationsRouteImport } from './routes/_app.profile.notifications'
 import { Route as AppProfileLanguageRouteImport } from './routes/_app.profile.language'
@@ -54,6 +56,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppWilayasRoute = AppWilayasRouteImport.update({
+  id: '/wilayas',
+  path: '/wilayas',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppTrustRoute = AppTrustRouteImport.update({
   id: '/trust',
@@ -105,6 +112,11 @@ const AppAboutRoute = AppAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => AppRoute,
 } as any)
+const AppWilayasIdRoute = AppWilayasIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AppWilayasRoute,
+} as any)
 const AppProfileSettingsRoute = AppProfileSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -151,12 +163,14 @@ export interface FileRoutesByFullPath {
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/trust': typeof AppTrustRoute
+  '/wilayas': typeof AppWilayasRouteWithChildren
   '/destinations/$id': typeof AppDestinationsIdRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
   '/profile/language': typeof AppProfileLanguageRoute
   '/profile/notifications': typeof AppProfileNotificationsRoute
   '/profile/settings': typeof AppProfileSettingsRoute
+  '/wilayas/$id': typeof AppWilayasIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -173,12 +187,14 @@ export interface FileRoutesByTo {
   '/news': typeof AppNewsRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/trust': typeof AppTrustRoute
+  '/wilayas': typeof AppWilayasRouteWithChildren
   '/destinations/$id': typeof AppDestinationsIdRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
   '/profile/language': typeof AppProfileLanguageRoute
   '/profile/notifications': typeof AppProfileNotificationsRoute
   '/profile/settings': typeof AppProfileSettingsRoute
+  '/wilayas/$id': typeof AppWilayasIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -197,12 +213,14 @@ export interface FileRoutesById {
   '/_app/news': typeof AppNewsRoute
   '/_app/profile': typeof AppProfileRouteWithChildren
   '/_app/trust': typeof AppTrustRoute
+  '/_app/wilayas': typeof AppWilayasRouteWithChildren
   '/_app/destinations/$id': typeof AppDestinationsIdRoute
   '/_app/profile/bookings': typeof AppProfileBookingsRoute
   '/_app/profile/help': typeof AppProfileHelpRoute
   '/_app/profile/language': typeof AppProfileLanguageRoute
   '/_app/profile/notifications': typeof AppProfileNotificationsRoute
   '/_app/profile/settings': typeof AppProfileSettingsRoute
+  '/_app/wilayas/$id': typeof AppWilayasIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -221,12 +239,14 @@ export interface FileRouteTypes {
     | '/news'
     | '/profile'
     | '/trust'
+    | '/wilayas'
     | '/destinations/$id'
     | '/profile/bookings'
     | '/profile/help'
     | '/profile/language'
     | '/profile/notifications'
     | '/profile/settings'
+    | '/wilayas/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -243,12 +263,14 @@ export interface FileRouteTypes {
     | '/news'
     | '/profile'
     | '/trust'
+    | '/wilayas'
     | '/destinations/$id'
     | '/profile/bookings'
     | '/profile/help'
     | '/profile/language'
     | '/profile/notifications'
     | '/profile/settings'
+    | '/wilayas/$id'
   id:
     | '__root__'
     | '/'
@@ -266,12 +288,14 @@ export interface FileRouteTypes {
     | '/_app/news'
     | '/_app/profile'
     | '/_app/trust'
+    | '/_app/wilayas'
     | '/_app/destinations/$id'
     | '/_app/profile/bookings'
     | '/_app/profile/help'
     | '/_app/profile/language'
     | '/_app/profile/notifications'
     | '/_app/profile/settings'
+    | '/_app/wilayas/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -318,6 +342,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/wilayas': {
+      id: '/_app/wilayas'
+      path: '/wilayas'
+      fullPath: '/wilayas'
+      preLoaderRoute: typeof AppWilayasRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/trust': {
       id: '/_app/trust'
@@ -389,6 +420,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAboutRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/wilayas/$id': {
+      id: '/_app/wilayas/$id'
+      path: '/$id'
+      fullPath: '/wilayas/$id'
+      preLoaderRoute: typeof AppWilayasIdRouteImport
+      parentRoute: typeof AppWilayasRoute
+    }
     '/_app/profile/settings': {
       id: '/_app/profile/settings'
       path: '/settings'
@@ -454,6 +492,18 @@ const AppProfileRouteWithChildren = AppProfileRoute._addFileChildren(
   AppProfileRouteChildren,
 )
 
+interface AppWilayasRouteChildren {
+  AppWilayasIdRoute: typeof AppWilayasIdRoute
+}
+
+const AppWilayasRouteChildren: AppWilayasRouteChildren = {
+  AppWilayasIdRoute: AppWilayasIdRoute,
+}
+
+const AppWilayasRouteWithChildren = AppWilayasRoute._addFileChildren(
+  AppWilayasRouteChildren,
+)
+
 interface AppRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
   AppBookingRoute: typeof AppBookingRoute
@@ -465,6 +515,7 @@ interface AppRouteChildren {
   AppNewsRoute: typeof AppNewsRoute
   AppProfileRoute: typeof AppProfileRouteWithChildren
   AppTrustRoute: typeof AppTrustRoute
+  AppWilayasRoute: typeof AppWilayasRouteWithChildren
   AppDestinationsIdRoute: typeof AppDestinationsIdRoute
 }
 
@@ -479,6 +530,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppNewsRoute: AppNewsRoute,
   AppProfileRoute: AppProfileRouteWithChildren,
   AppTrustRoute: AppTrustRoute,
+  AppWilayasRoute: AppWilayasRouteWithChildren,
   AppDestinationsIdRoute: AppDestinationsIdRoute,
 }
 
