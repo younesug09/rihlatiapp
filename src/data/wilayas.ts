@@ -9,6 +9,8 @@ export type TripType = "family" | "romantic" | "adventure" | "cultural" | "natur
 
 export type Wilaya = {
   id: string;
+  lat: number;
+  lng: number;
   code: string;
   name: string;
   region: Region;
@@ -62,6 +64,8 @@ export const durations = [
 export const wilayas: Wilaya[] = [
   {
     id: "alger",
+    lat: 36.75,
+    lng: 3.06,
     code: "16",
     name: "الجزائر",
     region: "center",
@@ -80,6 +84,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "bejaia",
+    lat: 36.75,
+    lng: 5.07,
     code: "06",
     name: "بجاية",
     region: "east",
@@ -98,6 +104,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "setif",
+    lat: 36.19,
+    lng: 5.41,
     code: "19",
     name: "سطيف",
     region: "east",
@@ -116,6 +124,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "jijel",
+    lat: 36.82,
+    lng: 5.77,
     code: "18",
     name: "جيجل",
     region: "east",
@@ -134,6 +144,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "constantine",
+    lat: 36.36,
+    lng: 6.61,
     code: "25",
     name: "قسنطينة",
     region: "east",
@@ -152,6 +164,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "annaba",
+    lat: 36.9,
+    lng: 7.75,
     code: "23",
     name: "عنابة",
     region: "east",
@@ -170,6 +184,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "skikda",
+    lat: 36.87,
+    lng: 6.91,
     code: "21",
     name: "سكيكدة",
     region: "east",
@@ -188,6 +204,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "batna",
+    lat: 35.55,
+    lng: 6.17,
     code: "05",
     name: "باتنة",
     region: "east",
@@ -206,6 +224,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "oran",
+    lat: 35.7,
+    lng: -0.63,
     code: "31",
     name: "وهران",
     region: "west",
@@ -224,6 +244,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "tlemcen",
+    lat: 34.88,
+    lng: -1.31,
     code: "13",
     name: "تلمسان",
     region: "west",
@@ -242,6 +264,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "mostaganem",
+    lat: 35.93,
+    lng: 0.09,
     code: "27",
     name: "مستغانم",
     region: "west",
@@ -260,6 +284,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "tipaza",
+    lat: 36.59,
+    lng: 2.45,
     code: "42",
     name: "تيبازة",
     region: "center",
@@ -278,6 +304,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "tizi-ouzou",
+    lat: 36.71,
+    lng: 4.05,
     code: "15",
     name: "تيزي وزو",
     region: "center",
@@ -296,6 +324,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "ghardaia",
+    lat: 32.49,
+    lng: 3.67,
     code: "47",
     name: "غرداية",
     region: "south",
@@ -314,6 +344,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "tamanrasset",
+    lat: 22.79,
+    lng: 5.53,
     code: "11",
     name: "تمنراست",
     region: "south",
@@ -332,6 +364,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "djanet",
+    lat: 24.55,
+    lng: 9.48,
     code: "56",
     name: "جانت",
     region: "south",
@@ -350,6 +384,8 @@ export const wilayas: Wilaya[] = [
   },
   {
     id: "biskra",
+    lat: 34.85,
+    lng: 5.73,
     code: "07",
     name: "بسكرة",
     region: "south",
