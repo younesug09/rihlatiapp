@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppWilayasRouteImport } from './routes/_app.wilayas'
 import { Route as AppTrustRouteImport } from './routes/_app.trust'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
+import { Route as AppPlanRouteImport } from './routes/_app.plan'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
 import { Route as AppMediaRouteImport } from './routes/_app.media'
 import { Route as AppHotelsRouteImport } from './routes/_app.hotels'
@@ -70,6 +71,11 @@ const AppTrustRoute = AppTrustRouteImport.update({
 const AppProfileRoute = AppProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPlanRoute = AppPlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
   getParentRoute: () => AppRoute,
 } as any)
 const AppNewsRoute = AppNewsRouteImport.update({
@@ -161,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/hotels': typeof AppHotelsRoute
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
+  '/plan': typeof AppPlanRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/trust': typeof AppTrustRoute
   '/wilayas': typeof AppWilayasRouteWithChildren
@@ -185,6 +192,7 @@ export interface FileRoutesByTo {
   '/hotels': typeof AppHotelsRoute
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
+  '/plan': typeof AppPlanRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/trust': typeof AppTrustRoute
   '/wilayas': typeof AppWilayasRouteWithChildren
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   '/_app/hotels': typeof AppHotelsRoute
   '/_app/media': typeof AppMediaRoute
   '/_app/news': typeof AppNewsRoute
+  '/_app/plan': typeof AppPlanRoute
   '/_app/profile': typeof AppProfileRouteWithChildren
   '/_app/trust': typeof AppTrustRoute
   '/_app/wilayas': typeof AppWilayasRouteWithChildren
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
     | '/hotels'
     | '/media'
     | '/news'
+    | '/plan'
     | '/profile'
     | '/trust'
     | '/wilayas'
@@ -261,6 +271,7 @@ export interface FileRouteTypes {
     | '/hotels'
     | '/media'
     | '/news'
+    | '/plan'
     | '/profile'
     | '/trust'
     | '/wilayas'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/_app/hotels'
     | '/_app/media'
     | '/_app/news'
+    | '/_app/plan'
     | '/_app/profile'
     | '/_app/trust'
     | '/_app/wilayas'
@@ -362,6 +374,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/plan': {
+      id: '/_app/plan'
+      path: '/plan'
+      fullPath: '/plan'
+      preLoaderRoute: typeof AppPlanRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/news': {
@@ -513,6 +532,7 @@ interface AppRouteChildren {
   AppHotelsRoute: typeof AppHotelsRoute
   AppMediaRoute: typeof AppMediaRoute
   AppNewsRoute: typeof AppNewsRoute
+  AppPlanRoute: typeof AppPlanRoute
   AppProfileRoute: typeof AppProfileRouteWithChildren
   AppTrustRoute: typeof AppTrustRoute
   AppWilayasRoute: typeof AppWilayasRouteWithChildren
@@ -528,6 +548,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppHotelsRoute: AppHotelsRoute,
   AppMediaRoute: AppMediaRoute,
   AppNewsRoute: AppNewsRoute,
+  AppPlanRoute: AppPlanRoute,
   AppProfileRoute: AppProfileRouteWithChildren,
   AppTrustRoute: AppTrustRoute,
   AppWilayasRoute: AppWilayasRouteWithChildren,
