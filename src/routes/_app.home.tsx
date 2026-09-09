@@ -24,48 +24,49 @@ function Home() {
 
   return (
     <div className="animate-fade-in">
-      {/* Hero */}
-      <section className="relative h-[26rem] sm:h-[32rem] overflow-hidden">
+      {/* Hero — cinematic */}
+      <section className="relative min-h-[32rem] sm:min-h-[40rem] overflow-hidden">
         <img
           src={heroSahara}
           alt="كثبان الصحراء الجزائرية عند الغروب"
           width={1920}
           height={1080}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover scale-105 animate-[fade-in_1.2s_ease-out]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/45 to-primary/20" />
-        <div className="relative h-full mx-auto max-w-6xl px-4 flex flex-col justify-end pb-8 text-primary-foreground">
-          <p className="text-[11px] font-bold tracking-[0.3em] text-white/70 mb-3">RIHLA — اكتشف. عِش. شارك.</p>
-          <h1 className="text-4xl sm:text-6xl font-bold leading-[1.15] mb-3">الجزائر… أقرب مما تتخيل.</h1>
-          <p className="text-white/85 mb-5 max-w-md leading-relaxed">
-            وجهات، قصص، وإقامات من كل ولاية — منصة اتصال سياحي رقمية جزائرية.
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-background/10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-transparent to-transparent" />
+
+        <div className="relative mx-auto max-w-5xl px-4 pt-24 sm:pt-32 pb-10 text-center">
+          <p className="text-[11px] font-bold tracking-[0.4em] text-primary mb-5">RIHLATY — اكتشف. عِش. شارك.</p>
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight text-foreground">
+            الجزائر… أقرب مما تتخيل.
+          </h1>
+          <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            اكتشف الأماكن، خطط رحلتك، وعِش التجربة بطريقتك.
           </p>
-          <div className="flex flex-wrap gap-2">
-            <Link to="/explore" className="rounded-2xl bg-card text-primary px-5 py-3 text-sm font-bold shadow-card hover:scale-[1.03] transition-transform">
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <Link
+              to="/wilayas"
+              className="rounded-full bg-primary text-primary-foreground px-7 py-3.5 text-sm font-bold shadow-card hover:scale-[1.03] transition-transform"
+            >
               اكتشف الجزائر
             </Link>
-            <Link to="/hotels" className="rounded-2xl border border-white/50 px-5 py-3 text-sm font-bold hover:bg-white/15 transition-colors">
-              خطّط رحلتي
+            <Link
+              to="/plan"
+              className="rounded-full border border-foreground/20 px-7 py-3.5 text-sm font-bold text-foreground hover:bg-foreground/5 transition-colors"
+            >
+              خطط رحلتي
             </Link>
           </div>
+
+          <SmartSearch />
         </div>
       </section>
-
-      {/* Search */}
-      <div className="mx-auto max-w-6xl px-4 -mt-7 relative z-10">
-        <Link
-          to="/explore"
-          className="flex items-center gap-3 bg-card rounded-2xl shadow-card px-4 py-4 hover:shadow-glow transition-all"
-        >
-          <Search className="h-5 w-5 text-primary" />
-          <span className="text-muted-foreground flex-1">{t("searchPlaceholder")}</span>
-          <span className="text-xs bg-primary text-primary-foreground px-3 py-1.5 rounded-full font-semibold">{t("search")}</span>
-        </Link>
-      </div>
 
       <div className="mx-auto max-w-6xl px-4 mt-5">
         <DemoNotice />
       </div>
+
 
       {/* Categories */}
       <section className="mx-auto max-w-6xl px-4 mt-8">
