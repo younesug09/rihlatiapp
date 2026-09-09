@@ -6,7 +6,7 @@ import { DestinationCard } from "@/components/DestinationCard";
 import { useLanguage } from "@/hooks/useLanguage";
 import { z } from "zod";
 
-const search = z.object({ category: z.string().optional() });
+const search = z.object({ category: z.string().optional(), q: z.string().optional() });
 
 export const Route = createFileRoute("/_app/explore")({
   validateSearch: search,
@@ -21,8 +21,8 @@ export const Route = createFileRoute("/_app/explore")({
 
 function Explore() {
   const { t } = useLanguage();
-  const { category } = Route.useSearch();
-  const [q, setQ] = useState("");
+  const { category, q: initialQ } = Route.useSearch();
+  const [q, setQ] = useState(initialQ ?? "");
   const [cat, setCat] = useState(category ?? "all");
   const [region, setRegion] = useState<"all" | "algeria" | "world">("all");
 
