@@ -1,10 +1,83 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Search, Sparkles, TrendingUp } from "lucide-react";
 import { destinations, categories } from "@/data/destinations";
 import { DestinationCard } from "@/components/DestinationCard";
 import { useLanguage } from "@/hooks/useLanguage";
 import { DemoNotice } from "@/components/DemoBadge";
 import heroSahara from "@/assets/hero-sahara.jpg";
+
+type SearchKind = { id: string; label: string; target: "wilayas" | "explore" | "hotels" | "news" };
+
+const searchKinds: SearchKind[] = [
+  { id: "wilaya", label: "ولاية", target: "wilayas" },
+  { id: "city", label: "مدينة", target: "explore" },
+  { id: "beach", label: "شاطئ", target: "explore" },
+  { id: "mountain", label: "جبل", target: "explore" },
+  { id: "desert", label: "صحراء", target: "explore" },
+  { id: "heritage", label: "موقع أثري", target: "explore" },
+  { id: "hotel", label: "فندق", target: "hotels" },
+  { id: "activity", label: "نشاط", target: "explore" },
+  { id: "restaurant", label: "مطعم", target: "explore" },
+  { id: "event", label: "فعالية", target: "news" },
+];
+
+function SmartSearch() {
+  const navigate = useNavigate();
+  const [kind, setKind] = useState<SearchKind>(searchKinds[0]);
+  const [q, setQ] = useState("");
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = q.trim();
+    if (kind.target === "wilayas") navigate({ to: "/wilayas" });
+    else if (kind.target === "hotels") navigate({ to: "/hotels" });
+    else if (kind.target === "news") navigate({ to: "/news" });
+    else navigate({ to: "/explore", search: query ? { q: query } : {} });
+  };
+
+  return (
+    <div className="mt-10 max-w-3xl mx-auto text-start">
+      <form
+        onSubmit={submit}
+        className="flex items-center gap-3 rounded-full bg-card/95 backdrop-blur border border-border shadow-card px-5 py-3"
+      >
+        <Search className="h-5 w-5 text-primary shrink-0" />
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="إلى أين تريد أن تذهب؟"
+          aria-label="إلى أين تريد أن تذهب؟"
+          className="flex-1 bg-transparent outline-none text-sm sm:text-base placeholder:text-muted-foreground"
+        />
+        <button
+          type="submit"
+          className="rounded-full bg-primary text-primary-foreground px-5 py-2 text-sm font-semibold shrink-0"
+        >
+          بحث
+        </button>
+      </form>
+      <div className="mt-3 flex flex-wrap gap-2 justify-center">
+        {searchKinds.map((k) => (
+          <button
+            key={k.id}
+            type="button"
+            onClick={() => setKind(k)}
+            aria-pressed={kind.id === k.id}
+            className={`rounded-full px-3.5 py-1.5 text-xs font-medium border transition-colors ${
+              kind.id === k.id
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-card/70 border-border text-muted-foreground hover:border-primary"
+            }`}
+          >
+            {k.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 
 export const Route = createFileRoute("/_app/home")({
   head: () => ({
