@@ -97,7 +97,7 @@ function WilayaDetail() {
                   <img src={h.image} alt={h.name} loading="lazy" className="h-32 w-full object-cover" />
                   <div className="p-3">
                     <p className="font-semibold text-sm">{h.name}</p>
-                    <p className="text-xs text-muted-foreground">{h.price.toLocaleString()} دج / ليلة</p>
+                    <p className="text-xs text-muted-foreground">{h.pricePerNight.toLocaleString()} دج / ليلة</p>
                   </div>
                 </div>
               ))}
