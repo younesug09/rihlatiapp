@@ -1,10 +1,83 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Search, Sparkles, TrendingUp } from "lucide-react";
 import { destinations, categories } from "@/data/destinations";
 import { DestinationCard } from "@/components/DestinationCard";
 import { useLanguage } from "@/hooks/useLanguage";
 import { DemoNotice } from "@/components/DemoBadge";
 import heroSahara from "@/assets/hero-sahara.jpg";
+
+type SearchKind = { id: string; label: string; target: "wilayas" | "explore" | "hotels" | "news" };
+
+const searchKinds: SearchKind[] = [
+  { id: "wilaya", label: "ولاية", target: "wilayas" },
+  { id: "city", label: "مدينة", target: "explore" },
+  { id: "beach", label: "شاطئ", target: "explore" },
+  { id: "mountain", label: "جبل", target: "explore" },
+  { id: "desert", label: "صحراء", target: "explore" },
+  { id: "heritage", label: "موقع أثري", target: "explore" },
+  { id: "hotel", label: "فندق", target: "hotels" },
+  { id: "activity", label: "نشاط", target: "explore" },
+  { id: "restaurant", label: "مطعم", target: "explore" },
+  { id: "event", label: "فعالية", target: "news" },
+];
+
+function SmartSearch() {
+  const navigate = useNavigate();
+  const [kind, setKind] = useState<SearchKind>(searchKinds[0]);
+  const [q, setQ] = useState("");
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = q.trim();
+    if (kind.target === "wilayas") navigate({ to: "/wilayas" });
+    else if (kind.target === "hotels") navigate({ to: "/hotels" });
+    else if (kind.target === "news") navigate({ to: "/news" });
+    else navigate({ to: "/explore", search: query ? { q: query } : {} });
+  };
+
+  return (
+    <div className="mt-10 max-w-3xl mx-auto text-start">
+      <form
+        onSubmit={submit}
+        className="flex items-center gap-3 rounded-full bg-card/95 backdrop-blur border border-border shadow-card px-5 py-3"
+      >
+        <Search className="h-5 w-5 text-primary shrink-0" />
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="إلى أين تريد أن تذهب؟"
+          aria-label="إلى أين تريد أن تذهب؟"
+          className="flex-1 bg-transparent outline-none text-sm sm:text-base placeholder:text-muted-foreground"
+        />
+        <button
+          type="submit"
+          className="rounded-full bg-primary text-primary-foreground px-5 py-2 text-sm font-semibold shrink-0"
+        >
+          بحث
+        </button>
+      </form>
+      <div className="mt-3 flex flex-wrap gap-2 justify-center">
+        {searchKinds.map((k) => (
+          <button
+            key={k.id}
+            type="button"
+            onClick={() => setKind(k)}
+            aria-pressed={kind.id === k.id}
+            className={`rounded-full px-3.5 py-1.5 text-xs font-medium border transition-colors ${
+              kind.id === k.id
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-card/70 border-border text-muted-foreground hover:border-primary"
+            }`}
+          >
+            {k.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 
 export const Route = createFileRoute("/_app/home")({
   head: () => ({
@@ -24,48 +97,49 @@ function Home() {
 
   return (
     <div className="animate-fade-in">
-      {/* Hero */}
-      <section className="relative h-[26rem] sm:h-[32rem] overflow-hidden">
+      {/* Hero — cinematic */}
+      <section className="relative min-h-[32rem] sm:min-h-[40rem] overflow-hidden">
         <img
           src={heroSahara}
           alt="كثبان الصحراء الجزائرية عند الغروب"
           width={1920}
           height={1080}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover scale-105 animate-[fade-in_1.2s_ease-out]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/45 to-primary/20" />
-        <div className="relative h-full mx-auto max-w-6xl px-4 flex flex-col justify-end pb-8 text-primary-foreground">
-          <p className="text-[11px] font-bold tracking-[0.3em] text-white/70 mb-3">RIHLA — اكتشف. عِش. شارك.</p>
-          <h1 className="text-4xl sm:text-6xl font-bold leading-[1.15] mb-3">الجزائر… أقرب مما تتخيل.</h1>
-          <p className="text-white/85 mb-5 max-w-md leading-relaxed">
-            وجهات، قصص، وإقامات من كل ولاية — منصة اتصال سياحي رقمية جزائرية.
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-background/10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-transparent to-transparent" />
+
+        <div className="relative mx-auto max-w-5xl px-4 pt-24 sm:pt-32 pb-10 text-center">
+          <p className="text-[11px] font-bold tracking-[0.4em] text-primary mb-5">RIHLATY — اكتشف. عِش. شارك.</p>
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight text-foreground">
+            الجزائر… أقرب مما تتخيل.
+          </h1>
+          <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            اكتشف الأماكن، خطط رحلتك، وعِش التجربة بطريقتك.
           </p>
-          <div className="flex flex-wrap gap-2">
-            <Link to="/explore" className="rounded-2xl bg-card text-primary px-5 py-3 text-sm font-bold shadow-card hover:scale-[1.03] transition-transform">
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <Link
+              to="/wilayas"
+              className="rounded-full bg-primary text-primary-foreground px-7 py-3.5 text-sm font-bold shadow-card hover:scale-[1.03] transition-transform"
+            >
               اكتشف الجزائر
             </Link>
-            <Link to="/hotels" className="rounded-2xl border border-white/50 px-5 py-3 text-sm font-bold hover:bg-white/15 transition-colors">
-              خطّط رحلتي
+            <Link
+              to="/plan"
+              className="rounded-full border border-foreground/20 px-7 py-3.5 text-sm font-bold text-foreground hover:bg-foreground/5 transition-colors"
+            >
+              خطط رحلتي
             </Link>
           </div>
+
+          <SmartSearch />
         </div>
       </section>
-
-      {/* Search */}
-      <div className="mx-auto max-w-6xl px-4 -mt-7 relative z-10">
-        <Link
-          to="/explore"
-          className="flex items-center gap-3 bg-card rounded-2xl shadow-card px-4 py-4 hover:shadow-glow transition-all"
-        >
-          <Search className="h-5 w-5 text-primary" />
-          <span className="text-muted-foreground flex-1">{t("searchPlaceholder")}</span>
-          <span className="text-xs bg-primary text-primary-foreground px-3 py-1.5 rounded-full font-semibold">{t("search")}</span>
-        </Link>
-      </div>
 
       <div className="mx-auto max-w-6xl px-4 mt-5">
         <DemoNotice />
       </div>
+
 
       {/* Categories */}
       <section className="mx-auto max-w-6xl px-4 mt-8">
