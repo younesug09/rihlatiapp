@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { MapPin, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { wilayas, tripTypes, budgets, durations, type Region, type TripType } from "@/data/wilayas";
 import { AlgeriaMap } from "@/components/AlgeriaMap";
 
