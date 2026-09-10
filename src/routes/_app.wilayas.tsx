@@ -42,35 +42,11 @@ function WilayasPage() {
         من ساحل جيجل إلى كثبان الطاسيلي — اختر منطقتك ونوع رحلتك وميزانيتك، ودع الباقي علينا.
       </p>
 
-      {/* Schematic interactive map */}
-      <div className="rounded-3xl border border-border bg-card p-4 sm:p-6 mb-6">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {(["west", "center", "east", "south"] as Region[]).map((r) => {
-            const active = region === r;
-            const label = regions.find((x) => x.id === r)!.label;
-            return (
-              <button
-                key={r}
-                onClick={() => setRegion(active ? "all" : r)}
-                className={`rounded-2xl px-4 py-6 text-center transition-all border ${
-                  active
-                    ? "bg-primary text-primary-foreground border-primary shadow-glow"
-                    : "bg-secondary/50 border-border hover:border-primary"
-                } ${r === "south" ? "sm:col-span-4" : ""}`}
-              >
-                <MapPin className="h-5 w-5 mx-auto mb-2 opacity-80" />
-                <span className="block font-bold">{label}</span>
-                <span className={`text-xs ${active ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
-                  {byRegion(r)} ولاية
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        <p className="text-xs text-muted-foreground mt-3">
-          خريطة مبسّطة للمناطق — اضغط على منطقة لتصفية الولايات.
-        </p>
+      {/* Interactive Algeria map */}
+      <div className="mb-6">
+        <AlgeriaMap region={region} onRegionChange={setRegion} />
       </div>
+
 
       <div className="flex items-center gap-2 bg-card border border-border rounded-2xl px-4 py-3 mb-4 focus-within:border-primary transition-colors">
         <Search className="h-4 w-4 text-muted-foreground" />
