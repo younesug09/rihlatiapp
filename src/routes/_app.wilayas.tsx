@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { MapPin, Search } from "lucide-react";
-import { wilayas, regions, tripTypes, budgets, durations, type Region, type TripType } from "@/data/wilayas";
+import { wilayas, tripTypes, budgets, durations, type Region, type TripType } from "@/data/wilayas";
+import { AlgeriaMap } from "@/components/AlgeriaMap";
 
 export const Route = createFileRoute("/_app/wilayas")({
   head: () => ({
