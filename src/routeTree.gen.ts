@@ -25,7 +25,9 @@ import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
+import { Route as AppAgencyRouteImport } from './routes/_app.agency'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
+import { Route as AppAgencyIndexRouteImport } from './routes/_app.agency.index'
 import { Route as AppWilayasIdRouteImport } from './routes/_app.wilayas.$id'
 import { Route as AppProfileSettingsRouteImport } from './routes/_app.profile.settings'
 import { Route as AppProfileNotificationsRouteImport } from './routes/_app.profile.notifications'
@@ -113,10 +115,20 @@ const AppBookingRoute = AppBookingRouteImport.update({
   path: '/booking',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAgencyRoute = AppAgencyRouteImport.update({
+  id: '/agency',
+  path: '/agency',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAboutRoute = AppAboutRouteImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => AppRoute,
+} as any)
+const AppAgencyIndexRoute = AppAgencyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppAgencyRoute,
 } as any)
 const AppWilayasIdRoute = AppWilayasIdRouteImport.update({
   id: '/$id',
@@ -160,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/about': typeof AppAboutRoute
+  '/agency': typeof AppAgencyRouteWithChildren
   '/booking': typeof AppBookingRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
@@ -178,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/profile/notifications': typeof AppProfileNotificationsRoute
   '/profile/settings': typeof AppProfileSettingsRoute
   '/wilayas/$id': typeof AppWilayasIdRoute
+  '/agency/': typeof AppAgencyIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -203,6 +217,7 @@ export interface FileRoutesByTo {
   '/profile/notifications': typeof AppProfileNotificationsRoute
   '/profile/settings': typeof AppProfileSettingsRoute
   '/wilayas/$id': typeof AppWilayasIdRoute
+  '/agency': typeof AppAgencyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -212,6 +227,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_app/about': typeof AppAboutRoute
+  '/_app/agency': typeof AppAgencyRouteWithChildren
   '/_app/booking': typeof AppBookingRoute
   '/_app/explore': typeof AppExploreRoute
   '/_app/favorites': typeof AppFavoritesRoute
@@ -230,6 +246,7 @@ export interface FileRoutesById {
   '/_app/profile/notifications': typeof AppProfileNotificationsRoute
   '/_app/profile/settings': typeof AppProfileSettingsRoute
   '/_app/wilayas/$id': typeof AppWilayasIdRoute
+  '/_app/agency/': typeof AppAgencyIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -239,6 +256,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/reset-password'
     | '/about'
+    | '/agency'
     | '/booking'
     | '/explore'
     | '/favorites'
@@ -257,6 +275,7 @@ export interface FileRouteTypes {
     | '/profile/notifications'
     | '/profile/settings'
     | '/wilayas/$id'
+    | '/agency/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -282,6 +301,7 @@ export interface FileRouteTypes {
     | '/profile/notifications'
     | '/profile/settings'
     | '/wilayas/$id'
+    | '/agency'
   id:
     | '__root__'
     | '/'
@@ -290,6 +310,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/reset-password'
     | '/_app/about'
+    | '/_app/agency'
     | '/_app/booking'
     | '/_app/explore'
     | '/_app/favorites'
@@ -308,6 +329,7 @@ export interface FileRouteTypes {
     | '/_app/profile/notifications'
     | '/_app/profile/settings'
     | '/_app/wilayas/$id'
+    | '/_app/agency/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -432,12 +454,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppBookingRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/agency': {
+      id: '/_app/agency'
+      path: '/agency'
+      fullPath: '/agency'
+      preLoaderRoute: typeof AppAgencyRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/about': {
       id: '/_app/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AppAboutRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/_app/agency/': {
+      id: '/_app/agency/'
+      path: '/'
+      fullPath: '/agency/'
+      preLoaderRoute: typeof AppAgencyIndexRouteImport
+      parentRoute: typeof AppAgencyRoute
     }
     '/_app/wilayas/$id': {
       id: '/_app/wilayas/$id'
@@ -491,6 +527,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppAgencyRouteChildren {
+  AppAgencyIndexRoute: typeof AppAgencyIndexRoute
+}
+
+const AppAgencyRouteChildren: AppAgencyRouteChildren = {
+  AppAgencyIndexRoute: AppAgencyIndexRoute,
+}
+
+const AppAgencyRouteWithChildren = AppAgencyRoute._addFileChildren(
+  AppAgencyRouteChildren,
+)
+
 interface AppProfileRouteChildren {
   AppProfileBookingsRoute: typeof AppProfileBookingsRoute
   AppProfileHelpRoute: typeof AppProfileHelpRoute
@@ -525,6 +573,7 @@ const AppWilayasRouteWithChildren = AppWilayasRoute._addFileChildren(
 
 interface AppRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
+  AppAgencyRoute: typeof AppAgencyRouteWithChildren
   AppBookingRoute: typeof AppBookingRoute
   AppExploreRoute: typeof AppExploreRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
@@ -541,6 +590,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAboutRoute: AppAboutRoute,
+  AppAgencyRoute: AppAgencyRouteWithChildren,
   AppBookingRoute: AppBookingRoute,
   AppExploreRoute: AppExploreRoute,
   AppFavoritesRoute: AppFavoritesRoute,
