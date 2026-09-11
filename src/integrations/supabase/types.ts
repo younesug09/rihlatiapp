@@ -14,44 +14,169 @@ export type Database = {
   }
   public: {
     Tables: {
+      agencies: {
+        Row: {
+          address: string | null
+          commercial_name: string | null
+          cover_url: string | null
+          created_at: string
+          description: string | null
+          email: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          owner_id: string
+          phone: string | null
+          slug: string
+          social_links: Json
+          updated_at: string
+          verification_notes: string | null
+          verification_status: Database["public"]["Enums"]["verification_status"]
+          verified_at: string | null
+          website: string | null
+          wilaya: string | null
+        }
+        Insert: {
+          address?: string | null
+          commercial_name?: string | null
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          owner_id: string
+          phone?: string | null
+          slug: string
+          social_links?: Json
+          updated_at?: string
+          verification_notes?: string | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+          verified_at?: string | null
+          website?: string | null
+          wilaya?: string | null
+        }
+        Update: {
+          address?: string | null
+          commercial_name?: string | null
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          owner_id?: string
+          phone?: string | null
+          slug?: string
+          social_links?: Json
+          updated_at?: string
+          verification_notes?: string | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+          verified_at?: string | null
+          website?: string | null
+          wilaya?: string | null
+        }
+        Relationships: []
+      }
+      agency_documents: {
+        Row: {
+          agency_id: string
+          created_at: string
+          doc_type: string
+          file_url: string
+          id: string
+        }
+        Insert: {
+          agency_id: string
+          created_at?: string
+          doc_type: string
+          file_url: string
+          id?: string
+        }
+        Update: {
+          agency_id?: string
+          created_at?: string
+          doc_type?: string
+          file_url?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agency_documents_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookings: {
         Row: {
+          agency_id: string | null
+          booking_ref: string | null
           check_in: string
           check_out: string
           created_at: string
-          destination_id: string
+          destination_id: string | null
           guests: number
           id: string
+          notes: string | null
           status: string
           total_price: number
+          trip_id: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          agency_id?: string | null
+          booking_ref?: string | null
           check_in: string
           check_out: string
           created_at?: string
-          destination_id: string
+          destination_id?: string | null
           guests?: number
           id?: string
+          notes?: string | null
           status?: string
           total_price: number
+          trip_id?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          agency_id?: string | null
+          booking_ref?: string | null
           check_in?: string
           check_out?: string
           created_at?: string
-          destination_id?: string
+          destination_id?: string | null
           guests?: number
           id?: string
+          notes?: string | null
           status?: string
           total_price?: number
+          trip_id?: string | null
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "bookings_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       favorites: {
         Row: {
@@ -74,56 +199,345 @@ export type Database = {
         }
         Relationships: []
       }
+      messages: {
+        Row: {
+          body: string
+          booking_id: string
+          created_at: string
+          id: string
+          read_at: string | null
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          booking_id: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          sender_id: string
+        }
+        Update: {
+          body?: string
+          booking_id?: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
+          budget_level: string | null
           created_at: string
           full_name: string | null
           id: string
+          language: string
+          phone: string | null
+          travel_preferences: string[]
           updated_at: string
+          wilaya: string | null
         }
         Insert: {
           avatar_url?: string | null
+          budget_level?: string | null
           created_at?: string
           full_name?: string | null
           id: string
+          language?: string
+          phone?: string | null
+          travel_preferences?: string[]
           updated_at?: string
+          wilaya?: string | null
         }
         Update: {
           avatar_url?: string | null
+          budget_level?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
+          language?: string
+          phone?: string | null
+          travel_preferences?: string[]
           updated_at?: string
+          wilaya?: string | null
         }
         Relationships: []
       }
       reviews: {
         Row: {
+          agency_id: string | null
+          booking_id: string | null
           comment: string | null
           created_at: string
-          destination_id: string
+          destination_id: string | null
           id: string
           rating: number
+          rating_accommodation: number | null
+          rating_guide: number | null
+          rating_organization: number | null
+          rating_transport: number | null
+          rating_value: number | null
+          trip_id: string | null
           updated_at: string
+          user_id: string
+          verified_trip: boolean
+        }
+        Insert: {
+          agency_id?: string | null
+          booking_id?: string | null
+          comment?: string | null
+          created_at?: string
+          destination_id?: string | null
+          id?: string
+          rating: number
+          rating_accommodation?: number | null
+          rating_guide?: number | null
+          rating_organization?: number | null
+          rating_transport?: number | null
+          rating_value?: number | null
+          trip_id?: string | null
+          updated_at?: string
+          user_id: string
+          verified_trip?: boolean
+        }
+        Update: {
+          agency_id?: string | null
+          booking_id?: string | null
+          comment?: string | null
+          created_at?: string
+          destination_id?: string | null
+          id?: string
+          rating?: number
+          rating_accommodation?: number | null
+          rating_guide?: number | null
+          rating_organization?: number | null
+          rating_transport?: number | null
+          rating_value?: number | null
+          trip_id?: string | null
+          updated_at?: string
+          user_id?: string
+          verified_trip?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trip_days: {
+        Row: {
+          activity: string
+          created_at: string
+          day_number: number
+          id: string
+          image_url: string | null
+          location: string | null
+          notes: string | null
+          sort_order: number
+          time_label: string | null
+          trip_id: string
+        }
+        Insert: {
+          activity: string
+          created_at?: string
+          day_number: number
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          notes?: string | null
+          sort_order?: number
+          time_label?: string | null
+          trip_id: string
+        }
+        Update: {
+          activity?: string
+          created_at?: string
+          day_number?: number
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          notes?: string | null
+          sort_order?: number
+          time_label?: string | null
+          trip_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trip_days_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trips: {
+        Row: {
+          accommodation: string | null
+          activities: string[]
+          agency_id: string
+          cancellation_policy: string | null
+          contact: string | null
+          cover_url: string | null
+          created_at: string
+          currency: string
+          departure_date: string | null
+          departure_location: string | null
+          description: string | null
+          destination: string
+          duration_days: number
+          gallery: string[]
+          id: string
+          included: string[]
+          not_included: string[]
+          price: number
+          return_date: string | null
+          seats: number
+          seats_booked: number
+          status: Database["public"]["Enums"]["trip_status"]
+          title: string
+          transport: string | null
+          updated_at: string
+        }
+        Insert: {
+          accommodation?: string | null
+          activities?: string[]
+          agency_id: string
+          cancellation_policy?: string | null
+          contact?: string | null
+          cover_url?: string | null
+          created_at?: string
+          currency?: string
+          departure_date?: string | null
+          departure_location?: string | null
+          description?: string | null
+          destination: string
+          duration_days?: number
+          gallery?: string[]
+          id?: string
+          included?: string[]
+          not_included?: string[]
+          price?: number
+          return_date?: string | null
+          seats?: number
+          seats_booked?: number
+          status?: Database["public"]["Enums"]["trip_status"]
+          title: string
+          transport?: string | null
+          updated_at?: string
+        }
+        Update: {
+          accommodation?: string | null
+          activities?: string[]
+          agency_id?: string
+          cancellation_policy?: string | null
+          contact?: string | null
+          cover_url?: string | null
+          created_at?: string
+          currency?: string
+          departure_date?: string | null
+          departure_location?: string | null
+          description?: string | null
+          destination?: string
+          duration_days?: number
+          gallery?: string[]
+          id?: string
+          included?: string[]
+          not_included?: string[]
+          price?: number
+          return_date?: string | null
+          seats?: number
+          seats_booked?: number
+          status?: Database["public"]["Enums"]["trip_status"]
+          title?: string
+          transport?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trips_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Insert: {
-          comment?: string | null
           created_at?: string
-          destination_id: string
           id?: string
-          rating: number
-          updated_at?: string
+          role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Update: {
-          comment?: string | null
           created_at?: string
-          destination_id?: string
           id?: string
-          rating?: number
-          updated_at?: string
+          role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
         }
         Relationships: []
@@ -133,10 +547,34 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_access_booking: {
+        Args: { _booking_id: string; _user_id: string }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "customer" | "agency" | "admin"
+      trip_status:
+        | "draft"
+        | "pending_approval"
+        | "published"
+        | "paused"
+        | "sold_out"
+        | "completed"
+        | "cancelled"
+      verification_status:
+        | "pending"
+        | "under_review"
+        | "verified"
+        | "rejected"
+        | "suspended"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -263,6 +701,24 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["customer", "agency", "admin"],
+      trip_status: [
+        "draft",
+        "pending_approval",
+        "published",
+        "paused",
+        "sold_out",
+        "completed",
+        "cancelled",
+      ],
+      verification_status: [
+        "pending",
+        "under_review",
+        "verified",
+        "rejected",
+        "suspended",
+      ],
+    },
   },
 } as const
