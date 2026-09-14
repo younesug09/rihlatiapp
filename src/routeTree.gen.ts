@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppWilayasRouteImport } from './routes/_app.wilayas'
+import { Route as AppVerifyRouteImport } from './routes/_app.verify'
 import { Route as AppTrustRouteImport } from './routes/_app.trust'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppPlanRouteImport } from './routes/_app.plan'
@@ -35,6 +36,9 @@ import { Route as AppProfileLanguageRouteImport } from './routes/_app.profile.la
 import { Route as AppProfileHelpRouteImport } from './routes/_app.profile.help'
 import { Route as AppProfileBookingsRouteImport } from './routes/_app.profile.bookings'
 import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
+import { Route as AppAgencyTripsRouteImport } from './routes/_app.agency.trips'
+import { Route as AppAgencyBookingsRouteImport } from './routes/_app.agency.bookings'
+import { Route as AppAgenciesSlugRouteImport } from './routes/_app.agencies.$slug'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -63,6 +67,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppWilayasRoute = AppWilayasRouteImport.update({
   id: '/wilayas',
   path: '/wilayas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppVerifyRoute = AppVerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
   getParentRoute: () => AppRoute,
 } as any)
 const AppTrustRoute = AppTrustRouteImport.update({
@@ -165,6 +174,21 @@ const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
   path: '/destinations/$id',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAgencyTripsRoute = AppAgencyTripsRouteImport.update({
+  id: '/trips',
+  path: '/trips',
+  getParentRoute: () => AppAgencyRoute,
+} as any)
+const AppAgencyBookingsRoute = AppAgencyBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AppAgencyRoute,
+} as any)
+const AppAgenciesSlugRoute = AppAgenciesSlugRouteImport.update({
+  id: '/agencies/$slug',
+  path: '/agencies/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -183,7 +207,11 @@ export interface FileRoutesByFullPath {
   '/plan': typeof AppPlanRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/trust': typeof AppTrustRoute
+  '/verify': typeof AppVerifyRoute
   '/wilayas': typeof AppWilayasRouteWithChildren
+  '/agencies/$slug': typeof AppAgenciesSlugRoute
+  '/agency/bookings': typeof AppAgencyBookingsRoute
+  '/agency/trips': typeof AppAgencyTripsRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
@@ -209,7 +237,11 @@ export interface FileRoutesByTo {
   '/plan': typeof AppPlanRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/trust': typeof AppTrustRoute
+  '/verify': typeof AppVerifyRoute
   '/wilayas': typeof AppWilayasRouteWithChildren
+  '/agencies/$slug': typeof AppAgenciesSlugRoute
+  '/agency/bookings': typeof AppAgencyBookingsRoute
+  '/agency/trips': typeof AppAgencyTripsRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
@@ -238,7 +270,11 @@ export interface FileRoutesById {
   '/_app/plan': typeof AppPlanRoute
   '/_app/profile': typeof AppProfileRouteWithChildren
   '/_app/trust': typeof AppTrustRoute
+  '/_app/verify': typeof AppVerifyRoute
   '/_app/wilayas': typeof AppWilayasRouteWithChildren
+  '/_app/agencies/$slug': typeof AppAgenciesSlugRoute
+  '/_app/agency/bookings': typeof AppAgencyBookingsRoute
+  '/_app/agency/trips': typeof AppAgencyTripsRoute
   '/_app/destinations/$id': typeof AppDestinationsIdRoute
   '/_app/profile/bookings': typeof AppProfileBookingsRoute
   '/_app/profile/help': typeof AppProfileHelpRoute
@@ -267,7 +303,11 @@ export interface FileRouteTypes {
     | '/plan'
     | '/profile'
     | '/trust'
+    | '/verify'
     | '/wilayas'
+    | '/agencies/$slug'
+    | '/agency/bookings'
+    | '/agency/trips'
     | '/destinations/$id'
     | '/profile/bookings'
     | '/profile/help'
@@ -293,7 +333,11 @@ export interface FileRouteTypes {
     | '/plan'
     | '/profile'
     | '/trust'
+    | '/verify'
     | '/wilayas'
+    | '/agencies/$slug'
+    | '/agency/bookings'
+    | '/agency/trips'
     | '/destinations/$id'
     | '/profile/bookings'
     | '/profile/help'
@@ -321,7 +365,11 @@ export interface FileRouteTypes {
     | '/_app/plan'
     | '/_app/profile'
     | '/_app/trust'
+    | '/_app/verify'
     | '/_app/wilayas'
+    | '/_app/agencies/$slug'
+    | '/_app/agency/bookings'
+    | '/_app/agency/trips'
     | '/_app/destinations/$id'
     | '/_app/profile/bookings'
     | '/_app/profile/help'
@@ -382,6 +430,13 @@ declare module '@tanstack/react-router' {
       path: '/wilayas'
       fullPath: '/wilayas'
       preLoaderRoute: typeof AppWilayasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/verify': {
+      id: '/_app/verify'
+      path: '/verify'
+      fullPath: '/verify'
+      preLoaderRoute: typeof AppVerifyRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/trust': {
@@ -524,14 +579,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDestinationsIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/agency/trips': {
+      id: '/_app/agency/trips'
+      path: '/trips'
+      fullPath: '/agency/trips'
+      preLoaderRoute: typeof AppAgencyTripsRouteImport
+      parentRoute: typeof AppAgencyRoute
+    }
+    '/_app/agency/bookings': {
+      id: '/_app/agency/bookings'
+      path: '/bookings'
+      fullPath: '/agency/bookings'
+      preLoaderRoute: typeof AppAgencyBookingsRouteImport
+      parentRoute: typeof AppAgencyRoute
+    }
+    '/_app/agencies/$slug': {
+      id: '/_app/agencies/$slug'
+      path: '/agencies/$slug'
+      fullPath: '/agencies/$slug'
+      preLoaderRoute: typeof AppAgenciesSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppAgencyRouteChildren {
+  AppAgencyBookingsRoute: typeof AppAgencyBookingsRoute
+  AppAgencyTripsRoute: typeof AppAgencyTripsRoute
   AppAgencyIndexRoute: typeof AppAgencyIndexRoute
 }
 
 const AppAgencyRouteChildren: AppAgencyRouteChildren = {
+  AppAgencyBookingsRoute: AppAgencyBookingsRoute,
+  AppAgencyTripsRoute: AppAgencyTripsRoute,
   AppAgencyIndexRoute: AppAgencyIndexRoute,
 }
 
@@ -584,7 +664,9 @@ interface AppRouteChildren {
   AppPlanRoute: typeof AppPlanRoute
   AppProfileRoute: typeof AppProfileRouteWithChildren
   AppTrustRoute: typeof AppTrustRoute
+  AppVerifyRoute: typeof AppVerifyRoute
   AppWilayasRoute: typeof AppWilayasRouteWithChildren
+  AppAgenciesSlugRoute: typeof AppAgenciesSlugRoute
   AppDestinationsIdRoute: typeof AppDestinationsIdRoute
 }
 
@@ -601,7 +683,9 @@ const AppRouteChildren: AppRouteChildren = {
   AppPlanRoute: AppPlanRoute,
   AppProfileRoute: AppProfileRouteWithChildren,
   AppTrustRoute: AppTrustRoute,
+  AppVerifyRoute: AppVerifyRoute,
   AppWilayasRoute: AppWilayasRouteWithChildren,
+  AppAgenciesSlugRoute: AppAgenciesSlugRoute,
   AppDestinationsIdRoute: AppDestinationsIdRoute,
 }
 

@@ -21,10 +21,19 @@ type Trip = {
   seats: number;
   seats_booked: number;
   price: number;
-  status: string;
+  status: TripStatus;
 };
 
-const statusLabel: Record<string, string> = {
+type TripStatus =
+  | "draft"
+  | "pending_approval"
+  | "published"
+  | "paused"
+  | "sold_out"
+  | "completed"
+  | "cancelled";
+
+const statusLabel: Record<TripStatus, string> = {
   draft: "مسودة",
   pending_approval: "بانتظار الموافقة",
   published: "منشورة",
@@ -44,7 +53,7 @@ const empty = {
   departure_location: "",
   seats: 20,
   price: 0,
-  status: "draft",
+  status: "draft" as TripStatus,
 };
 
 function AgencyTrips() {
@@ -100,7 +109,7 @@ function AgencyTrips() {
       departure_location: t.departure_location ?? "",
       seats: t.seats,
       price: Number(t.price),
-      status: t.status,
+      status: t.status as TripStatus,
     });
     setOpen(true);
   };
@@ -295,10 +304,10 @@ function AgencyTrips() {
             />
             <select
               value={form.status}
-              onChange={(e) => setForm({ ...form, status: e.target.value })}
+              onChange={(e) => setForm({ ...form, status: e.target.value as TripStatus })}
               className="w-full rounded-2xl bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
             >
-              {Object.entries(statusLabel).map(([k, v]) => (
+              {(Object.entries(statusLabel) as [TripStatus, string][]).map(([k, v]) => (
                 <option key={k} value={k}>
                   {v}
                 </option>
