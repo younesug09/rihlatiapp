@@ -19,6 +19,7 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [accountType, setAccountType] = useState<"customer" | "agency">("customer");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -35,7 +36,7 @@ function AuthPage() {
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
           email, password,
-          options: { data: { full_name: name }, emailRedirectTo: window.location.origin },
+          options: { data: { full_name: name, account_type: accountType }, emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
         toast.success(t("accountCreated"));
@@ -137,6 +138,27 @@ function AuthPage() {
             </div>
 
             <form onSubmit={handleEmailAuth} className="space-y-3">
+              {mode === "signup" && (
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { id: "customer" as const, label: "مسافر" },
+                    { id: "agency" as const, label: "وكالة سياحية" },
+                  ].map((o) => (
+                    <button
+                      key={o.id}
+                      type="button"
+                      onClick={() => setAccountType(o.id)}
+                      className={`rounded-2xl py-3 text-sm font-bold transition ${
+                        accountType === o.id
+                          ? "bg-primary text-primary-foreground shadow-soft"
+                          : "bg-secondary text-muted-foreground"
+                      }`}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              )}
               {mode === "signup" && (
                 <div className="flex items-center gap-2 bg-secondary rounded-2xl px-4 py-3 focus-within:ring-2 focus-within:ring-primary transition">
                   <UserIcon className="h-4 w-4 text-muted-foreground" />

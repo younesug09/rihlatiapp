@@ -205,8 +205,8 @@ function AgencyDashboard() {
           >
             <option value="">اختر الولاية</option>
             {wilayas.map((w) => (
-              <option key={w.id} value={w.nameAr}>
-                {w.nameAr}
+              <option key={w.id} value={w.name}>
+                {w.name}
               </option>
             ))}
           </select>
