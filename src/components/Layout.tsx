@@ -5,6 +5,7 @@ import logo from "@/assets/logo.png";
 import { LanguageMenu } from "@/components/LanguageMenu";
 import { AppFooter } from "@/components/AppFooter";
 import { useLanguage } from "@/hooks/useLanguage";
+import { track } from "@/lib/analytics";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,6 +33,11 @@ export function Layout() {
     { id: 2, title: "موسم الصحراء انطلق!", body: "احجز رحلتك إلى الطاسيلي الآن", time: "1d", unread: true },
     { id: 3, title: t("appName"), body: "اكتشف أجمل الوجهات حول العالم", time: "3d", unread: false },
   ];
+
+  // Anonymous page-view logging for the academic analytics dashboard.
+  useEffect(() => {
+    void track("page_view", pathname);
+  }, [pathname]);
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
