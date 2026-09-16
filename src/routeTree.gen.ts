@@ -21,6 +21,7 @@ import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppPlanRouteImport } from './routes/_app.plan'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
 import { Route as AppMediaRouteImport } from './routes/_app.media'
+import { Route as AppMagazineRouteImport } from './routes/_app.magazine'
 import { Route as AppHotelsRouteImport } from './routes/_app.hotels'
 import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
@@ -35,6 +36,7 @@ import { Route as AppProfileNotificationsRouteImport } from './routes/_app.profi
 import { Route as AppProfileLanguageRouteImport } from './routes/_app.profile.language'
 import { Route as AppProfileHelpRouteImport } from './routes/_app.profile.help'
 import { Route as AppProfileBookingsRouteImport } from './routes/_app.profile.bookings'
+import { Route as AppMagazineSlugRouteImport } from './routes/_app.magazine.$slug'
 import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
 import { Route as AppAgencyTripsRouteImport } from './routes/_app.agency.trips'
 import { Route as AppAgencyBookingsRouteImport } from './routes/_app.agency.bookings'
@@ -97,6 +99,11 @@ const AppNewsRoute = AppNewsRouteImport.update({
 const AppMediaRoute = AppMediaRouteImport.update({
   id: '/media',
   path: '/media',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMagazineRoute = AppMagazineRouteImport.update({
+  id: '/magazine',
+  path: '/magazine',
   getParentRoute: () => AppRoute,
 } as any)
 const AppHotelsRoute = AppHotelsRouteImport.update({
@@ -169,6 +176,11 @@ const AppProfileBookingsRoute = AppProfileBookingsRouteImport.update({
   path: '/bookings',
   getParentRoute: () => AppProfileRoute,
 } as any)
+const AppMagazineSlugRoute = AppMagazineSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => AppMagazineRoute,
+} as any)
 const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
   id: '/destinations/$id',
   path: '/destinations/$id',
@@ -202,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
   '/hotels': typeof AppHotelsRoute
+  '/magazine': typeof AppMagazineRouteWithChildren
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/plan': typeof AppPlanRoute
@@ -213,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/agency/bookings': typeof AppAgencyBookingsRoute
   '/agency/trips': typeof AppAgencyTripsRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
+  '/magazine/$slug': typeof AppMagazineSlugRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
   '/profile/language': typeof AppProfileLanguageRoute
@@ -232,6 +246,7 @@ export interface FileRoutesByTo {
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
   '/hotels': typeof AppHotelsRoute
+  '/magazine': typeof AppMagazineRouteWithChildren
   '/media': typeof AppMediaRoute
   '/news': typeof AppNewsRoute
   '/plan': typeof AppPlanRoute
@@ -243,6 +258,7 @@ export interface FileRoutesByTo {
   '/agency/bookings': typeof AppAgencyBookingsRoute
   '/agency/trips': typeof AppAgencyTripsRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
+  '/magazine/$slug': typeof AppMagazineSlugRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
   '/profile/language': typeof AppProfileLanguageRoute
@@ -265,6 +281,7 @@ export interface FileRoutesById {
   '/_app/favorites': typeof AppFavoritesRoute
   '/_app/home': typeof AppHomeRoute
   '/_app/hotels': typeof AppHotelsRoute
+  '/_app/magazine': typeof AppMagazineRouteWithChildren
   '/_app/media': typeof AppMediaRoute
   '/_app/news': typeof AppNewsRoute
   '/_app/plan': typeof AppPlanRoute
@@ -276,6 +293,7 @@ export interface FileRoutesById {
   '/_app/agency/bookings': typeof AppAgencyBookingsRoute
   '/_app/agency/trips': typeof AppAgencyTripsRoute
   '/_app/destinations/$id': typeof AppDestinationsIdRoute
+  '/_app/magazine/$slug': typeof AppMagazineSlugRoute
   '/_app/profile/bookings': typeof AppProfileBookingsRoute
   '/_app/profile/help': typeof AppProfileHelpRoute
   '/_app/profile/language': typeof AppProfileLanguageRoute
@@ -298,6 +316,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/home'
     | '/hotels'
+    | '/magazine'
     | '/media'
     | '/news'
     | '/plan'
@@ -309,6 +328,7 @@ export interface FileRouteTypes {
     | '/agency/bookings'
     | '/agency/trips'
     | '/destinations/$id'
+    | '/magazine/$slug'
     | '/profile/bookings'
     | '/profile/help'
     | '/profile/language'
@@ -328,6 +348,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/home'
     | '/hotels'
+    | '/magazine'
     | '/media'
     | '/news'
     | '/plan'
@@ -339,6 +360,7 @@ export interface FileRouteTypes {
     | '/agency/bookings'
     | '/agency/trips'
     | '/destinations/$id'
+    | '/magazine/$slug'
     | '/profile/bookings'
     | '/profile/help'
     | '/profile/language'
@@ -360,6 +382,7 @@ export interface FileRouteTypes {
     | '/_app/favorites'
     | '/_app/home'
     | '/_app/hotels'
+    | '/_app/magazine'
     | '/_app/media'
     | '/_app/news'
     | '/_app/plan'
@@ -371,6 +394,7 @@ export interface FileRouteTypes {
     | '/_app/agency/bookings'
     | '/_app/agency/trips'
     | '/_app/destinations/$id'
+    | '/_app/magazine/$slug'
     | '/_app/profile/bookings'
     | '/_app/profile/help'
     | '/_app/profile/language'
@@ -474,6 +498,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMediaRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/magazine': {
+      id: '/_app/magazine'
+      path: '/magazine'
+      fullPath: '/magazine'
+      preLoaderRoute: typeof AppMagazineRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/hotels': {
       id: '/_app/hotels'
       path: '/hotels'
@@ -572,6 +603,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileBookingsRouteImport
       parentRoute: typeof AppProfileRoute
     }
+    '/_app/magazine/$slug': {
+      id: '/_app/magazine/$slug'
+      path: '/$slug'
+      fullPath: '/magazine/$slug'
+      preLoaderRoute: typeof AppMagazineSlugRouteImport
+      parentRoute: typeof AppMagazineRoute
+    }
     '/_app/destinations/$id': {
       id: '/_app/destinations/$id'
       path: '/destinations/$id'
@@ -619,6 +657,18 @@ const AppAgencyRouteWithChildren = AppAgencyRoute._addFileChildren(
   AppAgencyRouteChildren,
 )
 
+interface AppMagazineRouteChildren {
+  AppMagazineSlugRoute: typeof AppMagazineSlugRoute
+}
+
+const AppMagazineRouteChildren: AppMagazineRouteChildren = {
+  AppMagazineSlugRoute: AppMagazineSlugRoute,
+}
+
+const AppMagazineRouteWithChildren = AppMagazineRoute._addFileChildren(
+  AppMagazineRouteChildren,
+)
+
 interface AppProfileRouteChildren {
   AppProfileBookingsRoute: typeof AppProfileBookingsRoute
   AppProfileHelpRoute: typeof AppProfileHelpRoute
@@ -659,6 +709,7 @@ interface AppRouteChildren {
   AppFavoritesRoute: typeof AppFavoritesRoute
   AppHomeRoute: typeof AppHomeRoute
   AppHotelsRoute: typeof AppHotelsRoute
+  AppMagazineRoute: typeof AppMagazineRouteWithChildren
   AppMediaRoute: typeof AppMediaRoute
   AppNewsRoute: typeof AppNewsRoute
   AppPlanRoute: typeof AppPlanRoute
@@ -678,6 +729,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppFavoritesRoute: AppFavoritesRoute,
   AppHomeRoute: AppHomeRoute,
   AppHotelsRoute: AppHotelsRoute,
+  AppMagazineRoute: AppMagazineRouteWithChildren,
   AppMediaRoute: AppMediaRoute,
   AppNewsRoute: AppNewsRoute,
   AppPlanRoute: AppPlanRoute,
