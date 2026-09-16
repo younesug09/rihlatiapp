@@ -49,7 +49,7 @@ function Booking() {
     });
     setSubmitting(false);
     if (error) { toast.error("فشل الحجز: " + error.message); return; }
-    toast.success("تم تأكيد الحجز بنجاح! 🎉");
+    toast.success("تم تأكيد الحجز بنجاح!");
     setDone(true);
   };
 
@@ -61,7 +61,7 @@ function Booking() {
         </div>
         <h1 className="text-2xl font-bold mb-2">تم تأكيد الحجز!</h1>
         <p className="text-muted-foreground mb-6">تم حفظ حجز رحلتك إلى {d.name}. ستجده في "حسابي".</p>
-        <Link to="/home" className="inline-block px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-semibold">
+        <Link to="/home"className="inline-block px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-semibold">
           العودة للرئيسية
         </Link>
       </div>
@@ -74,7 +74,7 @@ function Booking() {
 
       {/* Summary */}
       <div className="bg-card rounded-2xl shadow-soft p-3 flex gap-3 mb-5 border border-border">
-        <img src={hotel?.image ?? d.image} alt={hotel?.name ?? d.name} width={96} height={96} loading="lazy" className="h-24 w-24 rounded-xl object-cover" />
+        <img src={hotel?.image ?? d.image} alt={hotel?.name ?? d.name} width={96} height={96} loading="lazy"className="h-24 w-24 rounded-xl object-cover" />
         <div className="flex-1 min-w-0">
           {hotel ? (
             <>
@@ -100,15 +100,15 @@ function Booking() {
             <Calendar className="h-4 w-4 text-primary" /> تواريخ الإقامة
           </label>
           <div className="grid grid-cols-2 gap-3">
-            <input type="date" required value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="bg-secondary rounded-xl px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
-            <input type="date" required value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="bg-secondary rounded-xl px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
+            <input type="date"required value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="bg-secondary rounded-xl px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
+            <input type="date"required value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="bg-secondary rounded-xl px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
           </div>
           <div className="mt-3 flex items-center justify-between">
             <span className="text-sm">عدد الليالي</span>
             <div className="flex items-center gap-3">
-              <button type="button" onClick={() => setNights(Math.max(1, nights - 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">-</button>
+              <button type="button"onClick={() => setNights(Math.max(1, nights - 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">-</button>
               <span className="font-bold w-6 text-center">{nights}</span>
-              <button type="button" onClick={() => setNights(nights + 1)} className="h-8 w-8 rounded-full bg-secondary font-bold">+</button>
+              <button type="button"onClick={() => setNights(nights + 1)} className="h-8 w-8 rounded-full bg-secondary font-bold">+</button>
             </div>
           </div>
         </div>
@@ -118,9 +118,9 @@ function Booking() {
             <Users className="h-4 w-4 text-primary" /> عدد المسافرين
           </label>
           <div className="flex items-center gap-3">
-            <button type="button" onClick={() => setGuests(Math.max(1, guests - 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">-</button>
+            <button type="button"onClick={() => setGuests(Math.max(1, guests - 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">-</button>
             <span className="font-bold w-6 text-center">{guests}</span>
-            <button type="button" onClick={() => setGuests(guests + 1)} className="h-8 w-8 rounded-full bg-secondary font-bold">+</button>
+            <button type="button"onClick={() => setGuests(guests + 1)} className="h-8 w-8 rounded-full bg-secondary font-bold">+</button>
           </div>
         </div>
 
@@ -128,9 +128,9 @@ function Booking() {
           <label className="text-sm font-semibold flex items-center gap-2">
             <CreditCard className="h-4 w-4 text-primary" /> معلومات الاتصال
           </label>
-          <input required placeholder="الاسم الكامل" className="w-full bg-secondary rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
-          <input required type="email" placeholder="البريد الإلكتروني" className="w-full bg-secondary rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
-          <input required placeholder="رقم الهاتف" className="w-full bg-secondary rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
+          <input required placeholder="الاسم الكامل"className="w-full bg-secondary rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
+          <input required type="email"placeholder="البريد الإلكتروني"className="w-full bg-secondary rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
+          <input required placeholder="رقم الهاتف"className="w-full bg-secondary rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary" />
         </div>
 
         <div className="bg-card rounded-2xl p-4 shadow-soft">
@@ -148,7 +148,7 @@ function Booking() {
           </div>
         </div>
 
-        <button type="submit" disabled={submitting} className="w-full py-4 rounded-2xl font-bold text-primary-foreground shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-60" style={{ background: "var(--gradient-primary)" }}>
+        <button type="submit"disabled={submitting} className="w-full py-4 rounded-2xl font-bold text-primary-foreground shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-60"style={{ background: "var(--gradient-primary)" }}>
           {submitting ? "جارٍ التأكيد..." : "تأكيد الحجز"}
         </button>
       </form>

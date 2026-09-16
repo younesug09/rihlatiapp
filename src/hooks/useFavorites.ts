@@ -34,7 +34,7 @@ export function useFavorites() {
     } else {
       await supabase.from("favorites").insert({ user_id: user.id, destination_id: destinationId });
       setFavorites((s) => new Set(s).add(destinationId));
-      toast.success("تمت الإضافة للمفضلة ❤️");
+      toast.success("تمت الإضافة للمفضلة");
     }
   }, [user, favorites]);
 

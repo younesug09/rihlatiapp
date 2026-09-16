@@ -178,6 +178,42 @@ export type Database = {
           },
         ]
       }
+      community_posts: {
+        Row: {
+          caption: string
+          created_at: string
+          id: string
+          image_url: string | null
+          moderation_notes: string | null
+          status: Database["public"]["Enums"]["post_status"]
+          updated_at: string
+          user_id: string
+          wilaya: string | null
+        }
+        Insert: {
+          caption: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          moderation_notes?: string | null
+          status?: Database["public"]["Enums"]["post_status"]
+          updated_at?: string
+          user_id: string
+          wilaya?: string | null
+        }
+        Update: {
+          caption?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          moderation_notes?: string | null
+          status?: Database["public"]["Enums"]["post_status"]
+          updated_at?: string
+          user_id?: string
+          wilaya?: string | null
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string
@@ -561,6 +597,7 @@ export type Database = {
     }
     Enums: {
       app_role: "customer" | "agency" | "admin"
+      post_status: "pending" | "approved" | "rejected"
       trip_status:
         | "draft"
         | "pending_approval"
@@ -703,6 +740,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["customer", "agency", "admin"],
+      post_status: ["pending", "approved", "rejected"],
       trip_status: [
         "draft",
         "pending_approval",
