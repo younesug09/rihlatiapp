@@ -17,7 +17,7 @@ export function DestinationCard({ d, large = false }: { d: Destination; large?: 
         <div className={`relative overflow-hidden ${large ? "aspect-[4/5]" : "aspect-[4/3]"}`}>
           <img
             src={d.image}
-            alt={d.name}
+            alt={d.imageAlt ?? `${d.name} — ${d.country}`}
             loading="lazy"
             width={800}
             height={600}

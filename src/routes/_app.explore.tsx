@@ -82,8 +82,10 @@ function Explore() {
                 : "bg-card text-foreground border-border"
             }`}
           >
-            <span className="mr-1">{c.icon}</span>
-            {c.label}
+            <span className="inline-flex items-center gap-1.5">
+              <c.icon className="h-4 w-4" strokeWidth={1.5} aria-hidden />
+              {c.label}
+            </span>
           </button>
         ))}
       </div>

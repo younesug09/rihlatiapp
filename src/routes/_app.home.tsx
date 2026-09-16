@@ -155,7 +155,7 @@ function Home() {
               search={{ category: c.id }}
               className="shrink-0 flex flex-col items-center gap-2 px-4 py-3 rounded-2xl bg-card border border-border hover:border-primary hover:shadow-soft transition-all min-w-20"
             >
-              <span className="text-2xl">{c.icon}</span>
+              <c.icon className="h-6 w-6 text-primary" strokeWidth={1.5} aria-hidden />
               <span className="text-xs font-medium">{c.label}</span>
             </Link>
           ))}

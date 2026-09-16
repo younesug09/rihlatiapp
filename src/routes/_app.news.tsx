@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Calendar, ArrowLeft } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Calendar, ArrowLeft, Camera } from "lucide-react";
 import { news } from "@/data/destinations";
 
 export const Route = createFileRoute("/_app/news")({
@@ -50,10 +50,13 @@ function News() {
         ))}
       </div>
 
-      <div className="mt-10 rounded-3xl p-6 bg-gradient-to-br from-primary to-primary-glow text-primary-foreground">
-        <h3 className="text-lg font-bold mb-2">📸 معرض الوسائط</h3>
-        <p className="text-sm text-white/85 mb-4">شاهد مجموعتنا من الصور والفيديوهات السياحية</p>
-        <button className="bg-white text-primary px-4 py-2 rounded-xl text-sm font-semibold">استكشف المعرض</button>
+      <div className="mt-10 rounded-3xl p-6 bg-primary text-primary-foreground">
+        <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
+          <Camera className="h-5 w-5" strokeWidth={1.5} aria-hidden />
+          معرض الوسائط
+        </h3>
+        <p className="text-sm opacity-85 mb-4">شاهد مجموعتنا من الصور والفيديوهات السياحية</p>
+        <Link to="/media" className="inline-block bg-background text-primary px-4 py-2 rounded-xl text-sm font-semibold">استكشف المعرض</Link>
       </div>
     </div>
   );

@@ -1,8 +1,5 @@
-import algiers from "@/assets/dest-algiers.jpg";
-import timgad from "@/assets/dest-timgad.jpg";
-import constantine from "@/assets/dest-constantine.jpg";
-import oran from "@/assets/dest-oran.jpg";
-import sahara from "@/assets/hero-sahara.jpg";
+import { Building2, Globe2, Landmark, Mountain, Sun, Waves } from "lucide-react";
+import { realImages } from "@/data/images";
 import santorini from "@/assets/dest-santorini.jpg";
 import istanbul from "@/assets/dest-istanbul.jpg";
 import dubai from "@/assets/dest-dubai.jpg";
@@ -14,6 +11,7 @@ export type Destination = {
   region: "algeria" | "world";
   category: "beach" | "desert" | "city" | "historic" | "mountain";
   image: string;
+  imageAlt?: string;
   rating: number;
   reviews: number;
   price: number;
@@ -28,7 +26,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "city",
-    image: algiers,
+    image: realImages.alger.src,
+    imageAlt: realImages.alger.alt,
     rating: 4.8,
     reviews: 1240,
     price: 12000,
@@ -41,7 +40,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "desert",
-    image: sahara,
+    image: realImages.tassili.src,
+    imageAlt: realImages.tassili.alt,
     rating: 4.9,
     reviews: 890,
     price: 25000,
@@ -54,7 +54,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "historic",
-    image: timgad,
+    image: realImages.timgad.src,
+    imageAlt: realImages.timgad.alt,
     rating: 4.7,
     reviews: 560,
     price: 8000,
@@ -67,7 +68,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "city",
-    image: constantine,
+    image: realImages.constantine.src,
+    imageAlt: realImages.constantine.alt,
     rating: 4.6,
     reviews: 980,
     price: 10000,
@@ -80,7 +82,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "beach",
-    image: oran,
+    image: realImages.oran.src,
+    imageAlt: realImages.oran.alt,
     rating: 4.7,
     reviews: 1100,
     price: 11000,
@@ -93,7 +96,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "beach",
-    image: "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&w=1200&q=70",
+    image: realImages.bejaia.src,
+    imageAlt: realImages.bejaia.alt,
     rating: 4.8,
     reviews: 920,
     price: 9500,
@@ -106,7 +110,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "historic",
-    image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=70",
+    image: realImages.setif.src,
+    imageAlt: realImages.setif.alt,
     rating: 4.5,
     reviews: 640,
     price: 7000,
@@ -119,7 +124,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "beach",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=70",
+    image: realImages.jijel.src,
+    imageAlt: realImages.jijel.alt,
     rating: 4.9,
     reviews: 1340,
     price: 8500,
@@ -132,7 +138,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "beach",
-    image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=70",
+    image: realImages.skikda.src,
+    imageAlt: realImages.skikda.alt,
     rating: 4.6,
     reviews: 780,
     price: 8000,
@@ -145,7 +152,8 @@ export const destinations: Destination[] = [
     country: "الجزائر",
     region: "algeria",
     category: "city",
-    image: "https://images.unsplash.com/photo-1601751848169-99c1bcc1d4e8?auto=format&fit=crop&w=1200&q=70",
+    image: realImages.annaba.src,
+    imageAlt: realImages.annaba.alt,
     rating: 4.7,
     reviews: 1020,
     price: 9000,
@@ -194,12 +202,12 @@ export const destinations: Destination[] = [
 ];
 
 export const categories = [
-  { id: "all", label: "الكل", icon: "🌍" },
-  { id: "beach", label: "شواطئ", icon: "🏖️" },
-  { id: "desert", label: "صحراء", icon: "🏜️" },
-  { id: "city", label: "مدن", icon: "🏙️" },
-  { id: "historic", label: "آثار", icon: "🏛️" },
-  { id: "mountain", label: "جبال", icon: "⛰️" },
+  { id: "all", label: "الكل", icon: Globe2 },
+  { id: "beach", label: "شواطئ", icon: Waves },
+  { id: "desert", label: "صحراء", icon: Sun },
+  { id: "city", label: "مدن", icon: Building2 },
+  { id: "historic", label: "آثار", icon: Landmark },
+  { id: "mountain", label: "جبال", icon: Mountain },
 ] as const;
 
 export const news = [
@@ -207,7 +215,7 @@ export const news = [
     id: "1",
     title: "الجزائر تطلق حملة ترويجية كبرى لاستقطاب السياح",
     excerpt: "أعلنت وزارة السياحة عن إطلاق حملة عالمية لإبراز المعالم السياحية الجزائرية وتعزيز قطاع السياحة الداخلية.",
-    image: algiers,
+    image: realImages.alger.src,
     date: "منذ يومين",
     category: "أخبار محلية",
   },
@@ -215,7 +223,7 @@ export const news = [
     id: "2",
     title: "افتتاح موسم السياحة الصحراوية في تمنراست",
     excerpt: "انطلق رسميًا الموسم السياحي الصحراوي بمشاركة مئات السياح من مختلف دول العالم لاكتشاف عجائب الطاسيلي.",
-    image: sahara,
+    image: realImages.tassili.src,
     date: "منذ 5 أيام",
     category: "الطاسيلي",
   },
@@ -223,7 +231,7 @@ export const news = [
     id: "3",
     title: "قسنطينة تستضيف المهرجان الدولي للجاز",
     excerpt: "مدينة الجسور المعلقة تستعد لاستقبال عشاق الموسيقى في نسخة استثنائية من المهرجان الدولي للجاز.",
-    image: constantine,
+    image: realImages.constantine.src,
     date: "منذ أسبوع",
     category: "ثقافة",
   },
