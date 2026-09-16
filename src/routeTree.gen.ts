@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppWilayasRouteImport } from './routes/_app.wilayas'
 import { Route as AppVerifyRouteImport } from './routes/_app.verify'
 import { Route as AppTrustRouteImport } from './routes/_app.trust'
+import { Route as AppStaysRouteImport } from './routes/_app.stays'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppPlanRouteImport } from './routes/_app.plan'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
@@ -81,6 +82,11 @@ const AppVerifyRoute = AppVerifyRouteImport.update({
 const AppTrustRoute = AppTrustRouteImport.update({
   id: '/trust',
   path: '/trust',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppStaysRoute = AppStaysRouteImport.update({
+  id: '/stays',
+  path: '/stays',
   getParentRoute: () => AppRoute,
 } as any)
 const AppProfileRoute = AppProfileRouteImport.update({
@@ -233,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/news': typeof AppNewsRoute
   '/plan': typeof AppPlanRoute
   '/profile': typeof AppProfileRouteWithChildren
+  '/stays': typeof AppStaysRoute
   '/trust': typeof AppTrustRoute
   '/verify': typeof AppVerifyRoute
   '/wilayas': typeof AppWilayasRouteWithChildren
@@ -267,6 +274,7 @@ export interface FileRoutesByTo {
   '/news': typeof AppNewsRoute
   '/plan': typeof AppPlanRoute
   '/profile': typeof AppProfileRouteWithChildren
+  '/stays': typeof AppStaysRoute
   '/trust': typeof AppTrustRoute
   '/verify': typeof AppVerifyRoute
   '/wilayas': typeof AppWilayasRouteWithChildren
@@ -304,6 +312,7 @@ export interface FileRoutesById {
   '/_app/news': typeof AppNewsRoute
   '/_app/plan': typeof AppPlanRoute
   '/_app/profile': typeof AppProfileRouteWithChildren
+  '/_app/stays': typeof AppStaysRoute
   '/_app/trust': typeof AppTrustRoute
   '/_app/verify': typeof AppVerifyRoute
   '/_app/wilayas': typeof AppWilayasRouteWithChildren
@@ -341,6 +350,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/plan'
     | '/profile'
+    | '/stays'
     | '/trust'
     | '/verify'
     | '/wilayas'
@@ -375,6 +385,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/plan'
     | '/profile'
+    | '/stays'
     | '/trust'
     | '/verify'
     | '/wilayas'
@@ -411,6 +422,7 @@ export interface FileRouteTypes {
     | '/_app/news'
     | '/_app/plan'
     | '/_app/profile'
+    | '/_app/stays'
     | '/_app/trust'
     | '/_app/verify'
     | '/_app/wilayas'
@@ -492,6 +504,13 @@ declare module '@tanstack/react-router' {
       path: '/trust'
       fullPath: '/trust'
       preLoaderRoute: typeof AppTrustRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/stays': {
+      id: '/_app/stays'
+      path: '/stays'
+      fullPath: '/stays'
+      preLoaderRoute: typeof AppStaysRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/profile': {
@@ -754,6 +773,7 @@ interface AppRouteChildren {
   AppNewsRoute: typeof AppNewsRoute
   AppPlanRoute: typeof AppPlanRoute
   AppProfileRoute: typeof AppProfileRouteWithChildren
+  AppStaysRoute: typeof AppStaysRoute
   AppTrustRoute: typeof AppTrustRoute
   AppVerifyRoute: typeof AppVerifyRoute
   AppWilayasRoute: typeof AppWilayasRouteWithChildren
@@ -776,6 +796,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppNewsRoute: AppNewsRoute,
   AppPlanRoute: AppPlanRoute,
   AppProfileRoute: AppProfileRouteWithChildren,
+  AppStaysRoute: AppStaysRoute,
   AppTrustRoute: AppTrustRoute,
   AppVerifyRoute: AppVerifyRoute,
   AppWilayasRoute: AppWilayasRouteWithChildren,
