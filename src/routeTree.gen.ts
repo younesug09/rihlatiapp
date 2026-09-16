@@ -26,6 +26,8 @@ import { Route as AppHotelsRouteImport } from './routes/_app.hotels'
 import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
+import { Route as AppEventsRouteImport } from './routes/_app.events'
+import { Route as AppCommunityRouteImport } from './routes/_app.community'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
 import { Route as AppAgencyRouteImport } from './routes/_app.agency'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
@@ -126,6 +128,16 @@ const AppExploreRoute = AppExploreRouteImport.update({
   path: '/explore',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEventsRoute = AppEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCommunityRoute = AppCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppBookingRoute = AppBookingRouteImport.update({
   id: '/booking',
   path: '/booking',
@@ -210,6 +222,8 @@ export interface FileRoutesByFullPath {
   '/about': typeof AppAboutRoute
   '/agency': typeof AppAgencyRouteWithChildren
   '/booking': typeof AppBookingRoute
+  '/community': typeof AppCommunityRoute
+  '/events': typeof AppEventsRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
@@ -242,6 +256,8 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/about': typeof AppAboutRoute
   '/booking': typeof AppBookingRoute
+  '/community': typeof AppCommunityRoute
+  '/events': typeof AppEventsRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
   '/home': typeof AppHomeRoute
@@ -277,6 +293,8 @@ export interface FileRoutesById {
   '/_app/about': typeof AppAboutRoute
   '/_app/agency': typeof AppAgencyRouteWithChildren
   '/_app/booking': typeof AppBookingRoute
+  '/_app/community': typeof AppCommunityRoute
+  '/_app/events': typeof AppEventsRoute
   '/_app/explore': typeof AppExploreRoute
   '/_app/favorites': typeof AppFavoritesRoute
   '/_app/home': typeof AppHomeRoute
@@ -312,6 +330,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/agency'
     | '/booking'
+    | '/community'
+    | '/events'
     | '/explore'
     | '/favorites'
     | '/home'
@@ -344,6 +364,8 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/about'
     | '/booking'
+    | '/community'
+    | '/events'
     | '/explore'
     | '/favorites'
     | '/home'
@@ -378,6 +400,8 @@ export interface FileRouteTypes {
     | '/_app/about'
     | '/_app/agency'
     | '/_app/booking'
+    | '/_app/community'
+    | '/_app/events'
     | '/_app/explore'
     | '/_app/favorites'
     | '/_app/home'
@@ -531,6 +555,20 @@ declare module '@tanstack/react-router' {
       path: '/explore'
       fullPath: '/explore'
       preLoaderRoute: typeof AppExploreRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/events': {
+      id: '/_app/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof AppEventsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/community': {
+      id: '/_app/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof AppCommunityRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/booking': {
@@ -705,6 +743,8 @@ interface AppRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
   AppAgencyRoute: typeof AppAgencyRouteWithChildren
   AppBookingRoute: typeof AppBookingRoute
+  AppCommunityRoute: typeof AppCommunityRoute
+  AppEventsRoute: typeof AppEventsRoute
   AppExploreRoute: typeof AppExploreRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
   AppHomeRoute: typeof AppHomeRoute
@@ -725,6 +765,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppAboutRoute: AppAboutRoute,
   AppAgencyRoute: AppAgencyRouteWithChildren,
   AppBookingRoute: AppBookingRoute,
+  AppCommunityRoute: AppCommunityRoute,
+  AppEventsRoute: AppEventsRoute,
   AppExploreRoute: AppExploreRoute,
   AppFavoritesRoute: AppFavoritesRoute,
   AppHomeRoute: AppHomeRoute,
