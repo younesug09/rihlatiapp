@@ -28,6 +28,7 @@ import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
 import { Route as AppEventsRouteImport } from './routes/_app.events'
+import { Route as AppDocumentRouteImport } from './routes/_app.document'
 import { Route as AppCommunityRouteImport } from './routes/_app.community'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
 import { Route as AppAgencyRouteImport } from './routes/_app.agency'
@@ -44,6 +45,7 @@ import { Route as AppDestinationsIdRouteImport } from './routes/_app.destination
 import { Route as AppAgencyTripsRouteImport } from './routes/_app.agency.trips'
 import { Route as AppAgencyBookingsRouteImport } from './routes/_app.agency.bookings'
 import { Route as AppAgenciesSlugRouteImport } from './routes/_app.agencies.$slug'
+import { Route as AppVerifyBookingIdRouteImport } from './routes/_app.verify.booking.$id'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -139,6 +141,11 @@ const AppEventsRoute = AppEventsRouteImport.update({
   path: '/events',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDocumentRoute = AppDocumentRouteImport.update({
+  id: '/document',
+  path: '/document',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCommunityRoute = AppCommunityRouteImport.update({
   id: '/community',
   path: '/community',
@@ -219,6 +226,11 @@ const AppAgenciesSlugRoute = AppAgenciesSlugRouteImport.update({
   path: '/agencies/$slug',
   getParentRoute: () => AppRoute,
 } as any)
+const AppVerifyBookingIdRoute = AppVerifyBookingIdRouteImport.update({
+  id: '/booking/$id',
+  path: '/booking/$id',
+  getParentRoute: () => AppVerifyRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -229,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/agency': typeof AppAgencyRouteWithChildren
   '/booking': typeof AppBookingRoute
   '/community': typeof AppCommunityRoute
+  '/document': typeof AppDocumentRoute
   '/events': typeof AppEventsRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
@@ -241,7 +254,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AppProfileRouteWithChildren
   '/stays': typeof AppStaysRoute
   '/trust': typeof AppTrustRoute
-  '/verify': typeof AppVerifyRoute
+  '/verify': typeof AppVerifyRouteWithChildren
   '/wilayas': typeof AppWilayasRouteWithChildren
   '/agencies/$slug': typeof AppAgenciesSlugRoute
   '/agency/bookings': typeof AppAgencyBookingsRoute
@@ -255,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/profile/settings': typeof AppProfileSettingsRoute
   '/wilayas/$id': typeof AppWilayasIdRoute
   '/agency/': typeof AppAgencyIndexRoute
+  '/verify/booking/$id': typeof AppVerifyBookingIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -264,6 +278,7 @@ export interface FileRoutesByTo {
   '/about': typeof AppAboutRoute
   '/booking': typeof AppBookingRoute
   '/community': typeof AppCommunityRoute
+  '/document': typeof AppDocumentRoute
   '/events': typeof AppEventsRoute
   '/explore': typeof AppExploreRoute
   '/favorites': typeof AppFavoritesRoute
@@ -276,7 +291,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AppProfileRouteWithChildren
   '/stays': typeof AppStaysRoute
   '/trust': typeof AppTrustRoute
-  '/verify': typeof AppVerifyRoute
+  '/verify': typeof AppVerifyRouteWithChildren
   '/wilayas': typeof AppWilayasRouteWithChildren
   '/agencies/$slug': typeof AppAgenciesSlugRoute
   '/agency/bookings': typeof AppAgencyBookingsRoute
@@ -290,6 +305,7 @@ export interface FileRoutesByTo {
   '/profile/settings': typeof AppProfileSettingsRoute
   '/wilayas/$id': typeof AppWilayasIdRoute
   '/agency': typeof AppAgencyIndexRoute
+  '/verify/booking/$id': typeof AppVerifyBookingIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -302,6 +318,7 @@ export interface FileRoutesById {
   '/_app/agency': typeof AppAgencyRouteWithChildren
   '/_app/booking': typeof AppBookingRoute
   '/_app/community': typeof AppCommunityRoute
+  '/_app/document': typeof AppDocumentRoute
   '/_app/events': typeof AppEventsRoute
   '/_app/explore': typeof AppExploreRoute
   '/_app/favorites': typeof AppFavoritesRoute
@@ -314,7 +331,7 @@ export interface FileRoutesById {
   '/_app/profile': typeof AppProfileRouteWithChildren
   '/_app/stays': typeof AppStaysRoute
   '/_app/trust': typeof AppTrustRoute
-  '/_app/verify': typeof AppVerifyRoute
+  '/_app/verify': typeof AppVerifyRouteWithChildren
   '/_app/wilayas': typeof AppWilayasRouteWithChildren
   '/_app/agencies/$slug': typeof AppAgenciesSlugRoute
   '/_app/agency/bookings': typeof AppAgencyBookingsRoute
@@ -328,6 +345,7 @@ export interface FileRoutesById {
   '/_app/profile/settings': typeof AppProfileSettingsRoute
   '/_app/wilayas/$id': typeof AppWilayasIdRoute
   '/_app/agency/': typeof AppAgencyIndexRoute
+  '/_app/verify/booking/$id': typeof AppVerifyBookingIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -340,6 +358,7 @@ export interface FileRouteTypes {
     | '/agency'
     | '/booking'
     | '/community'
+    | '/document'
     | '/events'
     | '/explore'
     | '/favorites'
@@ -366,6 +385,7 @@ export interface FileRouteTypes {
     | '/profile/settings'
     | '/wilayas/$id'
     | '/agency/'
+    | '/verify/booking/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -375,6 +395,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/booking'
     | '/community'
+    | '/document'
     | '/events'
     | '/explore'
     | '/favorites'
@@ -401,6 +422,7 @@ export interface FileRouteTypes {
     | '/profile/settings'
     | '/wilayas/$id'
     | '/agency'
+    | '/verify/booking/$id'
   id:
     | '__root__'
     | '/'
@@ -412,6 +434,7 @@ export interface FileRouteTypes {
     | '/_app/agency'
     | '/_app/booking'
     | '/_app/community'
+    | '/_app/document'
     | '/_app/events'
     | '/_app/explore'
     | '/_app/favorites'
@@ -438,6 +461,7 @@ export interface FileRouteTypes {
     | '/_app/profile/settings'
     | '/_app/wilayas/$id'
     | '/_app/agency/'
+    | '/_app/verify/booking/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -583,6 +607,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEventsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/document': {
+      id: '/_app/document'
+      path: '/document'
+      fullPath: '/document'
+      preLoaderRoute: typeof AppDocumentRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/community': {
       id: '/_app/community'
       path: '/community'
@@ -695,6 +726,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAgenciesSlugRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/verify/booking/$id': {
+      id: '/_app/verify/booking/$id'
+      path: '/booking/$id'
+      fullPath: '/verify/booking/$id'
+      preLoaderRoute: typeof AppVerifyBookingIdRouteImport
+      parentRoute: typeof AppVerifyRoute
+    }
   }
 }
 
@@ -746,6 +784,18 @@ const AppProfileRouteWithChildren = AppProfileRoute._addFileChildren(
   AppProfileRouteChildren,
 )
 
+interface AppVerifyRouteChildren {
+  AppVerifyBookingIdRoute: typeof AppVerifyBookingIdRoute
+}
+
+const AppVerifyRouteChildren: AppVerifyRouteChildren = {
+  AppVerifyBookingIdRoute: AppVerifyBookingIdRoute,
+}
+
+const AppVerifyRouteWithChildren = AppVerifyRoute._addFileChildren(
+  AppVerifyRouteChildren,
+)
+
 interface AppWilayasRouteChildren {
   AppWilayasIdRoute: typeof AppWilayasIdRoute
 }
@@ -763,6 +813,7 @@ interface AppRouteChildren {
   AppAgencyRoute: typeof AppAgencyRouteWithChildren
   AppBookingRoute: typeof AppBookingRoute
   AppCommunityRoute: typeof AppCommunityRoute
+  AppDocumentRoute: typeof AppDocumentRoute
   AppEventsRoute: typeof AppEventsRoute
   AppExploreRoute: typeof AppExploreRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
@@ -775,7 +826,7 @@ interface AppRouteChildren {
   AppProfileRoute: typeof AppProfileRouteWithChildren
   AppStaysRoute: typeof AppStaysRoute
   AppTrustRoute: typeof AppTrustRoute
-  AppVerifyRoute: typeof AppVerifyRoute
+  AppVerifyRoute: typeof AppVerifyRouteWithChildren
   AppWilayasRoute: typeof AppWilayasRouteWithChildren
   AppAgenciesSlugRoute: typeof AppAgenciesSlugRoute
   AppDestinationsIdRoute: typeof AppDestinationsIdRoute
@@ -786,6 +837,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAgencyRoute: AppAgencyRouteWithChildren,
   AppBookingRoute: AppBookingRoute,
   AppCommunityRoute: AppCommunityRoute,
+  AppDocumentRoute: AppDocumentRoute,
   AppEventsRoute: AppEventsRoute,
   AppExploreRoute: AppExploreRoute,
   AppFavoritesRoute: AppFavoritesRoute,
@@ -798,7 +850,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppProfileRoute: AppProfileRouteWithChildren,
   AppStaysRoute: AppStaysRoute,
   AppTrustRoute: AppTrustRoute,
-  AppVerifyRoute: AppVerifyRoute,
+  AppVerifyRoute: AppVerifyRouteWithChildren,
   AppWilayasRoute: AppWilayasRouteWithChildren,
   AppAgenciesSlugRoute: AppAgenciesSlugRoute,
   AppDestinationsIdRoute: AppDestinationsIdRoute,

@@ -6,11 +6,16 @@ export const verifyBooking = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    const { data: booking } = await supabaseAdmin
+    // Accept either the human booking reference (RH-XXXXXXXX) or the row id used by QR codes.
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(data.id);
+
+    const query = supabaseAdmin
       .from("bookings")
-      .select("booking_ref, status, check_in, check_out, guests, agency_id, trip_id")
-      .or(`booking_ref.eq.${data.id}`)
-      .maybeSingle();
+      .select("booking_ref, status, check_in, check_out, guests, agency_id, trip_id");
+
+    const { data: booking } = isUuid
+      ? await query.eq("id", data.id).maybeSingle()
+      : await query.eq("booking_ref", data.id.toUpperCase()).maybeSingle();
 
     if (!booking) return { valid: false as const };
 
