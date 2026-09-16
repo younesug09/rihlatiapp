@@ -20,7 +20,10 @@ export function AppFooter() {
             <ul className="space-y-1.5">
               <li><Link to="/explore" className="hover:text-primary transition-colors">اكتشف</Link></li>
               <li><Link to="/hotels" className="hover:text-primary transition-colors">الإقامات</Link></li>
-              <li><Link to="/news" className="hover:text-primary transition-colors">مجلة رحلتي</Link></li>
+              <li><Link to="/magazine" className="hover:text-primary transition-colors">مجلة رحلتي</Link></li>
+              <li><Link to="/events" className="hover:text-primary transition-colors">الفعاليات</Link></li>
+              <li><Link to="/community" className="hover:text-primary transition-colors">قصص رحلتي</Link></li>
+              <li><Link to="/news" className="hover:text-primary transition-colors">الأخبار</Link></li>
               <li><Link to="/media" className="hover:text-primary transition-colors">الوسائط</Link></li>
               <li><Link to="/favorites" className="hover:text-primary transition-colors">المفضلة</Link></li>
             </ul>
