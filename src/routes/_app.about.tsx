@@ -101,6 +101,19 @@ function About() {
         </p>
       </section>
 
+      <section className="mt-6 rounded-2xl border border-border bg-card p-4">
+        <h2 className="font-bold">ميثاقنا التحريري</h2>
+        <ol className="mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground">
+          <li><b className="text-foreground">١. لا نخترع الأرقام.</b> لا ننشر أسعارًا أو تقييمات أو إحصائيات دون مصدر؛ وما كان للعرض فقط يُوسَم «بيانات تجريبية».</li>
+          <li><b className="text-foreground">٢. الصورة أمانة.</b> كل صورة للجزائر حقيقية وموثّقة المصدر، بلا تجميل يخالف الواقع.</li>
+          <li><b className="text-foreground">٣. فصل الإعلان عن التحرير.</b> أي محتوى مدفوع أو شراكة يُذكر صراحة داخل المادة.</li>
+          <li><b className="text-foreground">٤. التصحيح واجب.</b> عند ثبوت خطأ نصحّحه ونُبقي أثر التصحيح ظاهرًا.</li>
+          <li><b className="text-foreground">٥. احترام الناس والأماكن.</b> لا نشر لصور أشخاص دون إذن، ولا تنميط للمناطق أو سكانها.</li>
+          <li><b className="text-foreground">٦. الخصوصية قبل التتبّع.</b> نقيس النشاط العام للمنصة دون جمع بيانات شخصية أو عناوين IP.</li>
+          <li><b className="text-foreground">٧. المستخدم أولًا.</b> شفافية السعر والشروط قبل أي حجز، ومسار واضح للدعم بعده.</li>
+        </ol>
+      </section>
+
       <Link
         to="/trust"
         className="mt-6 inline-block rounded-2xl px-5 py-3 text-sm font-bold text-primary-foreground shadow-card"
