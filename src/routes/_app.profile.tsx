@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Settings, Bell, CreditCard, HelpCircle, LogOut, ChevronLeft, Globe, Info, Sparkles, MapPin, BedDouble, Shield } from "lucide-react";
+import { Settings, Bell, CreditCard, HelpCircle, LogOut, ChevronLeft, Globe, Info, Sparkles, MapPin, BedDouble, Shield, MessageCircle, Stamp, Heart, Building2, ShieldCheck } from "lucide-react";
+import { useRole } from "@/hooks/useRole";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -21,7 +22,10 @@ function Profile() {
   const items = [
     { icon: Bell, label: t("notifications"), to: "/profile/notifications" as const },
     { icon: CreditCard, label: t("myBookings"), to: "/profile/bookings" as const },
-    { icon: BedDouble, label: t("myStays"), to: "/hotels" as const },
+    { icon: MessageCircle, label: "رسائلي", to: "/profile/messages" as const },
+    { icon: Stamp, label: "جواز رحلتي", to: "/passport" as const },
+    { icon: Heart, label: t("favorites"), to: "/favorites" as const },
+    { icon: BedDouble, label: t("myStays"), to: "/stays" as const },
     { icon: Globe, label: t("language"), to: "/profile/language" as const },
     { icon: Settings, label: t("settings"), to: "/profile/settings" as const },
     { icon: HelpCircle, label: t("help"), to: "/profile/help" as const },
