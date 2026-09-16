@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_app/passport")({
       { property: "og:description", content: "تتبّع اكتشافاتك عبر الولايات الجزائرية واجمع أختام رحلتي." },
     ],
   }),
-  component: Passport;
+  component: Passport,
 });
 
 const TOTAL_WILAYAS = 58;
