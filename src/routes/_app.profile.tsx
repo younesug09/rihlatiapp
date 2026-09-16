@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Settings, Bell, CreditCard, HelpCircle, LogOut, ChevronLeft, Globe, Info, Sparkles, MapPin, BedDouble, Shield, MessageCircle, Stamp, Heart, Building2, ShieldCheck } from "lucide-react";
-import { useRole } from "@/hooks/useRole";
+import { Settings, Bell, CreditCard, HelpCircle, LogOut, ChevronLeft, Globe, Info, Sparkles, MapPin, BedDouble, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -14,7 +13,6 @@ export const Route = createFileRoute("/_app/profile")({
 
 function Profile() {
   const { user, loading } = useAuth();
-  const { isAgency, isAdmin, agency } = useRole();
   const navigate = useNavigate();
   const { t } = useLanguage();
   const [stats, setStats] = useState({ bookings: 0, favorites: 0, reviews: 0 });
@@ -23,10 +21,7 @@ function Profile() {
   const items = [
     { icon: Bell, label: t("notifications"), to: "/profile/notifications" as const },
     { icon: CreditCard, label: t("myBookings"), to: "/profile/bookings" as const },
-    { icon: MessageCircle, label: "رسائلي", to: "/profile/messages" as const },
-    { icon: Stamp, label: "جواز رحلتي", to: "/passport" as const },
-    { icon: Heart, label: t("favorites"), to: "/favorites" as const },
-    { icon: BedDouble, label: t("myStays"), to: "/stays" as const },
+    { icon: BedDouble, label: t("myStays"), to: "/hotels" as const },
     { icon: Globe, label: t("language"), to: "/profile/language" as const },
     { icon: Settings, label: t("settings"), to: "/profile/settings" as const },
     { icon: HelpCircle, label: t("help"), to: "/profile/help" as const },
@@ -110,36 +105,6 @@ function Profile() {
           );
         })}
       </div>
-
-      {(isAgency || isAdmin) && (
-        <div className="mt-4 space-y-2">
-          {isAgency && (
-            <Link to="/agency" className="flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-4">
-              <div className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-primary">
-                <Building2 className="h-4 w-4" strokeWidth={1.5} />
-              </div>
-              <span className="flex-1 text-sm font-bold">
-                لوحة الوكالة
-                {agency && (
-                  <span className="ms-2 rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold">
-                    {agency.verification_status === "verified" ? "موثّقة" : "قيد التوثيق"}
-                  </span>
-                )}
-              </span>
-              <ChevronLeft className="h-4 w-4 text-muted-foreground" />
-            </Link>
-          )}
-          {isAdmin && (
-            <Link to="/admin" className="flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-4">
-              <div className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-primary">
-                <ShieldCheck className="h-4 w-4" strokeWidth={1.5} />
-              </div>
-              <span className="flex-1 text-sm font-bold">لوحة الإشراف</span>
-              <ChevronLeft className="h-4 w-4 text-muted-foreground" />
-            </Link>
-          )}
-        </div>
-      )}
 
       {user && (
         <button onClick={handleSignOut} className="w-full mt-4 py-4 rounded-2xl bg-destructive/10 text-destructive font-semibold flex items-center justify-center gap-2">

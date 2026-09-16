@@ -33,13 +33,11 @@ import { Route as AppDocumentRouteImport } from './routes/_app.document'
 import { Route as AppCommunityRouteImport } from './routes/_app.community'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
 import { Route as AppAgencyRouteImport } from './routes/_app.agency'
-import { Route as AppAdminRouteImport } from './routes/_app.admin'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
 import { Route as AppAgencyIndexRouteImport } from './routes/_app.agency.index'
 import { Route as AppWilayasIdRouteImport } from './routes/_app.wilayas.$id'
 import { Route as AppProfileSettingsRouteImport } from './routes/_app.profile.settings'
 import { Route as AppProfileNotificationsRouteImport } from './routes/_app.profile.notifications'
-import { Route as AppProfileMessagesRouteImport } from './routes/_app.profile.messages'
 import { Route as AppProfileLanguageRouteImport } from './routes/_app.profile.language'
 import { Route as AppProfileHelpRouteImport } from './routes/_app.profile.help'
 import { Route as AppProfileBookingsRouteImport } from './routes/_app.profile.bookings'
@@ -169,11 +167,6 @@ const AppAgencyRoute = AppAgencyRouteImport.update({
   path: '/agency',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAdminRoute = AppAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppAboutRoute = AppAboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -197,11 +190,6 @@ const AppProfileSettingsRoute = AppProfileSettingsRouteImport.update({
 const AppProfileNotificationsRoute = AppProfileNotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
-  getParentRoute: () => AppProfileRoute,
-} as any)
-const AppProfileMessagesRoute = AppProfileMessagesRouteImport.update({
-  id: '/messages',
-  path: '/messages',
   getParentRoute: () => AppProfileRoute,
 } as any)
 const AppProfileLanguageRoute = AppProfileLanguageRouteImport.update({
@@ -256,7 +244,6 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/about': typeof AppAboutRoute
-  '/admin': typeof AppAdminRoute
   '/agency': typeof AppAgencyRouteWithChildren
   '/booking': typeof AppBookingRoute
   '/community': typeof AppCommunityRoute
@@ -284,7 +271,6 @@ export interface FileRoutesByFullPath {
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
   '/profile/language': typeof AppProfileLanguageRoute
-  '/profile/messages': typeof AppProfileMessagesRoute
   '/profile/notifications': typeof AppProfileNotificationsRoute
   '/profile/settings': typeof AppProfileSettingsRoute
   '/wilayas/$id': typeof AppWilayasIdRoute
@@ -297,7 +283,6 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/about': typeof AppAboutRoute
-  '/admin': typeof AppAdminRoute
   '/booking': typeof AppBookingRoute
   '/community': typeof AppCommunityRoute
   '/document': typeof AppDocumentRoute
@@ -324,7 +309,6 @@ export interface FileRoutesByTo {
   '/profile/bookings': typeof AppProfileBookingsRoute
   '/profile/help': typeof AppProfileHelpRoute
   '/profile/language': typeof AppProfileLanguageRoute
-  '/profile/messages': typeof AppProfileMessagesRoute
   '/profile/notifications': typeof AppProfileNotificationsRoute
   '/profile/settings': typeof AppProfileSettingsRoute
   '/wilayas/$id': typeof AppWilayasIdRoute
@@ -339,7 +323,6 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_app/about': typeof AppAboutRoute
-  '/_app/admin': typeof AppAdminRoute
   '/_app/agency': typeof AppAgencyRouteWithChildren
   '/_app/booking': typeof AppBookingRoute
   '/_app/community': typeof AppCommunityRoute
@@ -367,7 +350,6 @@ export interface FileRoutesById {
   '/_app/profile/bookings': typeof AppProfileBookingsRoute
   '/_app/profile/help': typeof AppProfileHelpRoute
   '/_app/profile/language': typeof AppProfileLanguageRoute
-  '/_app/profile/messages': typeof AppProfileMessagesRoute
   '/_app/profile/notifications': typeof AppProfileNotificationsRoute
   '/_app/profile/settings': typeof AppProfileSettingsRoute
   '/_app/wilayas/$id': typeof AppWilayasIdRoute
@@ -382,7 +364,6 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/reset-password'
     | '/about'
-    | '/admin'
     | '/agency'
     | '/booking'
     | '/community'
@@ -410,7 +391,6 @@ export interface FileRouteTypes {
     | '/profile/bookings'
     | '/profile/help'
     | '/profile/language'
-    | '/profile/messages'
     | '/profile/notifications'
     | '/profile/settings'
     | '/wilayas/$id'
@@ -423,7 +403,6 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/reset-password'
     | '/about'
-    | '/admin'
     | '/booking'
     | '/community'
     | '/document'
@@ -450,7 +429,6 @@ export interface FileRouteTypes {
     | '/profile/bookings'
     | '/profile/help'
     | '/profile/language'
-    | '/profile/messages'
     | '/profile/notifications'
     | '/profile/settings'
     | '/wilayas/$id'
@@ -464,7 +442,6 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/reset-password'
     | '/_app/about'
-    | '/_app/admin'
     | '/_app/agency'
     | '/_app/booking'
     | '/_app/community'
@@ -492,7 +469,6 @@ export interface FileRouteTypes {
     | '/_app/profile/bookings'
     | '/_app/profile/help'
     | '/_app/profile/language'
-    | '/_app/profile/messages'
     | '/_app/profile/notifications'
     | '/_app/profile/settings'
     | '/_app/wilayas/$id'
@@ -678,13 +654,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAgencyRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/admin': {
-      id: '/_app/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AppAdminRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/about': {
       id: '/_app/about'
       path: '/about'
@@ -718,13 +687,6 @@ declare module '@tanstack/react-router' {
       path: '/notifications'
       fullPath: '/profile/notifications'
       preLoaderRoute: typeof AppProfileNotificationsRouteImport
-      parentRoute: typeof AppProfileRoute
-    }
-    '/_app/profile/messages': {
-      id: '/_app/profile/messages'
-      path: '/messages'
-      fullPath: '/profile/messages'
-      preLoaderRoute: typeof AppProfileMessagesRouteImport
       parentRoute: typeof AppProfileRoute
     }
     '/_app/profile/language': {
@@ -825,7 +787,6 @@ interface AppProfileRouteChildren {
   AppProfileBookingsRoute: typeof AppProfileBookingsRoute
   AppProfileHelpRoute: typeof AppProfileHelpRoute
   AppProfileLanguageRoute: typeof AppProfileLanguageRoute
-  AppProfileMessagesRoute: typeof AppProfileMessagesRoute
   AppProfileNotificationsRoute: typeof AppProfileNotificationsRoute
   AppProfileSettingsRoute: typeof AppProfileSettingsRoute
 }
@@ -834,7 +795,6 @@ const AppProfileRouteChildren: AppProfileRouteChildren = {
   AppProfileBookingsRoute: AppProfileBookingsRoute,
   AppProfileHelpRoute: AppProfileHelpRoute,
   AppProfileLanguageRoute: AppProfileLanguageRoute,
-  AppProfileMessagesRoute: AppProfileMessagesRoute,
   AppProfileNotificationsRoute: AppProfileNotificationsRoute,
   AppProfileSettingsRoute: AppProfileSettingsRoute,
 }
@@ -869,7 +829,6 @@ const AppWilayasRouteWithChildren = AppWilayasRoute._addFileChildren(
 
 interface AppRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
-  AppAdminRoute: typeof AppAdminRoute
   AppAgencyRoute: typeof AppAgencyRouteWithChildren
   AppBookingRoute: typeof AppBookingRoute
   AppCommunityRoute: typeof AppCommunityRoute
@@ -895,7 +854,6 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAboutRoute: AppAboutRoute,
-  AppAdminRoute: AppAdminRoute,
   AppAgencyRoute: AppAgencyRouteWithChildren,
   AppBookingRoute: AppBookingRoute,
   AppCommunityRoute: AppCommunityRoute,
