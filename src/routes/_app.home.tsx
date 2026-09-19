@@ -5,7 +5,9 @@ import { destinations, categories } from "@/data/destinations";
 import { DestinationCard } from "@/components/DestinationCard";
 import { useLanguage } from "@/hooks/useLanguage";
 import { DemoNotice } from "@/components/DemoBadge";
-import heroSahara from "@/assets/hero-sahara.jpg";
+import { realImages } from "@/data/images";
+
+const heroShots = [realImages.tassili, realImages.alger, realImages.ghardaia];
 
 type SearchKind = { id: string; label: string; target: "wilayas" | "explore" | "hotels" | "news" };
 
