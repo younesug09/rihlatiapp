@@ -113,7 +113,7 @@ export function Layout() {
       {/* Clean glass bottom navigation */}
       <nav className="fixed bottom-3 inset-x-0 z-40 px-3 pointer-events-none">
         <div className="mx-auto max-w-md pointer-events-auto">
-          <div className="relative rounded-[28px] border border-border/60 bg-card/85 backdrop-blur-2xl shadow-card">
+          <div className="relative rounded-full border border-white/60 bg-white/80 dark:bg-card/75 backdrop-blur-xl shadow-2xl shadow-slate-900/10">
             <div className="grid grid-cols-5 h-16 px-1.5">
               {tabs.map((tab) => {
                 const active = pathname.startsWith(tab.to);
