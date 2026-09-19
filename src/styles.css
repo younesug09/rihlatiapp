@@ -87,79 +87,81 @@
 
 }
 
-/* RIHLA — Luxury editorial identity
-   70% warm ivory / neutral · 20% deep forest green · 10% terracotta accent
-   No gradients: every "gradient" token resolves to a flat colour. */
+/* RIHLA — Sahara Dusk & Deep Night Sky
+   Clean off-white canvas · deep slate ink · Sahara sunset orange CTA
+   Cyan waters secondary · emerald verified status */
 :root {
-  --radius: 1rem;
+  --radius: 1.25rem;
 
-  --background: #f7f4ed;        /* Warm Ivory */
-  --foreground: #202624;        /* Charcoal */
+  --background: #f8f9fa;        /* Clean Off-White */
+  --foreground: #0f172a;        /* Deep Slate / Night Sky */
 
-  --card: #fffdf8;
-  --card-foreground: #202624;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
 
-  --popover: #fffdf8;
-  --popover-foreground: #202624;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
 
-  --primary: #123c36;           /* Deep Forest Green */
-  --primary-foreground: #f7f4ed;
-  --primary-glow: #123c36;
+  --primary: #ff6b00;           /* Sahara Sunset Orange */
+  --primary-foreground: #ffffff;
+  --primary-glow: #ff8c33;
 
-  --secondary: #d8c3a5;         /* Sand */
-  --secondary-foreground: #202624;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #0f172a;
 
-  --muted: #ece6d9;
-  --muted-foreground: #7b9186;  /* Muted Sage */
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
 
-  --accent: #b86445;            /* Terracotta */
-  --accent-foreground: #f7f4ed;
+  --accent: #0ea5e9;            /* Cyan Waters */
+  --accent-foreground: #ffffff;
 
-  --destructive: #a63f2b;
-  --destructive-foreground: #f7f4ed;
+  --destructive: #e11d48;
+  --destructive-foreground: #ffffff;
 
-  --success: #3f6b58;
-  --success-foreground: #f7f4ed;
+  --success: #10b981;           /* Emerald — verified */
+  --success-foreground: #ffffff;
 
-  --warning: #b8894a;
-  --warning-foreground: #202624;
+  --warning: #f59e0b;
+  --warning-foreground: #0f172a;
 
-  --border: #e2dace;
-  --input: #e2dace;
-  --ring: #123c36;
+  --border: #e5e9ef;
+  --input: #e5e9ef;
+  --ring: #ff6b00;
 
   /* Flat colours — deliberately not gradients */
-  --gradient-hero: #123c36;
-  --gradient-primary: #123c36;
-  --gradient-sky: #f7f4ed;
+  --gradient-hero: #0f172a;
+  --gradient-primary: #ff6b00;
+  --gradient-sky: #f8f9fa;
 
-  --shadow-soft: 0 2px 10px -4px rgb(32 38 36 / 0.10);
-  --shadow-card: 0 10px 30px -14px rgb(32 38 36 / 0.20);
-  --shadow-glow: 0 6px 20px -10px rgb(18 60 54 / 0.45);
+  --shadow-soft: 0 2px 12px -4px rgb(15 23 42 / 0.08);
+  --shadow-card: 0 18px 40px -18px rgb(15 23 42 / 0.22);
+  --shadow-glow: 0 10px 28px -10px rgb(255 107 0 / 0.45);
 }
 
 .dark {
-  --background: #141a18;
-  --foreground: #f1ede4;
-  --card: #1c2321;
-  --card-foreground: #f1ede4;
-  --popover: #1c2321;
-  --popover-foreground: #f1ede4;
-  --primary: #9dbcaf;
-  --primary-foreground: #141a18;
-  --primary-glow: #9dbcaf;
-  --secondary: #2a322e;
-  --secondary-foreground: #f1ede4;
-  --muted: #262d2a;
-  --muted-foreground: #a6b7ae;
-  --accent: #c8795b;
-  --accent-foreground: #141a18;
+  --background: #0b1120;
+  --foreground: #e6edf7;
+  --card: #111a2e;
+  --card-foreground: #e6edf7;
+  --popover: #111a2e;
+  --popover-foreground: #e6edf7;
+  --primary: #ff7a1a;
+  --primary-foreground: #0b1120;
+  --primary-glow: #ff9b4d;
+  --secondary: #1b2740;
+  --secondary-foreground: #e6edf7;
+  --muted: #16203a;
+  --muted-foreground: #93a4bf;
+  --accent: #38bdf8;
+  --accent-foreground: #0b1120;
+  --success: #34d399;
+  --success-foreground: #0b1120;
   --border: #ffffff1f;
   --input: #ffffff26;
-  --ring: #9dbcaf;
-  --gradient-hero: #14231f;
-  --gradient-primary: #1d332d;
-  --gradient-sky: #141a18;
+  --ring: #ff7a1a;
+  --gradient-hero: #0b1120;
+  --gradient-primary: #ff7a1a;
+  --gradient-sky: #0b1120;
 }
 
 @layer base {
