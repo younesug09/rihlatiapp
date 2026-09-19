@@ -40,9 +40,9 @@ function SmartSearch() {
     <div className="mt-10 max-w-3xl mx-auto text-start">
       <form
         onSubmit={submit}
-        className="flex items-center gap-3 rounded-full bg-card/95 backdrop-blur border border-border shadow-card px-5 py-3"
+        className="flex items-center gap-3 rounded-full bg-white/90 dark:bg-card/90 backdrop-blur-xl border border-white/60 shadow-2xl shadow-slate-900/20 px-5 py-3.5"
       >
-        <Search className="h-5 w-5 text-primary shrink-0" />
+        <Search className="h-5 w-5 text-primary shrink-0" strokeWidth={1.75} />
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
