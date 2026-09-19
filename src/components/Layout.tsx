@@ -51,8 +51,8 @@ export function Layout() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-white/80 dark:bg-card/70 backdrop-blur-xl border-b border-border/60">
+        <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
           <Link to="/home" className="flex items-center gap-2">
             <img src={logo} alt={t("appName")} className="h-9 w-9 object-contain" width={36} height={36} />
             <span className="text-lg font-bold text-primary">{t("appName")}</span>
@@ -113,7 +113,7 @@ export function Layout() {
       {/* Clean glass bottom navigation */}
       <nav className="fixed bottom-3 inset-x-0 z-40 px-3 pointer-events-none">
         <div className="mx-auto max-w-md pointer-events-auto">
-          <div className="relative rounded-[28px] border border-border/60 bg-card/85 backdrop-blur-2xl shadow-card">
+          <div className="relative rounded-full border border-white/60 bg-white/80 dark:bg-card/75 backdrop-blur-xl shadow-2xl shadow-slate-900/10">
             <div className="grid grid-cols-5 h-16 px-1.5">
               {tabs.map((tab) => {
                 const active = pathname.startsWith(tab.to);
@@ -125,11 +125,11 @@ export function Layout() {
                     className="flex flex-col items-center justify-center gap-0.5 relative group"
                   >
                     <span
-                      className={`flex items-center justify-center h-9 w-12 rounded-2xl transition-all duration-300 ${
+                      className={`flex items-center justify-center h-9 w-12 rounded-full transition-all duration-300 ${
                         active ? "bg-primary text-primary-foreground shadow-glow scale-105" : "text-muted-foreground group-hover:bg-secondary"
                       }`}
                     >
-                      <Icon className="h-5 w-5" />
+                      <Icon className="h-5 w-5" strokeWidth={1.75} absoluteStrokeWidth />
                     </span>
                     <span
                       className={`text-[10px] mt-0.5 transition-colors ${

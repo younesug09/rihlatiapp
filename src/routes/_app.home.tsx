@@ -5,7 +5,9 @@ import { destinations, categories } from "@/data/destinations";
 import { DestinationCard } from "@/components/DestinationCard";
 import { useLanguage } from "@/hooks/useLanguage";
 import { DemoNotice } from "@/components/DemoBadge";
-import heroSahara from "@/assets/hero-sahara.jpg";
+import { realImages } from "@/data/images";
+
+const heroShots = [realImages.tassili, realImages.alger, realImages.ghardaia];
 
 type SearchKind = { id: string; label: string; target: "wilayas" | "explore" | "hotels" | "news" };
 
@@ -40,9 +42,9 @@ function SmartSearch() {
     <div className="mt-10 max-w-3xl mx-auto text-start">
       <form
         onSubmit={submit}
-        className="flex items-center gap-3 rounded-full bg-card/95 backdrop-blur border border-border shadow-card px-5 py-3"
+        className="flex items-center gap-3 rounded-full bg-white/90 dark:bg-card/90 backdrop-blur-xl border border-white/60 shadow-2xl shadow-slate-900/20 px-5 py-3.5"
       >
-        <Search className="h-5 w-5 text-primary shrink-0" />
+        <Search className="h-5 w-5 text-primary shrink-0" strokeWidth={1.75} />
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -52,7 +54,7 @@ function SmartSearch() {
         />
         <button
           type="submit"
-          className="rounded-full bg-primary text-primary-foreground px-5 py-2 text-sm font-semibold shrink-0"
+          className="rounded-full bg-primary text-primary-foreground px-6 py-2.5 text-sm font-bold shrink-0 shadow-glow hover:scale-105 transition-transform"
         >
           بحث
         </button>
@@ -98,19 +100,20 @@ function Home() {
   return (
     <div className="animate-fade-in">
       {/* Hero — cinematic */}
-      <section className="relative min-h-[32rem] sm:min-h-[40rem] overflow-hidden">
+      <section className="relative min-h-[34rem] sm:min-h-[42rem] overflow-hidden">
         <img
-          src={heroSahara}
-          alt="كثبان الصحراء الجزائرية عند الغروب"
+          src={realImages.constantine.src}
+          alt={realImages.constantine.alt}
           width={1920}
           height={1080}
           className="absolute inset-0 h-full w-full object-cover scale-105 animate-[fade-in_1.2s_ease-out]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-background/10" />
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-slate-900/40" />
 
         <div className="relative mx-auto max-w-5xl px-4 pt-24 sm:pt-32 pb-10 text-center">
-          <p className="text-[11px] font-bold tracking-[0.4em] text-primary mb-5">RIHLATY — اكتشف. عِش. شارك.</p>
+          <p className="inline-block rounded-full bg-white/15 backdrop-blur px-4 py-1.5 text-[11px] font-bold tracking-[0.3em] text-white mb-5">
+            RIHLATY — اكتشف. عِش. شارك.
+          </p>
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight text-foreground">
             الجزائر… أقرب مما تتخيل.
           </h1>
@@ -120,19 +123,35 @@ function Home() {
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <Link
               to="/wilayas"
-              className="rounded-full bg-primary text-primary-foreground px-7 py-3.5 text-sm font-bold shadow-card hover:scale-[1.03] transition-transform"
+              className="rounded-full bg-primary text-primary-foreground px-7 py-3.5 text-sm font-bold shadow-glow animate-pulse hover:animate-none hover:scale-[1.04] transition-transform"
             >
               اكتشف الجزائر
             </Link>
             <Link
               to="/plan"
-              className="rounded-full border border-foreground/20 px-7 py-3.5 text-sm font-bold text-foreground hover:bg-foreground/5 transition-colors"
+              className="rounded-full border border-foreground/20 bg-card/70 backdrop-blur px-7 py-3.5 text-sm font-bold text-foreground hover:bg-card transition-colors"
             >
               خطط رحلتي
             </Link>
           </div>
 
           <SmartSearch />
+
+          <div className="mt-8 flex justify-center gap-3">
+            {heroShots.map((s) => (
+              <div
+                key={s.src}
+                className="h-16 w-24 sm:h-20 sm:w-32 overflow-hidden rounded-2xl border border-white/50 shadow-xl shadow-slate-900/20"
+              >
+                <img
+                  src={s.src}
+                  alt={s.alt}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
