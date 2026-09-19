@@ -125,11 +125,11 @@ export function Layout() {
                     className="flex flex-col items-center justify-center gap-0.5 relative group"
                   >
                     <span
-                      className={`flex items-center justify-center h-9 w-12 rounded-2xl transition-all duration-300 ${
+                      className={`flex items-center justify-center h-9 w-12 rounded-full transition-all duration-300 ${
                         active ? "bg-primary text-primary-foreground shadow-glow scale-105" : "text-muted-foreground group-hover:bg-secondary"
                       }`}
                     >
-                      <Icon className="h-5 w-5" />
+                      <Icon className="h-5 w-5" strokeWidth={1.75} absoluteStrokeWidth />
                     </span>
                     <span
                       className={`text-[10px] mt-0.5 transition-colors ${
