@@ -51,8 +51,8 @@ export function Layout() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-white/80 dark:bg-card/70 backdrop-blur-xl border-b border-border/60">
+        <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
           <Link to="/home" className="flex items-center gap-2">
             <img src={logo} alt={t("appName")} className="h-9 w-9 object-contain" width={36} height={36} />
             <span className="text-lg font-bold text-primary">{t("appName")}</span>
