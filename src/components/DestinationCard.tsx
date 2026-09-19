@@ -29,7 +29,7 @@ export function DestinationCard({ d, large = false }: { d: Destination; large?: 
             className="absolute top-3 left-3 h-9 w-9 rounded-full bg-background/90 backdrop-blur flex items-center justify-center hover:scale-110 transition-transform"
             aria-label="إضافة للمفضلة"
           >
-            <Heart className={`h-4 w-4 transition-colors ${isFav ? "fill-destructive text-destructive" : "text-foreground"}`} />
+            <Heart strokeWidth={1.75} className={`h-4 w-4 transition-colors ${isFav ? "fill-destructive text-destructive" : "text-foreground"}`} />
           </button>
           <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-background/90 backdrop-blur flex items-center gap-1 text-xs font-semibold">
             <Star className="h-3 w-3 fill-warning text-warning" />
