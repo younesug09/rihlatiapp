@@ -52,7 +52,7 @@ function SmartSearch() {
         />
         <button
           type="submit"
-          className="rounded-full bg-primary text-primary-foreground px-5 py-2 text-sm font-semibold shrink-0"
+          className="rounded-full bg-primary text-primary-foreground px-6 py-2.5 text-sm font-bold shrink-0 shadow-glow hover:scale-105 transition-transform"
         >
           بحث
         </button>
