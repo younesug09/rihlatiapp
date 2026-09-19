@@ -13,7 +13,7 @@ export function DestinationCard({ d, large = false }: { d: Destination; large?: 
       params={{ id: d.id }}
       className="group block animate-fade-in"
     >
-      <div className="relative overflow-hidden rounded-2xl bg-card shadow-soft hover:shadow-card transition-all">
+      <div className="relative overflow-hidden rounded-3xl bg-card border border-border/60 shadow-xl shadow-slate-200/50 dark:shadow-black/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
         <div className={`relative overflow-hidden ${large ? "aspect-[4/5]" : "aspect-[4/3]"}`}>
           <img
             src={d.image}
