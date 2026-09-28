@@ -1,20 +1,15 @@
 import { createContext, useContext, useEffect, useState, ReactNode, useMemo } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-export type Lang = "ar" | "en" | "fr" | "es" | "de" | "tr" | "it" | "ru" | "zh";
+export type Lang = "ar" | "en" | "fr";
 
 export const languages: { code: Lang; label: string; flag: string; dir: "rtl" | "ltr" }[] = [
-  { code: "ar", label: "العربية", flag: "", dir: "rtl" },
-  { code: "en", label: "English", flag: "", dir: "ltr" },
-  { code: "fr", label: "Français", flag: "", dir: "ltr" },
-  { code: "es", label: "Español", flag: "", dir: "ltr" },
-  { code: "de", label: "Deutsch", flag: "", dir: "ltr" },
-  { code: "tr", label: "Türkçe", flag: "", dir: "ltr" },
-  { code: "it", label: "Italiano", flag: "", dir: "ltr" },
-  { code: "ru", label: "Русский", flag: "", dir: "ltr" },
-  { code: "zh", label: "中文", flag: "", dir: "ltr" },
+  { code: "ar", label: "العربية", flag: "🇩🇿", dir: "rtl" },
+  { code: "fr", label: "Français", flag: "🇫🇷", dir: "ltr" },
+  { code: "en", label: "English", flag: "🇬🇧", dir: "ltr" },
 ];
 
-const dict: Record<Lang, Record<string, string>> = {
+const dict: Record<string, Record<string, string>> = {
   ar: {
     appName: "رحلتي", home: "الرئيسية", explore: "اكتشف", hotels: "الفنادق", favorites: "المفضلة", profile: "حسابي",
     notifications: "الإشعارات", myBookings: "حجوزاتي", myStays: "إقاماتي", language: "اللغة", settings: "الإعدادات",
@@ -55,6 +50,14 @@ const dict: Record<Lang, Record<string, string>> = {
     forgotPwd: "نسيت كلمة المرور؟", agreeTerms: "بمتابعتك فأنت توافق على شروط الاستخدام وسياسة الخصوصية.",
     skip: "تخطّي", accountCreated: "تم إنشاء الحساب! تحقق من بريدك.", welcomeBackToast: "مرحبًا بعودتك!",
     invalidCreds: "بريد أو كلمة مرور غير صحيحة", googleFail: "فشل تسجيل الدخول عبر Google",
+    dashboard: "لوحة التحكم", discover: "اكتشف الجزائر", messages: "الرسائل", myTrips: "رحلاتي",
+    agencyProfile: "ملف الوكالة", addTrip: "إضافة رحلة", customers: "العملاء", statistics: "الإحصائيات",
+    travelPreferences: "تفضيلات السفر", save: "حفظ", saved: "تم الحفظ", recommendedTrips: "رحلات مقترحة",
+    upcomingTrips: "الرحلات القادمة", noUpcoming: "لا توجد رحلات قادمة", noRecommendations: "لا توجد رحلات منشورة حاليًا",
+    requestBooking: "طلب حجز", pendingApproval: "بانتظار موافقة الوكالة", bookingRequested: "تم إرسال طلب الحجز",
+    bookingRequestHint: "ستصلك رسالة عند قبول الوكالة أو رفضها.", printVoucher: "طباعة / حفظ PDF",
+    agencyDashboard: "لوحة الوكالة", customerDashboard: "لوحة المسافر", adminDashboard: "لوحة الإدارة",
+    pitch: "عرض المشروع", loadingError: "تعذّر تحميل البيانات", retry: "إعادة المحاولة",
   },
   en: {
     appName: "Rihlati", home: "Home", explore: "Explore", hotels: "Hotels", favorites: "Favorites", profile: "Account",
@@ -96,6 +99,14 @@ const dict: Record<Lang, Record<string, string>> = {
     forgotPwd: "Forgot password?", agreeTerms: "By continuing you agree to the terms and privacy policy.",
     skip: "Skip", accountCreated: "Account created! Check your email.", welcomeBackToast: "Welcome back!",
     invalidCreds: "Invalid email or password", googleFail: "Google sign-in failed",
+    dashboard: "Dashboard", discover: "Discover Algeria", messages: "Messages", myTrips: "My Trips",
+    agencyProfile: "Agency Profile", addTrip: "Add Trip", customers: "Customers", statistics: "Statistics",
+    travelPreferences: "Travel preferences", save: "Save", saved: "Saved", recommendedTrips: "Recommended trips",
+    upcomingTrips: "Upcoming trips", noUpcoming: "No upcoming trips", noRecommendations: "No published trips available",
+    requestBooking: "Request booking", pendingApproval: "Waiting for agency approval", bookingRequested: "Booking request sent",
+    bookingRequestHint: "You will be notified when the agency approves or rejects it.", printVoucher: "Print / Save PDF",
+    agencyDashboard: "Agency dashboard", customerDashboard: "Traveler dashboard", adminDashboard: "Admin dashboard",
+    pitch: "Project pitch", loadingError: "Unable to load data", retry: "Try again",
   },
   fr: {
     appName: "Rihlati", home: "Accueil", explore: "Explorer", hotels: "Hôtels", favorites: "Favoris", profile: "Compte",
@@ -137,6 +148,14 @@ const dict: Record<Lang, Record<string, string>> = {
     forgotPwd: "Mot de passe oublié ?", agreeTerms: "En continuant, vous acceptez les conditions et la politique de confidentialité.",
     skip: "Passer", accountCreated: "Compte créé ! Vérifiez votre e-mail.", welcomeBackToast: "Bon retour !",
     invalidCreds: "E-mail ou mot de passe invalide", googleFail: "Échec de connexion Google",
+    dashboard: "Tableau de bord", discover: "Découvrir l’Algérie", messages: "Messages", myTrips: "Mes voyages",
+    agencyProfile: "Profil de l’agence", addTrip: "Ajouter un voyage", customers: "Clients", statistics: "Statistiques",
+    travelPreferences: "Préférences de voyage", save: "Enregistrer", saved: "Enregistré", recommendedTrips: "Voyages recommandés",
+    upcomingTrips: "Voyages à venir", noUpcoming: "Aucun voyage à venir", noRecommendations: "Aucun voyage publié actuellement",
+    requestBooking: "Demander une réservation", pendingApproval: "En attente de l’agence", bookingRequested: "Demande envoyée",
+    bookingRequestHint: "Vous serez notifié après la décision de l’agence.", printVoucher: "Imprimer / Enregistrer PDF",
+    agencyDashboard: "Tableau agence", customerDashboard: "Tableau voyageur", adminDashboard: "Tableau administration",
+    pitch: "Présentation du projet", loadingError: "Chargement impossible", retry: "Réessayer",
   },
   es: {
     appName: "Rihlati", home: "Inicio", explore: "Explorar", hotels: "Hoteles", favorites: "Favoritos", profile: "Cuenta",
@@ -393,11 +412,24 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ar");
 
   useEffect(() => {
+    let active = true;
+    const apply = (value: Lang) => {
+      const supported = languages.some((item) => item.code === value) ? value : "ar";
+      const cfg = languages.find((item) => item.code === supported) ?? languages[0];
+      if (!active) return;
+      setLangState(supported);
+      localStorage.setItem("lang", supported);
+      document.documentElement.lang = cfg.code;
+      document.documentElement.dir = cfg.dir;
+    };
     const stored = (localStorage.getItem("lang") as Lang | null) ?? "ar";
-    setLangState(stored);
-    const cfg = languages.find((l) => l.code === stored) ?? languages[0];
-    document.documentElement.lang = cfg.code;
-    document.documentElement.dir = cfg.dir;
+    apply(stored);
+    void supabase.auth.getUser().then(async ({ data }) => {
+      if (!data.user) return;
+      const { data: profile } = await supabase.from("profiles").select("language").eq("id", data.user.id).maybeSingle();
+      if (profile?.language) apply(profile.language as Lang);
+    });
+    return () => { active = false; };
   }, []);
 
   const setLang = (l: Lang) => {
@@ -406,6 +438,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const cfg = languages.find((x) => x.code === l) ?? languages[0];
     document.documentElement.lang = cfg.code;
     document.documentElement.dir = cfg.dir;
+    void supabase.auth.getUser().then(({ data }) => {
+      if (data.user) void supabase.from("profiles").update({ language: l }).eq("id", data.user.id);
+    });
   };
 
   const value = useMemo(

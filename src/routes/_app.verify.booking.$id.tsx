@@ -32,7 +32,7 @@ function VerifyBooking() {
   useEffect(() => {
     const url = `${window.location.origin}/verify/booking/${id}`;
     import("qrcode")
-      .then((m) => m.toDataURL(url, { margin: 1, width: 320, color: { dark: "#0f172a", light: "#ffffff" } }))
+      .then((m) => m.toDataURL(url, { margin: 1, width: 320 }))
       .then(setQr)
       .catch(() => setQr(null));
   }, [id]);
@@ -101,6 +101,9 @@ function VerifyBooking() {
                 <div className="mt-5 flex flex-wrap gap-2">
                   <span className="rounded-full bg-accent/10 text-accent px-3 py-1 text-[11px] font-bold">
                     الحالة: {data.status}
+                  </span>
+                  <span className="rounded-full bg-secondary px-3 py-1 text-[11px] font-bold">
+                    الدفع: {data.paymentStatus}
                   </span>
                   <span className="rounded-full bg-success/10 text-success px-3 py-1 text-[11px] font-bold inline-flex items-center gap-1">
                     <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.75} /> حجز موثّق

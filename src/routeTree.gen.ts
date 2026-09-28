@@ -20,8 +20,10 @@ import { Route as AppTrustRouteImport } from './routes/_app.trust'
 import { Route as AppStaysRouteImport } from './routes/_app.stays'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppPlanRouteImport } from './routes/_app.plan'
+import { Route as AppPitchRouteImport } from './routes/_app.pitch'
 import { Route as AppPassportRouteImport } from './routes/_app.passport'
 import { Route as AppNewsRouteImport } from './routes/_app.news'
+import { Route as AppMessagesRouteImport } from './routes/_app.messages'
 import { Route as AppMediaRouteImport } from './routes/_app.media'
 import { Route as AppMagazineRouteImport } from './routes/_app.magazine'
 import { Route as AppHotelsRouteImport } from './routes/_app.hotels'
@@ -109,6 +111,11 @@ const AppPlanRoute = AppPlanRouteImport.update({
   path: '/plan',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPitchRoute = AppPitchRouteImport.update({
+  id: '/pitch',
+  path: '/pitch',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPassportRoute = AppPassportRouteImport.update({
   id: '/passport',
   path: '/passport',
@@ -117,6 +124,11 @@ const AppPassportRoute = AppPassportRouteImport.update({
 const AppNewsRoute = AppNewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMessagesRoute = AppMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMediaRoute = AppMediaRouteImport.update({
@@ -298,8 +310,10 @@ export interface FileRoutesByFullPath {
   '/hotels': typeof AppHotelsRoute
   '/magazine': typeof AppMagazineRouteWithChildren
   '/media': typeof AppMediaRoute
+  '/messages': typeof AppMessagesRoute
   '/news': typeof AppNewsRoute
   '/passport': typeof AppPassportRoute
+  '/pitch': typeof AppPitchRoute
   '/plan': typeof AppPlanRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/stays': typeof AppStaysRoute
@@ -342,8 +356,10 @@ export interface FileRoutesByTo {
   '/hotels': typeof AppHotelsRoute
   '/magazine': typeof AppMagazineRouteWithChildren
   '/media': typeof AppMediaRoute
+  '/messages': typeof AppMessagesRoute
   '/news': typeof AppNewsRoute
   '/passport': typeof AppPassportRoute
+  '/pitch': typeof AppPitchRoute
   '/plan': typeof AppPlanRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/stays': typeof AppStaysRoute
@@ -390,8 +406,10 @@ export interface FileRoutesById {
   '/_app/hotels': typeof AppHotelsRoute
   '/_app/magazine': typeof AppMagazineRouteWithChildren
   '/_app/media': typeof AppMediaRoute
+  '/_app/messages': typeof AppMessagesRoute
   '/_app/news': typeof AppNewsRoute
   '/_app/passport': typeof AppPassportRoute
+  '/_app/pitch': typeof AppPitchRoute
   '/_app/plan': typeof AppPlanRoute
   '/_app/profile': typeof AppProfileRouteWithChildren
   '/_app/stays': typeof AppStaysRoute
@@ -438,8 +456,10 @@ export interface FileRouteTypes {
     | '/hotels'
     | '/magazine'
     | '/media'
+    | '/messages'
     | '/news'
     | '/passport'
+    | '/pitch'
     | '/plan'
     | '/profile'
     | '/stays'
@@ -482,8 +502,10 @@ export interface FileRouteTypes {
     | '/hotels'
     | '/magazine'
     | '/media'
+    | '/messages'
     | '/news'
     | '/passport'
+    | '/pitch'
     | '/plan'
     | '/profile'
     | '/stays'
@@ -529,8 +551,10 @@ export interface FileRouteTypes {
     | '/_app/hotels'
     | '/_app/magazine'
     | '/_app/media'
+    | '/_app/messages'
     | '/_app/news'
     | '/_app/passport'
+    | '/_app/pitch'
     | '/_app/plan'
     | '/_app/profile'
     | '/_app/stays'
@@ -645,6 +669,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPlanRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/pitch': {
+      id: '/_app/pitch'
+      path: '/pitch'
+      fullPath: '/pitch'
+      preLoaderRoute: typeof AppPitchRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/passport': {
       id: '/_app/passport'
       path: '/passport'
@@ -657,6 +688,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof AppNewsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/messages': {
+      id: '/_app/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof AppMessagesRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/media': {
@@ -986,8 +1024,10 @@ interface AppRouteChildren {
   AppHotelsRoute: typeof AppHotelsRoute
   AppMagazineRoute: typeof AppMagazineRouteWithChildren
   AppMediaRoute: typeof AppMediaRoute
+  AppMessagesRoute: typeof AppMessagesRoute
   AppNewsRoute: typeof AppNewsRoute
   AppPassportRoute: typeof AppPassportRoute
+  AppPitchRoute: typeof AppPitchRoute
   AppPlanRoute: typeof AppPlanRoute
   AppProfileRoute: typeof AppProfileRouteWithChildren
   AppStaysRoute: typeof AppStaysRoute
@@ -1016,8 +1056,10 @@ const AppRouteChildren: AppRouteChildren = {
   AppHotelsRoute: AppHotelsRoute,
   AppMagazineRoute: AppMagazineRouteWithChildren,
   AppMediaRoute: AppMediaRoute,
+  AppMessagesRoute: AppMessagesRoute,
   AppNewsRoute: AppNewsRoute,
   AppPassportRoute: AppPassportRoute,
+  AppPitchRoute: AppPitchRoute,
   AppPlanRoute: AppPlanRoute,
   AppProfileRoute: AppProfileRouteWithChildren,
   AppStaysRoute: AppStaysRoute,

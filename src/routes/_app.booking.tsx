@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { Banknote, Building2, Calendar, CheckCircle2, CreditCard, Globe, MapPin, ShieldCheck, Star, Users } from "lucide-react";
 import { destinations } from "@/data/destinations";
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/_app/booking")({
     id: z.string().optional(),
     hotel: z.string().optional(),
     stay: z.string().optional(),
+    trip: z.string().uuid().optional(),
   }),
   head: () => ({
     meta: [
@@ -35,7 +36,7 @@ const paymentMethods = [
 ] as const;
 
 function Booking() {
-  const { id, hotel: hotelId, stay: stayId } = Route.useSearch();
+  const { id, hotel: hotelId, stay: stayId, trip: tripId } = Route.useSearch();
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -43,7 +44,21 @@ function Booking() {
   const d = destinations.find((x) => x.id === id) ?? destinations[0];
   const hotel = hotelId ? hotels.find((h) => h.id === hotelId) : undefined;
 
-  const nightlyPrice = stay?.pricePerNight ?? hotel?.pricePerNight ?? d.price;
+  type TripBooking = { id: string; agency_id: string; title: string; destination: string; departure_date: string | null; return_date: string | null; price: number; cover_url: string | null; seats: number; seats_booked: number };
+  const [trip, setTrip] = useState<TripBooking | null>(null);
+  const [tripLoading, setTripLoading] = useState(Boolean(tripId));
+
+  useEffect(() => {
+    if (!tripId) return;
+    void supabase.from("trips").select("id, agency_id, title, destination, departure_date, return_date, price, cover_url, seats, seats_booked").eq("id", tripId).eq("status", "published").maybeSingle().then(({ data }) => {
+      setTrip(data as TripBooking | null);
+      if (data?.departure_date) setCheckIn(data.departure_date);
+      if (data?.return_date) setCheckOut(data.return_date);
+      setTripLoading(false);
+    });
+  }, [tripId]);
+
+  const nightlyPrice = trip ? Number(trip.price) : stay?.pricePerNight ?? hotel?.pricePerNight ?? d.price;
   const taxRate = stay?.taxRate ?? 0.05;
 
   const [guests, setGuests] = useState(2);
@@ -54,11 +69,14 @@ function Booking() {
   const [submitting, setSubmitting] = useState(false);
   const [bookingRef, setBookingRef] = useState<string | null>(null);
 
-  const { rooms, taxes, total } = priceBreakdown(nightlyPrice, nights, taxRate);
+  const breakdown = priceBreakdown(nightlyPrice, nights, taxRate);
+  const rooms = trip ? nightlyPrice * guests : breakdown.rooms;
+  const taxes = trip ? 0 : breakdown.taxes;
+  const total = trip ? rooms : breakdown.total;
 
-  const title = stay?.name ?? hotel?.name ?? d.name;
-  const image = stay?.image ?? hotel?.image ?? d.image;
-  const imageAlt = stay?.imageAlt ?? hotel?.name ?? d.name;
+  const title = trip?.title ?? stay?.name ?? hotel?.name ?? d.name;
+  const image = trip?.cover_url ?? stay?.image ?? hotel?.image ?? d.image;
+  const imageAlt = trip?.title ?? stay?.imageAlt ?? hotel?.name ?? d.name;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,17 +90,33 @@ function Booking() {
       toast.error("طريقة الدفع هذه غير متاحة بعد");
       return;
     }
+    if (tripId && !trip) {
+      toast.error("هذه الرحلة غير متاحة للحجز");
+      return;
+    }
+    if (trip && trip.seats - trip.seats_booked < guests) {
+      toast.error("عدد المقاعد المتاحة غير كافٍ");
+      return;
+    }
+    if (!checkIn || !checkOut || checkOut < checkIn) {
+      toast.error("تحقق من تواريخ الحجز");
+      return;
+    }
     setSubmitting(true);
     const { data, error } = await supabase
       .from("bookings")
       .insert({
         user_id: user.id,
-        destination_id: stay?.wilayaId ?? d.id,
-        check_in: checkIn || new Date().toISOString().slice(0, 10),
-        check_out: checkOut || new Date(Date.now() + nights * 86400000).toISOString().slice(0, 10),
+        destination_id: trip?.destination ?? stay?.wilayaId ?? d.id,
+        check_in: checkIn,
+        check_out: checkOut,
         guests,
         total_price: total,
-        status: "confirmed",
+        status: "pending",
+        agency_id: trip?.agency_id ?? null,
+        trip_id: trip?.id ?? null,
+        payment_status: "unpaid",
+        payment_method: payment,
         notes: `${title} · ${method.label}`,
       })
       .select("booking_ref")
@@ -92,7 +126,7 @@ function Booking() {
       toast.error("تعذّر إتمام الحجز: " + error.message);
       return;
     }
-    toast.success("تم تأكيد الحجز");
+    toast.success("تم إرسال طلب الحجز إلى الوكالة");
     setBookingRef(data?.booking_ref ?? null);
   };
 
@@ -102,17 +136,10 @@ function Booking() {
         <div className="mx-auto mb-4 grid h-20 w-20 place-items-center rounded-full bg-success/20">
           <CheckCircle2 className="h-10 w-10 text-success" strokeWidth={1.5} />
         </div>
-        <h1 className="mb-2 text-2xl font-bold">تم تأكيد الحجز</h1>
-        <p className="mb-2 text-muted-foreground">إقامتك في {title} محفوظة باسمك.</p>
+        <h1 className="mb-2 text-2xl font-bold">تم إرسال طلب الحجز</h1>
+        <p className="mb-2 text-muted-foreground">الطلب بانتظار موافقة الوكالة، وسنرسل لك إشعارًا عند اتخاذ القرار.</p>
         <p className="mb-6 font-mono text-lg font-black text-primary">{bookingRef}</p>
         <div className="space-y-2">
-          <Link
-            to="/document"
-            search={{ ref: bookingRef }}
-            className="block rounded-2xl bg-primary py-3 font-bold text-primary-foreground"
-          >
-            عرض وثيقة السفر وطباعتها
-          </Link>
           <Link to="/profile/bookings" className="block rounded-2xl border border-border py-3 font-semibold">
             حجوزاتي
           </Link>
@@ -121,6 +148,8 @@ function Booking() {
     );
   }
 
+  if (tripLoading) return <div className="mx-auto max-w-2xl space-y-4 px-4 py-8"><div className="h-8 w-48 animate-pulse rounded bg-secondary" /><div className="h-36 animate-pulse rounded-lg bg-secondary" /><div className="h-80 animate-pulse rounded-lg bg-secondary" /></div>;
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-6 animate-fade-in">
       <h1 className="mb-5 text-2xl font-bold">إكمال الحجز</h1>
@@ -128,7 +157,14 @@ function Booking() {
       <div className="mb-5 flex gap-3 rounded-2xl border border-border bg-card p-3">
         <img src={image} alt={imageAlt} width={96} height={96} loading="lazy" className="h-24 w-24 rounded-xl object-cover" />
         <div className="min-w-0 flex-1">
-          {stay ? (
+          {trip ? (
+            <>
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">رحلة وكالة موثّقة</span>
+              <h2 className="mt-1 truncate font-bold leading-tight">{trip.title}</h2>
+              <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="h-3 w-3" /> {trip.destination}</p>
+              <p className="mt-1 text-xs text-muted-foreground">متاح {trip.seats - trip.seats_booked} مقعد</p>
+            </>
+          ) : stay ? (
             <>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-bold text-secondary-foreground">
@@ -159,7 +195,7 @@ function Booking() {
               <p className="text-sm text-muted-foreground">{d.country}</p>
             </>
           )}
-          <p className="mt-2 text-sm font-semibold text-primary">{formatDZ(nightlyPrice)} {DZD} / ليلة</p>
+          <p className="mt-2 text-sm font-semibold text-primary">{formatDZ(nightlyPrice)} {DZD} {trip ? "/ مسافر" : "/ ليلة"}</p>
         </div>
       </div>
 
@@ -172,14 +208,14 @@ function Booking() {
             <input type="date" required value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="rounded-xl bg-secondary px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--ring)]" />
             <input type="date" required value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="rounded-xl bg-secondary px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--ring)]" />
           </div>
-          <div className="mt-3 flex items-center justify-between">
+           {!trip && <div className="mt-3 flex items-center justify-between">
             <span className="text-sm">عدد الليالي</span>
             <div className="flex items-center gap-3">
               <button type="button" onClick={() => setNights(Math.max(1, nights - 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">-</button>
               <span className="w-6 text-center font-bold">{nights}</span>
               <button type="button" onClick={() => setNights(Math.min(30, nights + 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">+</button>
             </div>
-          </div>
+           </div>}
         </div>
 
         <div className="flex items-center justify-between rounded-2xl border border-border bg-card p-4">
@@ -239,13 +275,13 @@ function Booking() {
             <ShieldCheck className="h-4 w-4 text-primary" strokeWidth={1.5} /> تفصيل السعر
           </h2>
           <div className="mb-1 flex justify-between text-sm">
-            <span className="text-muted-foreground">{formatDZ(nightlyPrice)} × {nights} ليلة</span>
+             <span className="text-muted-foreground">{formatDZ(nightlyPrice)} × {trip ? `${guests} مسافر` : `${nights} ليلة`}</span>
             <span>{formatDZ(rooms)} {DZD}</span>
           </div>
-          <div className="mb-1 flex justify-between text-sm">
+           {!trip && <div className="mb-1 flex justify-between text-sm">
             <span className="text-muted-foreground">الرسوم ({Math.round(taxRate * 100)}%)</span>
             <span>{formatDZ(taxes)} {DZD}</span>
-          </div>
+           </div>}
           <div className="mb-3 flex justify-between text-sm">
             <span className="text-muted-foreground">عمولة رحلتي</span>
             <span>0 {DZD}</span>
@@ -254,7 +290,7 @@ function Booking() {
             <span className="font-bold">الإجمالي</span>
             <span className="text-xl font-black text-primary">{formatDZ(total)} {DZD}</span>
           </div>
-          <p className="mt-2 text-[11px] text-muted-foreground">(سعر الليلة × عدد الليالي) + الرسوم = الإجمالي</p>
+           <p className="mt-2 text-[11px] text-muted-foreground">{trip ? "سعر الرحلة × عدد المسافرين = الإجمالي" : "(سعر الليلة × عدد الليالي) + الرسوم = الإجمالي"}</p>
         </div>
 
         <button
@@ -262,7 +298,7 @@ function Booking() {
           disabled={submitting}
           className="w-full rounded-2xl bg-primary py-4 font-bold text-primary-foreground disabled:opacity-60"
         >
-          {submitting ? "جارٍ التأكيد…" : "تأكيد الحجز"}
+           {submitting ? "جارٍ الإرسال…" : trip ? "إرسال طلب الحجز" : "تأكيد الحجز"}
         </button>
       </form>
 
