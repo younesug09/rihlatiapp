@@ -28,9 +28,13 @@ const outlinePath =
 export function AlgeriaMap({
   region,
   onRegionChange,
+  selectedId,
+  destinationPath = "/wilayas/$id",
 }: {
   region: Region | "all";
   onRegionChange: (r: Region | "all") => void;
+  selectedId?: string | null;
+  destinationPath?: "/wilayas/$id" | "/discover/$id";
 }) {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState<string | null>(null);
@@ -91,20 +95,20 @@ export function AlgeriaMap({
                 className={`cursor-pointer transition-opacity ${dim ? "opacity-25" : "opacity-100"}`}
                 onMouseEnter={() => setHovered(w.id)}
                 onMouseLeave={() => setHovered((c) => (c === w.id ? null : c))}
-                onClick={() => navigate({ to: "/wilayas/$id", params: { id: w.id } })}
+                onClick={() => navigate({ to: destinationPath, params: { id: w.id } })}
                 role="button"
                 tabIndex={0}
                 aria-label={`ولاية ${w.name}`}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    navigate({ to: "/wilayas/$id", params: { id: w.id } });
+                    navigate({ to: destinationPath, params: { id: w.id } });
                   }
                 }}
               >
-                {isHot && <circle r="16" fill="hsl(var(--primary))" fillOpacity="0.18" />}
+                {(isHot || selectedId === w.id) && <circle r="16" fill="hsl(var(--primary))" fillOpacity="0.18" />}
                 <circle
-                  r={isHot ? 8 : 6}
+                  r={isHot || selectedId === w.id ? 8 : 6}
                   fill="hsl(var(--primary))"
                   stroke="hsl(var(--card))"
                   strokeWidth="2.5"

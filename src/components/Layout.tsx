@@ -21,7 +21,7 @@ export function Layout() {
 
   const tabs = [
     { to: "/home", label: t("home"), icon: Home },
-    { to: "/explore", label: t("explore"), icon: Compass },
+    { to: "/discover", label: t("explore"), icon: Compass },
     { to: "/hotels", label: t("hotels"), icon: BedDouble },
     { to: "/favorites", label: t("favorites"), icon: Heart },
     { to: "/profile", label: t("profile"), icon: User },
