@@ -5,9 +5,9 @@ import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/pitch")({
   head: () => ({ meta: [
-    { title: "RIHLA 2.0 — عرض مشروع ماستر 2" },
-    { name: "description", content: "عرض مشروع RIHLA 2.0: منصة جزائرية موحّدة لاكتشاف الرحلات والحجز الموثّق." },
-    { property: "og:title", content: "RIHLA 2.0 — Master 2 Pitch" },
+    { title: "Rihlaty — عرض مشروع ماستر 2" },
+    { name: "description", content: "عرض مشروع Rihlaty: منصة جزائرية موحّدة لاكتشاف الرحلات والحجز الموثّق." },
+    { property: "og:title", content: "Rihlaty — Master 2 Pitch" },
     { property: "og:description", content: "منصة TravelTech جزائرية تربط المسافر بالوكالة والإدارة ضمن حجز موثّق." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
@@ -17,21 +17,21 @@ export const Route = createFileRoute("/_app/pitch")({
 
 const copy = {
   ar: {
-    overline: "مشروع تخرج ماستر 2 · إعلام واتصال", title: "رحلتي 2.0", subtitle: "من التشتّت السياحي إلى منظومة جزائرية موحّدة وموثوقة.", cta: "استكشف المنصة",
+    overline: "مشروع تخرج ماستر 2 · إعلام واتصال", title: "Rihlaty", subtitle: "من التشتّت السياحي إلى منظومة جزائرية موحّدة وموثوقة.", cta: "استكشف المنصة",
     problem: "المشكلة", problemTitle: "رحلة جميلة… تبدأ غالبًا بتجربة رقمية مشتّتة", problemBody: "المعلومات موزّعة، الثقة في العروض محدودة، والحجز والتواصل والتحقق تتم في قنوات منفصلة.",
     solution: "الحل", solutionTitle: "منصة واحدة من الاكتشاف إلى إثبات الحجز", solutionBody: "RIHLA تجمع الوجهات الجزائرية، الوكالات الموثّقة، الرحلات، الطلبات، الرسائل، والإشعارات في تجربة واحدة.",
     ecosystem: "منظومة بثلاثة أدوار", traveler: "المسافر", agency: "الوكالة", admin: "الإدارة", travelerText: "يكتشف، يحفظ، يطلب الحجز ويتابع القسيمة.", agencyText: "تنشر الرحلات وتدير العملاء والطلبات.", adminText: "توثّق الوكالات وتحمي جودة المنصة.",
     flow: "دورة الحجز الموثّق", future: "الرؤية المستقبلية", futureTitle: "بنية رقمية للسياحة الجزائرية", futureBody: "توصيات أذكى، دفع محلي، شراكات مع الفاعلين، وبيانات أفضل لصناعة القرار السياحي.", stack: "البنية التقنية",
   },
   fr: {
-    overline: "Projet de fin d’études Master 2 · Communication", title: "RIHLA 2.0", subtitle: "De la fragmentation touristique à un écosystème algérien unifié et fiable.", cta: "Explorer la plateforme",
+    overline: "Projet de fin d’études Master 2 · Communication", title: "Rihlaty", subtitle: "De la fragmentation touristique à un écosystème algérien unifié et fiable.", cta: "Explorer la plateforme",
     problem: "Le problème", problemTitle: "Un beau voyage commence souvent par une expérience numérique fragmentée", problemBody: "L’information est dispersée, la confiance limitée, et réservation, communication et vérification utilisent des canaux séparés.",
     solution: "La solution", solutionTitle: "Une plateforme, de la découverte à la preuve de réservation", solutionBody: "RIHLA réunit destinations algériennes, agences vérifiées, voyages, demandes, messages et notifications.",
     ecosystem: "Un écosystème à trois rôles", traveler: "Voyageur", agency: "Agence", admin: "Administration", travelerText: "Découvre, sauvegarde, réserve et reçoit son voucher.", agencyText: "Publie les voyages et gère clients et demandes.", adminText: "Vérifie les agences et protège la qualité.",
     flow: "Parcours de réservation vérifiée", future: "Vision future", futureTitle: "Une infrastructure numérique pour le tourisme algérien", futureBody: "Recommandations intelligentes, paiement local, partenariats et meilleures données pour la décision touristique.", stack: "Socle technique",
   },
   en: {
-    overline: "Master 2 Graduation Project · Mass Communication", title: "RIHLA 2.0", subtitle: "From tourism fragmentation to one trusted Algerian travel ecosystem.", cta: "Explore the platform",
+    overline: "Master 2 Graduation Project · Mass Communication", title: "Rihlaty", subtitle: "From tourism fragmentation to one trusted Algerian travel ecosystem.", cta: "Explore the platform",
     problem: "The problem", problemTitle: "A great trip often starts with a fragmented digital experience", problemBody: "Information is scattered, offer trust is limited, and booking, communication and verification happen across separate channels.",
     solution: "The solution", solutionTitle: "One platform from discovery to verified booking proof", solutionBody: "RIHLA connects Algerian destinations, verified agencies, trips, requests, messages and notifications in one experience.",
     ecosystem: "A three-role ecosystem", traveler: "Traveler", agency: "Agency", admin: "Administration", travelerText: "Discovers, saves, requests bookings and receives a voucher.", agencyText: "Publishes trips and manages customers and requests.", adminText: "Verifies agencies and safeguards platform quality.",
@@ -55,6 +55,6 @@ function PitchPage() {
 
     <section className="bg-foreground py-20 text-background"><div className="mx-auto max-w-6xl px-4"><p className="text-sm font-black text-accent">05 · TECHNOLOGY</p><h2 className="mt-2 text-4xl font-black">{text.stack}</h2><div className="mt-10 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">{[{ icon: Sparkles, name: "Lovable", text: "Product creation" }, { icon: Smartphone, name: "React", text: "Responsive interface" }, { icon: Database, name: "Cloud Database", text: "Live structured data" }, { icon: LockKeyhole, name: "RLS Security", text: "Role-level protection" }].map((item) => <div key={item.name} className="border-t border-background/25 pt-5"><item.icon className="h-6 w-6 text-accent" /><h3 className="mt-4 text-xl font-black">{item.name}</h3><p className="mt-1 text-sm opacity-65">{item.text}</p></div>)}</div></div></section>
 
-    <section className="mx-auto max-w-6xl px-4 py-24"><Globe2 className="h-10 w-10 text-primary" /><p className="mt-6 text-sm font-black text-accent">06 · {text.future}</p><h2 className="mt-2 max-w-3xl text-4xl font-black sm:text-6xl">{text.futureTitle}</h2><p className="mt-6 max-w-3xl text-xl leading-9 text-muted-foreground">{text.futureBody}</p><div className="mt-12 flex flex-wrap items-center gap-3 border-t border-border pt-6 text-sm font-bold"><BadgeCheck className="h-5 w-5 text-success" /> RIHLA 2.0 · MADE FOR ALGERIA</div></section>
+    <section className="mx-auto max-w-6xl px-4 py-24"><Globe2 className="h-10 w-10 text-primary" /><p className="mt-6 text-sm font-black text-accent">06 · {text.future}</p><h2 className="mt-2 max-w-3xl text-4xl font-black sm:text-6xl">{text.futureTitle}</h2><p className="mt-6 max-w-3xl text-xl leading-9 text-muted-foreground">{text.futureBody}</p><div className="mt-12 flex flex-wrap items-center gap-3 border-t border-border pt-6 text-sm font-bold"><BadgeCheck className="h-5 w-5 text-success" /> Rihlaty · MADE FOR ALGERIA</div></section>
   </main>;
 }
