@@ -214,8 +214,8 @@ function Booking() {
               <button type="button" onClick={() => setNights(Math.max(1, nights - 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">-</button>
               <span className="w-6 text-center font-bold">{nights}</span>
               <button type="button" onClick={() => setNights(Math.min(30, nights + 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">+</button>
+            </div>
            </div>}
-          </div>
         </div>
 
         <div className="flex items-center justify-between rounded-2xl border border-border bg-card p-4">

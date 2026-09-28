@@ -5,6 +5,8 @@ import { BadgeCheck, Printer, QrCode } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { formatDZ, DZD } from "@/lib/format";
+import { Button } from "@/components/ui/button";
+import { bookingStatusLabel, paymentStatusLabel } from "@/lib/booking-labels";
 
 export const Route = createFileRoute("/_app/document")({
   validateSearch: z.object({ ref: z.string().optional() }),
@@ -56,7 +58,8 @@ function TravelDocument() {
         .select("id, booking_ref, status, check_in, check_out, guests, total_price, notes, destination_id, payment_status, payment_method, verification_token, user_id, agencies(name, address, wilaya), trips(title, destination)")
         .eq("booking_ref", ref)
         .maybeSingle();
-      setBooking((data as Booking) ?? null);
+      const row = data as Booking | null;
+      setBooking(row && ["confirmed", "completed"].includes(row.status) ? row : null);
       setFetched(true);
     })();
   }, [user, ref, loading]);
@@ -100,12 +103,11 @@ function TravelDocument() {
     <div className="mx-auto max-w-2xl px-4 py-8 animate-fade-in">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3 print:hidden">
         <h1 className="text-2xl font-black">وثيقة سفر رحلتي</h1>
-        <button
+        <Button
           onClick={() => window.print()}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground"
         >
           <Printer className="h-4 w-4" strokeWidth={1.5} /> طباعة / حفظ PDF
-        </button>
+        </Button>
       </div>
 
       <article className="rounded-3xl border border-border bg-card p-6">
@@ -122,8 +124,8 @@ function TravelDocument() {
 
         <dl className="mt-4 grid gap-3 sm:grid-cols-2 text-sm">
           <div><dt className="text-xs text-muted-foreground">رقم الحجز</dt><dd className="font-mono font-black">{booking.booking_ref}</dd></div>
-          <div><dt className="text-xs text-muted-foreground">الحالة</dt><dd className="font-semibold">{booking.status}</dd></div>
-          <div><dt className="text-xs text-muted-foreground">حالة الدفع</dt><dd className="font-semibold">{booking.payment_status}</dd></div>
+           <div><dt className="text-xs text-muted-foreground">الحالة</dt><dd className="font-semibold">{bookingStatusLabel[booking.status] ?? booking.status}</dd></div>
+           <div><dt className="text-xs text-muted-foreground">حالة الدفع</dt><dd className="font-semibold">{paymentStatusLabel[booking.payment_status] ?? booking.payment_status}</dd></div>
           <div><dt className="text-xs text-muted-foreground">المسافر</dt><dd className="font-semibold">{user?.user_metadata?.full_name ?? user?.email ?? "مسافر رحلتي"}</dd></div>
           <div><dt className="text-xs text-muted-foreground">الوكالة</dt><dd className="font-semibold">{booking.agencies?.name ?? "رحلتي"}</dd></div>
           <div><dt className="text-xs text-muted-foreground">الرحلة</dt><dd className="font-semibold">{booking.trips?.title ?? booking.notes ?? "—"}</dd></div>
