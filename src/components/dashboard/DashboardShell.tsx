@@ -31,7 +31,7 @@ export function DashboardShell({
   const navigation = (
     <nav className="space-y-1" aria-label="تنقل لوحة التحكم">
       {items.map((item) => {
-        const active = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(`${item.href}/`));
+        const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
         return (
           <Link
             key={item.href}
