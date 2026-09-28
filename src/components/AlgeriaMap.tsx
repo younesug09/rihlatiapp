@@ -71,15 +71,15 @@ export function AlgeriaMap({
         >
           <defs>
             <linearGradient id="rihla-map" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.16" />
-              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
+              <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.16" />
+              <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.05" />
             </linearGradient>
           </defs>
 
           <path
             d={outlinePath}
             fill="url(#rihla-map)"
-            stroke="hsl(var(--primary))"
+            stroke="var(--primary)"
             strokeOpacity="0.5"
             strokeWidth="2"
             strokeLinejoin="round"
@@ -106,11 +106,11 @@ export function AlgeriaMap({
                   }
                 }}
               >
-                {(isHot || selectedId === w.id) && <circle r="16" fill="hsl(var(--primary))" fillOpacity="0.18" />}
+                {(isHot || selectedId === w.id) && <circle r="16" fill="var(--primary)" fillOpacity="0.18" />}
                 <circle
                   r={isHot || selectedId === w.id ? 8 : 6}
-                  fill="hsl(var(--primary))"
-                  stroke="hsl(var(--card))"
+                  fill="var(--primary)"
+                  stroke="var(--card)"
                   strokeWidth="2.5"
                   className="transition-all"
                 />
