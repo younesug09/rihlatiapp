@@ -47,7 +47,7 @@ export function HeroSearch() {
   );
 }
 
-function Head({ kicker, title, to }: { kicker: string; title: string; to?: "/wilayas" | "/explore" | "/stays" }) {
+function Head({ kicker, title, to }: { kicker: string; title: string; to?: "/discover" | "/wilayas" | "/explore" | "/stays" }) {
   return (
     <div className="flex items-end justify-between mb-5">
       <div>
@@ -67,12 +67,12 @@ export function PopularDestinations() {
   const list = wilayas.slice(0, 6);
   return (
     <section className="mx-auto max-w-6xl px-4 mt-14">
-      <Head kicker="Destinations populaires" title="الوجهات الأكثر طلبًا" to="/wilayas" />
+      <Head kicker="Destinations populaires" title="الوجهات الأكثر طلبًا" to="/discover" />
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {list.map((w, i) => (
           <Link
             key={w.id}
-            to="/wilayas/$id"
+            to="/discover/$id"
             params={{ id: w.id }}
             className={`group relative overflow-hidden rounded-2xl shadow-card hover:-translate-y-1 transition-all duration-300 ${i === 0 ? "md:row-span-2 aspect-[3/4] md:aspect-auto" : "aspect-[4/3]"}`}
           >

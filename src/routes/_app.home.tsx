@@ -34,7 +34,7 @@ function SmartSearch() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const query = q.trim();
-    if (kind.target === "wilayas") navigate({ to: "/wilayas" });
+    if (kind.target === "wilayas") navigate({ to: "/discover" });
     else if (kind.target === "hotels") navigate({ to: "/hotels" });
     else if (kind.target === "news") navigate({ to: "/news" });
     else navigate({ to: "/explore", search: query ? { q: query } : {} });
@@ -124,7 +124,7 @@ function Home() {
             RIHLA تربط المسافر بالوجهات والتجارب والوكالات السياحية في منصة واحدة.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link to="/wilayas" className="rounded-full bg-accent text-accent-foreground px-7 py-3.5 text-sm font-bold shadow-glow hover:scale-[1.04] transition-transform">
+            <Link to="/discover" className="rounded-full bg-accent text-accent-foreground px-7 py-3.5 text-sm font-bold shadow-glow hover:scale-[1.04] transition-transform">
               🗺️ اكتشف الجزائر
             </Link>
             <Link to="/plan" className="rounded-full border border-card/40 bg-card/15 backdrop-blur px-7 py-3.5 text-sm font-bold hover:bg-card/25 transition-colors">

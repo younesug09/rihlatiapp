@@ -28,9 +28,15 @@ const outlinePath =
 export function AlgeriaMap({
   region,
   onRegionChange,
+  selectedId,
+  destinationPath = "/wilayas/$id",
+  showRegionControls = true,
 }: {
   region: Region | "all";
   onRegionChange: (r: Region | "all") => void;
+  selectedId?: string | null;
+  destinationPath?: "/wilayas/$id" | "/discover/$id";
+  showRegionControls?: boolean;
 }) {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState<string | null>(null);
@@ -40,7 +46,7 @@ export function AlgeriaMap({
 
   return (
     <div className="rounded-3xl border border-border bg-card p-4 sm:p-6">
-      <div className="flex flex-wrap gap-2 mb-4">
+      {showRegionControls && <div className="flex flex-wrap gap-2 mb-4">
         {regions.map((r) => (
           <button
             key={r.id}
@@ -56,7 +62,7 @@ export function AlgeriaMap({
             {r.label}
           </button>
         ))}
-      </div>
+      </div>}
 
       <div className="relative">
         <svg
@@ -67,15 +73,15 @@ export function AlgeriaMap({
         >
           <defs>
             <linearGradient id="rihla-map" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.16" />
-              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
+              <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.16" />
+              <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.05" />
             </linearGradient>
           </defs>
 
           <path
             d={outlinePath}
             fill="url(#rihla-map)"
-            stroke="hsl(var(--primary))"
+            stroke="var(--primary)"
             strokeOpacity="0.5"
             strokeWidth="2"
             strokeLinejoin="round"
@@ -91,22 +97,22 @@ export function AlgeriaMap({
                 className={`cursor-pointer transition-opacity ${dim ? "opacity-25" : "opacity-100"}`}
                 onMouseEnter={() => setHovered(w.id)}
                 onMouseLeave={() => setHovered((c) => (c === w.id ? null : c))}
-                onClick={() => navigate({ to: "/wilayas/$id", params: { id: w.id } })}
+                onClick={() => navigate({ to: destinationPath, params: { id: w.id } })}
                 role="button"
                 tabIndex={0}
                 aria-label={`ولاية ${w.name}`}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    navigate({ to: "/wilayas/$id", params: { id: w.id } });
+                    navigate({ to: destinationPath, params: { id: w.id } });
                   }
                 }}
               >
-                {isHot && <circle r="16" fill="hsl(var(--primary))" fillOpacity="0.18" />}
+                {(isHot || selectedId === w.id) && <circle r="16" fill="var(--primary)" fillOpacity="0.18" />}
                 <circle
-                  r={isHot ? 8 : 6}
-                  fill="hsl(var(--primary))"
-                  stroke="hsl(var(--card))"
+                  r={isHot || selectedId === w.id ? 8 : 6}
+                  fill="var(--primary)"
+                  stroke="var(--card)"
                   strokeWidth="2.5"
                   className="transition-all"
                 />
