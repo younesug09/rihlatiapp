@@ -139,6 +139,36 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_logs: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          entity_id: string
+          entity_type: string
+          id: string
+          metadata: Json
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          entity_id: string
+          entity_type: string
+          id?: string
+          metadata?: Json
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          metadata?: Json
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           agency_id: string | null
@@ -146,15 +176,20 @@ export type Database = {
           check_in: string
           check_out: string
           created_at: string
+          decided_at: string | null
+          decision_notes: string | null
           destination_id: string | null
           guests: number
           id: string
           notes: string | null
+          payment_method: string | null
+          payment_status: string
           status: string
           total_price: number
           trip_id: string | null
           updated_at: string
           user_id: string
+          verification_token: string
         }
         Insert: {
           agency_id?: string | null
@@ -162,15 +197,20 @@ export type Database = {
           check_in: string
           check_out: string
           created_at?: string
+          decided_at?: string | null
+          decision_notes?: string | null
           destination_id?: string | null
           guests?: number
           id?: string
           notes?: string | null
+          payment_method?: string | null
+          payment_status?: string
           status?: string
           total_price: number
           trip_id?: string | null
           updated_at?: string
           user_id: string
+          verification_token?: string
         }
         Update: {
           agency_id?: string | null
@@ -178,15 +218,20 @@ export type Database = {
           check_in?: string
           check_out?: string
           created_at?: string
+          decided_at?: string | null
+          decision_notes?: string | null
           destination_id?: string | null
           guests?: number
           id?: string
           notes?: string | null
+          payment_method?: string | null
+          payment_status?: string
           status?: string
           total_price?: number
           trip_id?: string | null
           updated_at?: string
           user_id?: string
+          verification_token?: string
         }
         Relationships: [
           {
@@ -238,6 +283,63 @@ export type Database = {
           updated_at?: string
           user_id?: string
           wilaya?: string | null
+        }
+        Relationships: []
+      }
+      destinations_catalog: {
+        Row: {
+          activities: string[]
+          best_time: string | null
+          created_at: string
+          gallery: string[]
+          id: string
+          image_url: string | null
+          is_published: boolean
+          latitude: number | null
+          longitude: number | null
+          name: string
+          overview: string | null
+          recommended_duration: string | null
+          short_description: string | null
+          tourism_type: string
+          updated_at: string
+          wilaya: string
+        }
+        Insert: {
+          activities?: string[]
+          best_time?: string | null
+          created_at?: string
+          gallery?: string[]
+          id: string
+          image_url?: string | null
+          is_published?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          overview?: string | null
+          recommended_duration?: string | null
+          short_description?: string | null
+          tourism_type?: string
+          updated_at?: string
+          wilaya: string
+        }
+        Update: {
+          activities?: string[]
+          best_time?: string | null
+          created_at?: string
+          gallery?: string[]
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          overview?: string | null
+          recommended_duration?: string | null
+          short_description?: string | null
+          tourism_type?: string
+          updated_at?: string
+          wilaya?: string
         }
         Relationships: []
       }
@@ -614,6 +716,36 @@ export type Database = {
         Args: { _booking_id: string; _user_id: string }
         Returns: boolean
       }
+      decide_booking: {
+        Args: { _booking_id: string; _decision: string; _notes?: string }
+        Returns: {
+          agency_id: string | null
+          booking_ref: string | null
+          check_in: string
+          check_out: string
+          created_at: string
+          decided_at: string | null
+          decision_notes: string | null
+          destination_id: string | null
+          guests: number
+          id: string
+          notes: string | null
+          payment_method: string | null
+          payment_status: string
+          status: string
+          total_price: number
+          trip_id: string | null
+          updated_at: string
+          user_id: string
+          verification_token: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "bookings"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       get_my_role: {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
@@ -624,6 +756,49 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      set_booking_payment_status: {
+        Args: { _booking_id: string; _payment_status: string }
+        Returns: {
+          agency_id: string | null
+          booking_ref: string | null
+          check_in: string
+          check_out: string
+          created_at: string
+          decided_at: string | null
+          decision_notes: string | null
+          destination_id: string | null
+          guests: number
+          id: string
+          notes: string | null
+          payment_method: string | null
+          payment_status: string
+          status: string
+          total_price: number
+          trip_id: string | null
+          updated_at: string
+          user_id: string
+          verification_token: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "bookings"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      verify_booking_token: {
+        Args: { _token: string }
+        Returns: {
+          agency_name: string
+          booking_ref: string
+          check_in: string
+          check_out: string
+          guests: number
+          payment_status: string
+          status: string
+          trip_title: string
+        }[]
       }
     }
     Enums: {
