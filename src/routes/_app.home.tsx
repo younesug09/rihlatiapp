@@ -101,7 +101,7 @@ function Home() {
 
   return (
     <div className="animate-fade-in">
-      {/* Hero — RIHLA 2.0 */}
+      {/* Hero — Rihlaty */}
       <section className="relative min-h-[36rem] sm:min-h-[44rem] overflow-hidden">
         <img
           src={realImages.tassili.src}
@@ -115,7 +115,7 @@ function Home() {
 
         <div className="relative mx-auto max-w-5xl px-4 pt-24 sm:pt-32 pb-12 text-center text-primary-foreground">
           <p className="inline-flex items-center gap-2 rounded-full bg-card/15 backdrop-blur px-4 py-1.5 text-[11px] font-bold tracking-[0.25em] mb-5 border border-card/25">
-            <BadgeCheck className="h-3.5 w-3.5 text-accent" strokeWidth={1.75} /> RIHLA 2.0
+            <BadgeCheck className="h-3.5 w-3.5 text-accent" strokeWidth={1.75} /> Rihlaty
           </p>
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight">
             اكتشف الجزائر… بطريقتك
