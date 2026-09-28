@@ -30,11 +30,13 @@ export function AlgeriaMap({
   onRegionChange,
   selectedId,
   destinationPath = "/wilayas/$id",
+  showRegionControls = true,
 }: {
   region: Region | "all";
   onRegionChange: (r: Region | "all") => void;
   selectedId?: string | null;
   destinationPath?: "/wilayas/$id" | "/discover/$id";
+  showRegionControls?: boolean;
 }) {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState<string | null>(null);
@@ -44,7 +46,7 @@ export function AlgeriaMap({
 
   return (
     <div className="rounded-3xl border border-border bg-card p-4 sm:p-6">
-      <div className="flex flex-wrap gap-2 mb-4">
+      {showRegionControls && <div className="flex flex-wrap gap-2 mb-4">
         {regions.map((r) => (
           <button
             key={r.id}
@@ -60,7 +62,7 @@ export function AlgeriaMap({
             {r.label}
           </button>
         ))}
-      </div>
+      </div>}
 
       <div className="relative">
         <svg

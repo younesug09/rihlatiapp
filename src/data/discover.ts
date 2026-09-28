@@ -75,7 +75,7 @@ export function getDiscoverDestination(id: string) {
     tourismTypes: getTourismTypes(wilaya),
     bestTime: bestTimes[wilaya.id] ?? "على مدار العام حسب نوع النشاط",
     recommendedDuration: durations[wilaya.id] ?? "2–3 أيام",
-    exactLocation: `${wilaya.name}، ${wilaya.region === "south" ? "الجنوب الجزائري" : wilaya.region === "east" ? "شرق الجزائر" : wilaya.region === "west" ? "غرب الجزائر" : "وسط الجزائر"}`,
+    exactLocation: `${wilaya.name}، ${wilaya.region === "south" ? "الجنوب الجزائري" : wilaya.region === "east" ? "شرق الجزائر" : wilaya.region === "west" ? "غرب الجزائر" : "وسط الجزائر"} · ${wilaya.lat.toFixed(2)}°N، ${wilaya.lng.toFixed(2)}°E`,
     gallery: [{ src: wilaya.image, alt: wilaya.imageAlt, credit: "Wikimedia Commons" }, ...(extraGallery[wilaya.id] ?? [])],
   };
 }

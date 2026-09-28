@@ -66,7 +66,7 @@ function DiscoverPage() {
               ))}
             </div>
           </div>
-          <AlgeriaMap region={region} onRegionChange={setRegion} destinationPath="/discover/$id" />
+          <AlgeriaMap region={region} onRegionChange={setRegion} destinationPath="/discover/$id" showRegionControls={false} />
         </section>
 
         <section className="mt-10" aria-labelledby="destinations-heading">
