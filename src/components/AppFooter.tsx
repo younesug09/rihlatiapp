@@ -42,6 +42,7 @@ export function AppFooter() {
             <ul className="space-y-1.5">
               <li><Link to="/trust" className="hover:text-accent transition-colors">{copy.trustCenter}</Link></li>
               <li><Link to="/about" className="hover:text-accent transition-colors">{copy.about}</Link></li>
+              <li><Link to="/pitch" className="inline-flex items-center gap-1.5 hover:text-accent transition-colors"><GraduationCap className="h-3.5 w-3.5 text-accent" /> {copy.pitch}</Link></li>
               <li><Link to="/profile/help" className="hover:text-accent transition-colors">{copy.help}</Link></li>
             </ul>
           </div>
