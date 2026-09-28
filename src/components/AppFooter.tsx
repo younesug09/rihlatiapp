@@ -1,14 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Send } from "lucide-react";
+import { GraduationCap, Mail, Send } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useLanguage } from "@/hooks/useLanguage";
 
 export function AppFooter() {
   const { lang } = useLanguage();
   const copy = {
-    ar: { tagline: "اكتشف. عِش. شارك.", browse: "التصفح", discover: "اكتشف", stays: "الإقامات", magazine: "مجلة رحلتي", events: "الفعاليات", stories: "قصص رحلتي", passport: "جواز رحلتي", news: "الأخبار", media: "الوسائط", favorites: "المفضلة", trust: "الثقة", trustCenter: "مركز الثقة", about: "من نحن", help: "المساعدة والدعم", newsletter: "اشترك في نشرة رحلتي", newsletterBody: "أفضل الوجهات والقصص السياحية في بريدك.", email: "بريدك الإلكتروني", soon: "قريبًا", platform: "منصة اتصال سياحي رقمية جزائرية" },
-    fr: { tagline: "Découvrez. Vivez. Partagez.", browse: "Explorer", discover: "Découvrir", stays: "Hébergements", magazine: "Magazine RIHLA", events: "Événements", stories: "Récits RIHLA", passport: "Passeport RIHLA", news: "Actualités", media: "Médias", favorites: "Favoris", trust: "Confiance", trustCenter: "Centre de confiance", about: "À propos", help: "Aide et support", newsletter: "Recevez la newsletter RIHLA", newsletterBody: "Les meilleures destinations et histoires dans votre boîte mail.", email: "Votre e-mail", soon: "Bientôt", platform: "Plateforme numérique algérienne de tourisme" },
-    en: { tagline: "Discover. Live. Share.", browse: "Browse", discover: "Discover", stays: "Stays", magazine: "RIHLA Magazine", events: "Events", stories: "RIHLA Stories", passport: "RIHLA Passport", news: "News", media: "Media", favorites: "Favorites", trust: "Trust", trustCenter: "Trust Center", about: "About", help: "Help & Support", newsletter: "Join the RIHLA newsletter", newsletterBody: "Top destinations and travel stories, delivered.", email: "Your email", soon: "Coming soon", platform: "Algerian digital tourism platform" },
+    ar: { tagline: "اكتشف. عِش. شارك.", browse: "التصفح", discover: "اكتشف", stays: "الإقامات", magazine: "مجلة رحلتي", events: "الفعاليات", stories: "قصص رحلتي", passport: "جواز رحلتي", news: "الأخبار", media: "الوسائط", favorites: "المفضلة", trust: "الثقة", trustCenter: "مركز الثقة", about: "من نحن", pitch: "العرض الأكاديمي", help: "المساعدة والدعم", newsletter: "اشترك في نشرة رحلتي", newsletterBody: "أفضل الوجهات والقصص السياحية في بريدك.", email: "بريدك الإلكتروني", soon: "قريبًا", platform: "منصة اتصال سياحي رقمية جزائرية" },
+    fr: { tagline: "Découvrez. Vivez. Partagez.", browse: "Explorer", discover: "Découvrir", stays: "Hébergements", magazine: "Magazine RIHLA", events: "Événements", stories: "Récits RIHLA", passport: "Passeport RIHLA", news: "Actualités", media: "Médias", favorites: "Favoris", trust: "Confiance", trustCenter: "Centre de confiance", about: "À propos", pitch: "Présentation académique", help: "Aide et support", newsletter: "Recevez la newsletter RIHLA", newsletterBody: "Les meilleures destinations et histoires dans votre boîte mail.", email: "Votre e-mail", soon: "Bientôt", platform: "Plateforme numérique algérienne de tourisme" },
+    en: { tagline: "Discover. Live. Share.", browse: "Browse", discover: "Discover", stays: "Stays", magazine: "RIHLA Magazine", events: "Events", stories: "RIHLA Stories", passport: "RIHLA Passport", news: "News", media: "Media", favorites: "Favorites", trust: "Trust", trustCenter: "Trust Center", about: "About", pitch: "Academic pitch", help: "Help & Support", newsletter: "Join the RIHLA newsletter", newsletterBody: "Top destinations and travel stories, delivered.", email: "Your email", soon: "Coming soon", platform: "Algerian digital tourism platform" },
   }[lang];
   return (
     <footer className="mt-12 bg-primary-glow text-primary-foreground">
@@ -42,6 +42,7 @@ export function AppFooter() {
             <ul className="space-y-1.5">
               <li><Link to="/trust" className="hover:text-accent transition-colors">{copy.trustCenter}</Link></li>
               <li><Link to="/about" className="hover:text-accent transition-colors">{copy.about}</Link></li>
+              <li><Link to="/pitch" className="inline-flex items-center gap-1.5 hover:text-accent transition-colors"><GraduationCap className="h-3.5 w-3.5 text-accent" /> {copy.pitch}</Link></li>
               <li><Link to="/profile/help" className="hover:text-accent transition-colors">{copy.help}</Link></li>
             </ul>
           </div>
