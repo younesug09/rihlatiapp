@@ -30,6 +30,12 @@ type Booking = {
   total_price: number;
   notes: string | null;
   destination_id: string | null;
+  payment_status: string;
+  payment_method: string | null;
+  verification_token: string;
+  user_id: string;
+  agencies: { name: string; address: string | null; wilaya: string | null } | null;
+  trips: { title: string; destination: string } | null;
 };
 
 function TravelDocument() {
@@ -47,7 +53,7 @@ function TravelDocument() {
     void (async () => {
       const { data } = await supabase
         .from("bookings")
-        .select("id, booking_ref, status, check_in, check_out, guests, total_price, notes, destination_id")
+        .select("id, booking_ref, status, check_in, check_out, guests, total_price, notes, destination_id, payment_status, payment_method, verification_token, user_id, agencies(name, address, wilaya), trips(title, destination)")
         .eq("booking_ref", ref)
         .maybeSingle();
       setBooking((data as Booking) ?? null);
@@ -57,13 +63,13 @@ function TravelDocument() {
 
   // QR is rendered in the browser only; it encodes the public verification URL.
   useEffect(() => {
-    if (!booking?.id) return;
+    if (!booking?.verification_token) return;
     void (async () => {
       const QRCode = (await import("qrcode")).default;
-      const url = `${window.location.origin}/verify/booking/${booking.id}`;
+      const url = `${window.location.origin}/verify/booking/${booking.verification_token}`;
       setQr(await QRCode.toDataURL(url, { width: 320, margin: 1 }));
     })();
-  }, [booking?.id]);
+  }, [booking?.verification_token]);
 
   if (!ref) {
     return (
@@ -105,8 +111,8 @@ function TravelDocument() {
       <article className="rounded-3xl border border-border bg-card p-6">
         <header className="flex items-start justify-between gap-4 border-b border-border pb-4">
           <div className="min-w-0">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">RIHLA TRAVEL DOCUMENT</p>
-            <h2 className="mt-1 text-xl font-black">وثيقة سفر رحلتي</h2>
+            <p className="text-xs font-bold text-muted-foreground">RIHLA VERIFIED BOOKING VOUCHER</p>
+            <h2 className="mt-1 text-xl font-black">قسيمة حجز رحلتي الموثّقة</h2>
             <p className="mt-1 text-xs text-muted-foreground">وثيقة صادرة عن منصة رحلتي — ليست وثيقة رسمية حكومية.</p>
           </div>
           <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-3 py-1 text-[11px] font-bold text-primary-foreground">
@@ -117,8 +123,11 @@ function TravelDocument() {
         <dl className="mt-4 grid gap-3 sm:grid-cols-2 text-sm">
           <div><dt className="text-xs text-muted-foreground">رقم الحجز</dt><dd className="font-mono font-black">{booking.booking_ref}</dd></div>
           <div><dt className="text-xs text-muted-foreground">الحالة</dt><dd className="font-semibold">{booking.status}</dd></div>
-          <div><dt className="text-xs text-muted-foreground">الإقامة / الرحلة</dt><dd className="font-semibold">{booking.notes ?? "—"}</dd></div>
-          <div><dt className="text-xs text-muted-foreground">الوجهة</dt><dd className="font-semibold">{booking.destination_id ?? "—"}</dd></div>
+          <div><dt className="text-xs text-muted-foreground">حالة الدفع</dt><dd className="font-semibold">{booking.payment_status}</dd></div>
+          <div><dt className="text-xs text-muted-foreground">المسافر</dt><dd className="font-semibold">{user?.user_metadata?.full_name ?? user?.email ?? "مسافر رحلتي"}</dd></div>
+          <div><dt className="text-xs text-muted-foreground">الوكالة</dt><dd className="font-semibold">{booking.agencies?.name ?? "رحلتي"}</dd></div>
+          <div><dt className="text-xs text-muted-foreground">الرحلة</dt><dd className="font-semibold">{booking.trips?.title ?? booking.notes ?? "—"}</dd></div>
+          <div><dt className="text-xs text-muted-foreground">الوجهة</dt><dd className="font-semibold">{booking.trips?.destination ?? booking.destination_id ?? "—"}</dd></div>
           <div><dt className="text-xs text-muted-foreground">تاريخ الدخول</dt><dd className="font-semibold">{booking.check_in}</dd></div>
           <div><dt className="text-xs text-muted-foreground">تاريخ الخروج</dt><dd className="font-semibold">{booking.check_out}</dd></div>
           <div><dt className="text-xs text-muted-foreground">عدد الليالي</dt><dd className="font-semibold">{nights}</dd></div>
@@ -140,7 +149,7 @@ function TravelDocument() {
           <p className="text-center text-xs text-muted-foreground">
             امسح الرمز للتحقق من صلاحية الحجز عبر صفحة التحقق العامة.
           </p>
-          <p dir="ltr" className="text-center text-[10px] text-muted-foreground">/verify/booking/{booking.id}</p>
+          <p className="text-center text-[10px] text-muted-foreground">الرمز لا يحتوي أي بيانات شخصية.</p>
         </div>
       </article>
 
