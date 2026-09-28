@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Send } from "lucide-react";
+import { GraduationCap, Mail, Send } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useLanguage } from "@/hooks/useLanguage";
 
