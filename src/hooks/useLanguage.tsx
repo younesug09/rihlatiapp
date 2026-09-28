@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-export type Lang = "ar" | "en" | "fr" | "es" | "de" | "tr" | "it" | "ru" | "zh";
+export type Lang = "ar" | "en" | "fr";
 
 export const languages: { code: Lang; label: string; flag: string; dir: "rtl" | "ltr" }[] = [
   { code: "ar", label: "العربية", flag: "🇩🇿", dir: "rtl" },
@@ -9,7 +9,7 @@ export const languages: { code: Lang; label: string; flag: string; dir: "rtl" | 
   { code: "en", label: "English", flag: "🇬🇧", dir: "ltr" },
 ];
 
-const dict: Record<Lang, Record<string, string>> = {
+const dict: Record<string, Record<string, string>> = {
   ar: {
     appName: "رحلتي", home: "الرئيسية", explore: "اكتشف", hotels: "الفنادق", favorites: "المفضلة", profile: "حسابي",
     notifications: "الإشعارات", myBookings: "حجوزاتي", myStays: "إقاماتي", language: "اللغة", settings: "الإعدادات",
