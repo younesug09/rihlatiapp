@@ -614,6 +614,10 @@ export type Database = {
         Args: { _booking_id: string; _user_id: string }
         Returns: boolean
       }
+      get_my_role: {
+        Args: never
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
