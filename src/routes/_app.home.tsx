@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Search, Sparkles, TrendingUp } from "lucide-react";
+import { Search, Sparkles, TrendingUp, BadgeCheck, MapPin, CalendarDays, Compass, Building2, Star, ShieldCheck, Users, Route as RouteIcon, Quote } from "lucide-react";
+import { HeroSearch, PopularDestinations, FeaturedTrips, TravelAgencies, WhyRihla, Testimonials } from "@/components/home/HomeSections";
+import { TrustGuarantees } from "@/components/RihlaVerified";
 import { destinations, categories } from "@/data/destinations";
 import { DestinationCard } from "@/components/DestinationCard";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -85,7 +87,7 @@ export const Route = createFileRoute("/_app/home")({
   head: () => ({
     meta: [
       { title: "الرئيسية — رحلتي" },
-      { name: "description", content: "ابدأ رحلتك من هنا. وجهات مميزة وعروض حصرية في الجزائر والعالم." },
+      { name: "description", content: "اكتشف الجزائر بطريقتك: وجهات، رحلات منظمة ووكالات سياحية موثّقة في منصة واحدة." },
     ],
   }),
   component: Home,
@@ -99,59 +101,37 @@ function Home() {
 
   return (
     <div className="animate-fade-in">
-      {/* Hero — cinematic */}
-      <section className="relative min-h-[34rem] sm:min-h-[42rem] overflow-hidden">
+      {/* Hero — RIHLA 2.0 */}
+      <section className="relative min-h-[36rem] sm:min-h-[44rem] overflow-hidden">
         <img
-          src={realImages.constantine.src}
-          alt={realImages.constantine.alt}
+          src={realImages.tassili.src}
+          alt={realImages.tassili.alt}
           width={1920}
           height={1080}
-          className="absolute inset-0 h-full w-full object-cover scale-105 animate-[fade-in_1.2s_ease-out]"
+          className="absolute inset-0 h-full w-full object-cover animate-[fade-in_1.2s_ease-out]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-slate-900/40" />
+        <div className="absolute inset-0 bg-primary-glow/55" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
 
-        <div className="relative mx-auto max-w-5xl px-4 pt-24 sm:pt-32 pb-10 text-center">
-          <p className="inline-block rounded-full bg-white/15 backdrop-blur px-4 py-1.5 text-[11px] font-bold tracking-[0.3em] text-white mb-5">
-            RIHLATY — اكتشف. عِش. شارك.
+        <div className="relative mx-auto max-w-5xl px-4 pt-24 sm:pt-32 pb-12 text-center text-primary-foreground">
+          <p className="inline-flex items-center gap-2 rounded-full bg-card/15 backdrop-blur px-4 py-1.5 text-[11px] font-bold tracking-[0.25em] mb-5 border border-card/25">
+            <BadgeCheck className="h-3.5 w-3.5 text-accent" strokeWidth={1.75} /> RIHLA 2.0
           </p>
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight text-foreground">
-            الجزائر… أقرب مما تتخيل.
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight">
+            اكتشف الجزائر… بطريقتك
           </h1>
-          <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            اكتشف الأماكن، خطط رحلتك، وعِش التجربة بطريقتك.
+          <p className="mt-5 text-base sm:text-lg opacity-90 max-w-2xl mx-auto leading-relaxed">
+            RIHLA تربط المسافر بالوجهات والتجارب والوكالات السياحية في منصة واحدة.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link
-              to="/wilayas"
-              className="rounded-full bg-primary text-primary-foreground px-7 py-3.5 text-sm font-bold shadow-glow animate-pulse hover:animate-none hover:scale-[1.04] transition-transform"
-            >
-              اكتشف الجزائر
+            <Link to="/wilayas" className="rounded-full bg-accent text-accent-foreground px-7 py-3.5 text-sm font-bold shadow-glow hover:scale-[1.04] transition-transform">
+              🗺️ اكتشف الجزائر
             </Link>
-            <Link
-              to="/plan"
-              className="rounded-full border border-foreground/20 bg-card/70 backdrop-blur px-7 py-3.5 text-sm font-bold text-foreground hover:bg-card transition-colors"
-            >
-              خطط رحلتي
+            <Link to="/plan" className="rounded-full border border-card/40 bg-card/15 backdrop-blur px-7 py-3.5 text-sm font-bold hover:bg-card/25 transition-colors">
+              ✈️ خطط رحلتك
             </Link>
           </div>
-
-          <SmartSearch />
-
-          <div className="mt-8 flex justify-center gap-3">
-            {heroShots.map((s) => (
-              <div
-                key={s.src}
-                className="h-16 w-24 sm:h-20 sm:w-32 overflow-hidden rounded-2xl border border-white/50 shadow-xl shadow-slate-900/20"
-              >
-                <img
-                  src={s.src}
-                  alt={s.alt}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
-                />
-              </div>
-            ))}
-          </div>
+          <HeroSearch />
         </div>
       </section>
 
@@ -238,6 +218,12 @@ function Home() {
           </Link>
         </div>
       </section>
+      <PopularDestinations />
+      <FeaturedTrips />
+      <TravelAgencies />
+      <WhyRihla />
+      <section className="mx-auto max-w-6xl px-4 mt-14"><TrustGuarantees /></section>
+      <Testimonials />
     </div>
   );
 }

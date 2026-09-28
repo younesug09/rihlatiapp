@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "IBM Plex Sans Arabic", "Manrope", system-ui, sans-serif;
-  --font-latin: "Manrope", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans Arabic", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-latin: "Plus Jakarta Sans", system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -87,86 +87,75 @@
 
 }
 
-/* RIHLA — Sahara Dusk & Deep Night Sky
-   Clean off-white canvas · deep slate ink · Sahara sunset orange CTA
-   Cyan waters secondary · emerald verified status */
+/* RIHLA 2.0 — Premium Algerian Tourism
+   Sand canvas · deep emerald primary · desert gold accent */
 :root {
-  --radius: 1.25rem;
-
-  --background: #f8f9fa;        /* Clean Off-White */
-  --foreground: #0f172a;        /* Deep Slate / Night Sky */
-
+  --radius: 1rem;
+  --background: #fdfbf7;
+  --foreground: #0b1f1a;
   --card: #ffffff;
-  --card-foreground: #0f172a;
-
+  --card-foreground: #0b1f1a;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
-
-  --primary: #ff6b00;           /* Sahara Sunset Orange */
+  --popover-foreground: #0b1f1a;
+  --primary: #047857;
   --primary-foreground: #ffffff;
-  --primary-glow: #ff8c33;
-
-  --secondary: #e2e8f0;
-  --secondary-foreground: #0f172a;
-
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-
-  --accent: #0ea5e9;            /* Cyan Waters */
+  --primary-glow: #064e3b;
+  --secondary: #f5f2eb;
+  --secondary-foreground: #064e3b;
+  --muted: #f5f2eb;
+  --muted-foreground: #5f6b66;
+  --accent: #d97706;
   --accent-foreground: #ffffff;
-
-  --destructive: #e11d48;
+  --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-
-  --success: #10b981;           /* Emerald — verified */
+  --success: #d97706;
   --success-foreground: #ffffff;
-
-  --warning: #f59e0b;
-  --warning-foreground: #0f172a;
-
-  --border: #e5e9ef;
-  --input: #e5e9ef;
-  --ring: #ff6b00;
-
-  /* Flat colours — deliberately not gradients */
-  --gradient-hero: #0f172a;
-  --gradient-primary: #ff6b00;
-  --gradient-sky: #f8f9fa;
-
-  --shadow-soft: 0 2px 12px -4px rgb(15 23 42 / 0.08);
-  --shadow-card: 0 18px 40px -18px rgb(15 23 42 / 0.22);
-  --shadow-glow: 0 10px 28px -10px rgb(255 107 0 / 0.45);
+  --warning: #d97706;
+  --warning-foreground: #ffffff;
+  --border: #e9e3d6;
+  --input: #e9e3d6;
+  --ring: #047857;
+  --gradient-hero: #064e3b;
+  --gradient-primary: #047857;
+  --gradient-sky: #fdfbf7;
+  --shadow-soft: 0 2px 12px -4px rgb(6 78 59 / 0.08);
+  --shadow-card: 0 16px 36px -18px rgb(6 78 59 / 0.22);
+  --shadow-glow: 0 10px 28px -10px rgb(4 120 87 / 0.45);
 }
 
 .dark {
-  --background: #0b1120;
-  --foreground: #e6edf7;
-  --card: #111a2e;
-  --card-foreground: #e6edf7;
-  --popover: #111a2e;
-  --popover-foreground: #e6edf7;
-  --primary: #ff7a1a;
-  --primary-foreground: #0b1120;
-  --primary-glow: #ff9b4d;
-  --secondary: #1b2740;
-  --secondary-foreground: #e6edf7;
-  --muted: #16203a;
-  --muted-foreground: #93a4bf;
-  --accent: #38bdf8;
-  --accent-foreground: #0b1120;
-  --success: #34d399;
-  --success-foreground: #0b1120;
-  --border: #ffffff1f;
-  --input: #ffffff26;
-  --ring: #ff7a1a;
-  --gradient-hero: #0b1120;
-  --gradient-primary: #ff7a1a;
-  --gradient-sky: #0b1120;
+  --background: #07140f;
+  --foreground: #f1ede4;
+  --card: #0e2019;
+  --card-foreground: #f1ede4;
+  --popover: #0e2019;
+  --popover-foreground: #f1ede4;
+  --primary: #10b981;
+  --primary-foreground: #04120c;
+  --primary-glow: #34d399;
+  --secondary: #16302a;
+  --secondary-foreground: #f1ede4;
+  --muted: #13291f;
+  --muted-foreground: #a3b1aa;
+  --accent: #f59e0b;
+  --accent-foreground: #04120c;
+  --success: #f59e0b;
+  --success-foreground: #04120c;
+  --warning: #f59e0b;
+  --warning-foreground: #04120c;
+  --border: #ffffff1a;
+  --input: #ffffff24;
+  --ring: #10b981;
+  --gradient-hero: #07140f;
+  --gradient-primary: #10b981;
+  --gradient-sky: #07140f;
 }
 
 @layer base {
   * { border-color: var(--color-border); }
   html { direction: rtl; }
+  html[dir="ltr"] { direction: ltr; }
+  html[dir="ltr"] body { font-family: var(--font-latin); }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
