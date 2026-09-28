@@ -34,6 +34,7 @@ import { Route as AppCommunityRouteImport } from './routes/_app.community'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
 import { Route as AppAgencyRouteImport } from './routes/_app.agency'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
+import { Route as AppDashboardIndexRouteImport } from './routes/_app.dashboard.index'
 import { Route as AppAgencyIndexRouteImport } from './routes/_app.agency.index'
 import { Route as AppWilayasIdRouteImport } from './routes/_app.wilayas.$id'
 import { Route as AppProfileSettingsRouteImport } from './routes/_app.profile.settings'
@@ -43,6 +44,9 @@ import { Route as AppProfileHelpRouteImport } from './routes/_app.profile.help'
 import { Route as AppProfileBookingsRouteImport } from './routes/_app.profile.bookings'
 import { Route as AppMagazineSlugRouteImport } from './routes/_app.magazine.$slug'
 import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
+import { Route as AppDashboardCustomerRouteImport } from './routes/_app.dashboard.customer'
+import { Route as AppDashboardAgencyRouteImport } from './routes/_app.dashboard.agency'
+import { Route as AppDashboardAdminRouteImport } from './routes/_app.dashboard.admin'
 import { Route as AppAgencyTripsRouteImport } from './routes/_app.agency.trips'
 import { Route as AppAgencyBookingsRouteImport } from './routes/_app.agency.bookings'
 import { Route as AppAgenciesSlugRouteImport } from './routes/_app.agencies.$slug'
@@ -172,6 +176,11 @@ const AppAboutRoute = AppAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAgencyIndexRoute = AppAgencyIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -215,6 +224,21 @@ const AppMagazineSlugRoute = AppMagazineSlugRouteImport.update({
 const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
   id: '/destinations/$id',
   path: '/destinations/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardCustomerRoute = AppDashboardCustomerRouteImport.update({
+  id: '/dashboard/customer',
+  path: '/dashboard/customer',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardAgencyRoute = AppDashboardAgencyRouteImport.update({
+  id: '/dashboard/agency',
+  path: '/dashboard/agency',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardAdminRoute = AppDashboardAdminRouteImport.update({
+  id: '/dashboard/admin',
+  path: '/dashboard/admin',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAgencyTripsRoute = AppAgencyTripsRouteImport.update({
@@ -266,6 +290,9 @@ export interface FileRoutesByFullPath {
   '/agencies/$slug': typeof AppAgenciesSlugRoute
   '/agency/bookings': typeof AppAgencyBookingsRoute
   '/agency/trips': typeof AppAgencyTripsRoute
+  '/dashboard/admin': typeof AppDashboardAdminRoute
+  '/dashboard/agency': typeof AppDashboardAgencyRoute
+  '/dashboard/customer': typeof AppDashboardCustomerRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
   '/magazine/$slug': typeof AppMagazineSlugRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
@@ -275,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/profile/settings': typeof AppProfileSettingsRoute
   '/wilayas/$id': typeof AppWilayasIdRoute
   '/agency/': typeof AppAgencyIndexRoute
+  '/dashboard/': typeof AppDashboardIndexRoute
   '/verify/booking/$id': typeof AppVerifyBookingIdRoute
 }
 export interface FileRoutesByTo {
@@ -304,6 +332,9 @@ export interface FileRoutesByTo {
   '/agencies/$slug': typeof AppAgenciesSlugRoute
   '/agency/bookings': typeof AppAgencyBookingsRoute
   '/agency/trips': typeof AppAgencyTripsRoute
+  '/dashboard/admin': typeof AppDashboardAdminRoute
+  '/dashboard/agency': typeof AppDashboardAgencyRoute
+  '/dashboard/customer': typeof AppDashboardCustomerRoute
   '/destinations/$id': typeof AppDestinationsIdRoute
   '/magazine/$slug': typeof AppMagazineSlugRoute
   '/profile/bookings': typeof AppProfileBookingsRoute
@@ -313,6 +344,7 @@ export interface FileRoutesByTo {
   '/profile/settings': typeof AppProfileSettingsRoute
   '/wilayas/$id': typeof AppWilayasIdRoute
   '/agency': typeof AppAgencyIndexRoute
+  '/dashboard': typeof AppDashboardIndexRoute
   '/verify/booking/$id': typeof AppVerifyBookingIdRoute
 }
 export interface FileRoutesById {
@@ -345,6 +377,9 @@ export interface FileRoutesById {
   '/_app/agencies/$slug': typeof AppAgenciesSlugRoute
   '/_app/agency/bookings': typeof AppAgencyBookingsRoute
   '/_app/agency/trips': typeof AppAgencyTripsRoute
+  '/_app/dashboard/admin': typeof AppDashboardAdminRoute
+  '/_app/dashboard/agency': typeof AppDashboardAgencyRoute
+  '/_app/dashboard/customer': typeof AppDashboardCustomerRoute
   '/_app/destinations/$id': typeof AppDestinationsIdRoute
   '/_app/magazine/$slug': typeof AppMagazineSlugRoute
   '/_app/profile/bookings': typeof AppProfileBookingsRoute
@@ -354,6 +389,7 @@ export interface FileRoutesById {
   '/_app/profile/settings': typeof AppProfileSettingsRoute
   '/_app/wilayas/$id': typeof AppWilayasIdRoute
   '/_app/agency/': typeof AppAgencyIndexRoute
+  '/_app/dashboard/': typeof AppDashboardIndexRoute
   '/_app/verify/booking/$id': typeof AppVerifyBookingIdRoute
 }
 export interface FileRouteTypes {
@@ -386,6 +422,9 @@ export interface FileRouteTypes {
     | '/agencies/$slug'
     | '/agency/bookings'
     | '/agency/trips'
+    | '/dashboard/admin'
+    | '/dashboard/agency'
+    | '/dashboard/customer'
     | '/destinations/$id'
     | '/magazine/$slug'
     | '/profile/bookings'
@@ -395,6 +434,7 @@ export interface FileRouteTypes {
     | '/profile/settings'
     | '/wilayas/$id'
     | '/agency/'
+    | '/dashboard/'
     | '/verify/booking/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -424,6 +464,9 @@ export interface FileRouteTypes {
     | '/agencies/$slug'
     | '/agency/bookings'
     | '/agency/trips'
+    | '/dashboard/admin'
+    | '/dashboard/agency'
+    | '/dashboard/customer'
     | '/destinations/$id'
     | '/magazine/$slug'
     | '/profile/bookings'
@@ -433,6 +476,7 @@ export interface FileRouteTypes {
     | '/profile/settings'
     | '/wilayas/$id'
     | '/agency'
+    | '/dashboard'
     | '/verify/booking/$id'
   id:
     | '__root__'
@@ -464,6 +508,9 @@ export interface FileRouteTypes {
     | '/_app/agencies/$slug'
     | '/_app/agency/bookings'
     | '/_app/agency/trips'
+    | '/_app/dashboard/admin'
+    | '/_app/dashboard/agency'
+    | '/_app/dashboard/customer'
     | '/_app/destinations/$id'
     | '/_app/magazine/$slug'
     | '/_app/profile/bookings'
@@ -473,6 +520,7 @@ export interface FileRouteTypes {
     | '/_app/profile/settings'
     | '/_app/wilayas/$id'
     | '/_app/agency/'
+    | '/_app/dashboard/'
     | '/_app/verify/booking/$id'
   fileRoutesById: FileRoutesById
 }
@@ -661,6 +709,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAboutRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/dashboard/': {
+      id: '/_app/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AppDashboardIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/agency/': {
       id: '/_app/agency/'
       path: '/'
@@ -722,6 +777,27 @@ declare module '@tanstack/react-router' {
       path: '/destinations/$id'
       fullPath: '/destinations/$id'
       preLoaderRoute: typeof AppDestinationsIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard/customer': {
+      id: '/_app/dashboard/customer'
+      path: '/dashboard/customer'
+      fullPath: '/dashboard/customer'
+      preLoaderRoute: typeof AppDashboardCustomerRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard/agency': {
+      id: '/_app/dashboard/agency'
+      path: '/dashboard/agency'
+      fullPath: '/dashboard/agency'
+      preLoaderRoute: typeof AppDashboardAgencyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard/admin': {
+      id: '/_app/dashboard/admin'
+      path: '/dashboard/admin'
+      fullPath: '/dashboard/admin'
+      preLoaderRoute: typeof AppDashboardAdminRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/agency/trips': {
@@ -849,7 +925,11 @@ interface AppRouteChildren {
   AppVerifyRoute: typeof AppVerifyRouteWithChildren
   AppWilayasRoute: typeof AppWilayasRouteWithChildren
   AppAgenciesSlugRoute: typeof AppAgenciesSlugRoute
+  AppDashboardAdminRoute: typeof AppDashboardAdminRoute
+  AppDashboardAgencyRoute: typeof AppDashboardAgencyRoute
+  AppDashboardCustomerRoute: typeof AppDashboardCustomerRoute
   AppDestinationsIdRoute: typeof AppDestinationsIdRoute
+  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -874,7 +954,11 @@ const AppRouteChildren: AppRouteChildren = {
   AppVerifyRoute: AppVerifyRouteWithChildren,
   AppWilayasRoute: AppWilayasRouteWithChildren,
   AppAgenciesSlugRoute: AppAgenciesSlugRoute,
+  AppDashboardAdminRoute: AppDashboardAdminRoute,
+  AppDashboardAgencyRoute: AppDashboardAgencyRoute,
+  AppDashboardCustomerRoute: AppDashboardCustomerRoute,
   AppDestinationsIdRoute: AppDestinationsIdRoute,
+  AppDashboardIndexRoute: AppDashboardIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
