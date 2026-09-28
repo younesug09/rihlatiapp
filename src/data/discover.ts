@@ -1,5 +1,6 @@
 import { Mountain, Waves, Sun, Landmark, Leaf, TentTree, Building2, type LucideIcon } from "lucide-react";
 import { getWilaya, wilayas, type Wilaya } from "@/data/wilayas";
+import { realImages, type RealImage } from "@/data/images";
 
 export type TourismType = "beaches" | "mountains" | "sahara" | "heritage" | "nature" | "adventure" | "cities";
 
@@ -47,6 +48,12 @@ const durations: Record<string, string> = {
   "tizi-ouzou": "3 أيام", ghardaia: "3–4 أيام", tamanrasset: "5–7 أيام", djanet: "5–7 أيام", biskra: "3 أيام",
 };
 
+const extraGallery: Partial<Record<string, RealImage[]>> = {
+  alger: [realImages.algerBasilica],
+  setif: [realImages.djemila],
+  batna: [realImages.timgad],
+};
+
 export function getTourismTypes(wilaya: Wilaya): TourismType[] {
   const result = new Set<TourismType>();
   if (beachIds.has(wilaya.id)) result.add("beaches");
@@ -63,17 +70,13 @@ export function getTourismTypes(wilaya: Wilaya): TourismType[] {
 export function getDiscoverDestination(id: string) {
   const wilaya = getWilaya(id);
   if (!wilaya) return undefined;
-  const nearbyImages = wilaya.nearby
-    .map((name) => wilayas.find((item) => item.name === name))
-    .filter((item): item is Wilaya => Boolean(item))
-    .map((item) => ({ src: item.image, alt: item.imageAlt }));
   return {
     ...wilaya,
     tourismTypes: getTourismTypes(wilaya),
     bestTime: bestTimes[wilaya.id] ?? "على مدار العام حسب نوع النشاط",
     recommendedDuration: durations[wilaya.id] ?? "2–3 أيام",
     exactLocation: `${wilaya.name}، ${wilaya.region === "south" ? "الجنوب الجزائري" : wilaya.region === "east" ? "شرق الجزائر" : wilaya.region === "west" ? "غرب الجزائر" : "وسط الجزائر"}`,
-    gallery: [{ src: wilaya.image, alt: wilaya.imageAlt }, ...nearbyImages].slice(0, 3),
+    gallery: [{ src: wilaya.image, alt: wilaya.imageAlt, credit: "Wikimedia Commons" }, ...(extraGallery[wilaya.id] ?? [])],
   };
 }
 
