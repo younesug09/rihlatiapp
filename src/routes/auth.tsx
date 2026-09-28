@@ -6,6 +6,7 @@ import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
 import { useLanguage } from "@/hooks/useLanguage";
 import logo from "@/assets/logo.png";
+import { getDashboardPath } from "@/lib/roleRedirect";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [{ title: "تسجيل الدخول — رحلتي" }] }),
@@ -24,9 +25,14 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const go = async () => navigate({ to: await getDashboardPath(), replace: true });
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/home" });
+      if (data.session) go();
     });
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" && session) go();
+    });
+    return () => sub.subscription.unsubscribe();
   }, [navigate]);
 
   const handleEmailAuth = async (e: React.FormEvent) => {
@@ -44,7 +50,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast.success(t("welcomeBackToast"));
-        navigate({ to: "/home" });
+        navigate({ to: await getDashboardPath() });
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Error";
@@ -59,7 +65,7 @@ function AuthPage() {
     const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (result.error) { toast.error(t("googleFail")); setLoading(false); return; }
     if (result.redirected) return;
-    navigate({ to: "/home" });
+    navigate({ to: await getDashboardPath() });
   };
 
   return (
@@ -139,24 +145,30 @@ function AuthPage() {
 
             <form onSubmit={handleEmailAuth} className="space-y-3">
               {mode === "signup" && (
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { id: "customer" as const, label: "مسافر" },
-                    { id: "agency" as const, label: "وكالة سياحية" },
-                  ].map((o) => (
-                    <button
-                      key={o.id}
-                      type="button"
-                      onClick={() => setAccountType(o.id)}
-                      className={`rounded-2xl py-3 text-sm font-bold transition ${
-                        accountType === o.id
-                          ? "bg-primary text-primary-foreground shadow-soft"
-                          : "bg-secondary text-muted-foreground"
-                      }`}
-                    >
-                      {o.label}
-                    </button>
-                  ))}
+                <div>
+                  <p className="text-sm font-bold mb-2 text-center">ماذا تريد أن تفعل على RIHLA؟</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { id: "customer" as const, emoji: "👤", label: "أنا مسافر", sub: "حساب مسافر" },
+                      { id: "agency" as const, emoji: "🏢", label: "أنا وكالة سياحية", sub: "حساب وكالة" },
+                    ].map((o) => (
+                      <button
+                        key={o.id}
+                        type="button"
+                        onClick={() => setAccountType(o.id)}
+                        aria-pressed={accountType === o.id}
+                        className={`rounded-3xl p-4 text-center transition border-2 ${
+                          accountType === o.id
+                            ? "border-primary bg-primary/10 shadow-soft"
+                            : "border-border bg-secondary text-muted-foreground"
+                        }`}
+                      >
+                        <span className="block text-2xl">{o.emoji}</span>
+                        <span className="block text-sm font-bold mt-1 text-foreground">{o.label}</span>
+                        <span className="block text-[11px]">{o.sub}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
               {mode === "signup" && (
