@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { regions, wilayas, type Region } from "@/data/wilayas";
 import { getTourismTypes, tourismFilters, tourismLabel, type TourismType } from "@/data/discover";
 
-export const Route = createFileRoute("/_app/discover")({
+export const Route = createFileRoute("/_app/discover/")({
   head: () => ({
     meta: [
       { title: "اكتشف الجزائر — وجهات وولايات | رحلتي" },

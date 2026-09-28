@@ -30,11 +30,11 @@ import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
 import { Route as AppExploreRouteImport } from './routes/_app.explore'
 import { Route as AppEventsRouteImport } from './routes/_app.events'
 import { Route as AppDocumentRouteImport } from './routes/_app.document'
-import { Route as AppDiscoverRouteImport } from './routes/_app.discover'
 import { Route as AppCommunityRouteImport } from './routes/_app.community'
 import { Route as AppBookingRouteImport } from './routes/_app.booking'
 import { Route as AppAgencyRouteImport } from './routes/_app.agency'
 import { Route as AppAboutRouteImport } from './routes/_app.about'
+import { Route as AppDiscoverIndexRouteImport } from './routes/_app.discover.index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app.dashboard.index'
 import { Route as AppAgencyIndexRouteImport } from './routes/_app.agency.index'
 import { Route as AppWilayasIdRouteImport } from './routes/_app.wilayas.$id'
@@ -158,11 +158,6 @@ const AppDocumentRoute = AppDocumentRouteImport.update({
   path: '/document',
   getParentRoute: () => AppRoute,
 } as any)
-const AppDiscoverRoute = AppDiscoverRouteImport.update({
-  id: '/discover',
-  path: '/discover',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppCommunityRoute = AppCommunityRouteImport.update({
   id: '/community',
   path: '/community',
@@ -181,6 +176,11 @@ const AppAgencyRoute = AppAgencyRouteImport.update({
 const AppAboutRoute = AppAboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDiscoverIndexRoute = AppDiscoverIndexRouteImport.update({
+  id: '/discover/',
+  path: '/discover/',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
@@ -229,9 +229,9 @@ const AppMagazineSlugRoute = AppMagazineSlugRouteImport.update({
   getParentRoute: () => AppMagazineRoute,
 } as any)
 const AppDiscoverIdRoute = AppDiscoverIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AppDiscoverRoute,
+  id: '/discover/$id',
+  path: '/discover/$id',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
   id: '/destinations/$id',
@@ -283,7 +283,6 @@ export interface FileRoutesByFullPath {
   '/agency': typeof AppAgencyRouteWithChildren
   '/booking': typeof AppBookingRoute
   '/community': typeof AppCommunityRoute
-  '/discover': typeof AppDiscoverRouteWithChildren
   '/document': typeof AppDocumentRoute
   '/events': typeof AppEventsRoute
   '/explore': typeof AppExploreRoute
@@ -317,6 +316,7 @@ export interface FileRoutesByFullPath {
   '/wilayas/$id': typeof AppWilayasIdRoute
   '/agency/': typeof AppAgencyIndexRoute
   '/dashboard/': typeof AppDashboardIndexRoute
+  '/discover/': typeof AppDiscoverIndexRoute
   '/verify/booking/$id': typeof AppVerifyBookingIdRoute
 }
 export interface FileRoutesByTo {
@@ -327,7 +327,6 @@ export interface FileRoutesByTo {
   '/about': typeof AppAboutRoute
   '/booking': typeof AppBookingRoute
   '/community': typeof AppCommunityRoute
-  '/discover': typeof AppDiscoverRouteWithChildren
   '/document': typeof AppDocumentRoute
   '/events': typeof AppEventsRoute
   '/explore': typeof AppExploreRoute
@@ -361,6 +360,7 @@ export interface FileRoutesByTo {
   '/wilayas/$id': typeof AppWilayasIdRoute
   '/agency': typeof AppAgencyIndexRoute
   '/dashboard': typeof AppDashboardIndexRoute
+  '/discover': typeof AppDiscoverIndexRoute
   '/verify/booking/$id': typeof AppVerifyBookingIdRoute
 }
 export interface FileRoutesById {
@@ -374,7 +374,6 @@ export interface FileRoutesById {
   '/_app/agency': typeof AppAgencyRouteWithChildren
   '/_app/booking': typeof AppBookingRoute
   '/_app/community': typeof AppCommunityRoute
-  '/_app/discover': typeof AppDiscoverRouteWithChildren
   '/_app/document': typeof AppDocumentRoute
   '/_app/events': typeof AppEventsRoute
   '/_app/explore': typeof AppExploreRoute
@@ -408,6 +407,7 @@ export interface FileRoutesById {
   '/_app/wilayas/$id': typeof AppWilayasIdRoute
   '/_app/agency/': typeof AppAgencyIndexRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
+  '/_app/discover/': typeof AppDiscoverIndexRoute
   '/_app/verify/booking/$id': typeof AppVerifyBookingIdRoute
 }
 export interface FileRouteTypes {
@@ -421,7 +421,6 @@ export interface FileRouteTypes {
     | '/agency'
     | '/booking'
     | '/community'
-    | '/discover'
     | '/document'
     | '/events'
     | '/explore'
@@ -455,6 +454,7 @@ export interface FileRouteTypes {
     | '/wilayas/$id'
     | '/agency/'
     | '/dashboard/'
+    | '/discover/'
     | '/verify/booking/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -465,7 +465,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/booking'
     | '/community'
-    | '/discover'
     | '/document'
     | '/events'
     | '/explore'
@@ -499,6 +498,7 @@ export interface FileRouteTypes {
     | '/wilayas/$id'
     | '/agency'
     | '/dashboard'
+    | '/discover'
     | '/verify/booking/$id'
   id:
     | '__root__'
@@ -511,7 +511,6 @@ export interface FileRouteTypes {
     | '/_app/agency'
     | '/_app/booking'
     | '/_app/community'
-    | '/_app/discover'
     | '/_app/document'
     | '/_app/events'
     | '/_app/explore'
@@ -545,6 +544,7 @@ export interface FileRouteTypes {
     | '/_app/wilayas/$id'
     | '/_app/agency/'
     | '/_app/dashboard/'
+    | '/_app/discover/'
     | '/_app/verify/booking/$id'
   fileRoutesById: FileRoutesById
 }
@@ -705,13 +705,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDocumentRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/discover': {
-      id: '/_app/discover'
-      path: '/discover'
-      fullPath: '/discover'
-      preLoaderRoute: typeof AppDiscoverRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/community': {
       id: '/_app/community'
       path: '/community'
@@ -738,6 +731,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AppAboutRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/discover/': {
+      id: '/_app/discover/'
+      path: '/discover'
+      fullPath: '/discover/'
+      preLoaderRoute: typeof AppDiscoverIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/dashboard/': {
@@ -805,10 +805,10 @@ declare module '@tanstack/react-router' {
     }
     '/_app/discover/$id': {
       id: '/_app/discover/$id'
-      path: '/$id'
+      path: '/discover/$id'
       fullPath: '/discover/$id'
       preLoaderRoute: typeof AppDiscoverIdRouteImport
-      parentRoute: typeof AppDiscoverRoute
+      parentRoute: typeof AppRoute
     }
     '/_app/destinations/$id': {
       id: '/_app/destinations/$id'
@@ -885,18 +885,6 @@ const AppAgencyRouteWithChildren = AppAgencyRoute._addFileChildren(
   AppAgencyRouteChildren,
 )
 
-interface AppDiscoverRouteChildren {
-  AppDiscoverIdRoute: typeof AppDiscoverIdRoute
-}
-
-const AppDiscoverRouteChildren: AppDiscoverRouteChildren = {
-  AppDiscoverIdRoute: AppDiscoverIdRoute,
-}
-
-const AppDiscoverRouteWithChildren = AppDiscoverRoute._addFileChildren(
-  AppDiscoverRouteChildren,
-)
-
 interface AppMagazineRouteChildren {
   AppMagazineSlugRoute: typeof AppMagazineSlugRoute
 }
@@ -958,7 +946,6 @@ interface AppRouteChildren {
   AppAgencyRoute: typeof AppAgencyRouteWithChildren
   AppBookingRoute: typeof AppBookingRoute
   AppCommunityRoute: typeof AppCommunityRoute
-  AppDiscoverRoute: typeof AppDiscoverRouteWithChildren
   AppDocumentRoute: typeof AppDocumentRoute
   AppEventsRoute: typeof AppEventsRoute
   AppExploreRoute: typeof AppExploreRoute
@@ -980,7 +967,9 @@ interface AppRouteChildren {
   AppDashboardAgencyRoute: typeof AppDashboardAgencyRoute
   AppDashboardCustomerRoute: typeof AppDashboardCustomerRoute
   AppDestinationsIdRoute: typeof AppDestinationsIdRoute
+  AppDiscoverIdRoute: typeof AppDiscoverIdRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
+  AppDiscoverIndexRoute: typeof AppDiscoverIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -988,7 +977,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppAgencyRoute: AppAgencyRouteWithChildren,
   AppBookingRoute: AppBookingRoute,
   AppCommunityRoute: AppCommunityRoute,
-  AppDiscoverRoute: AppDiscoverRouteWithChildren,
   AppDocumentRoute: AppDocumentRoute,
   AppEventsRoute: AppEventsRoute,
   AppExploreRoute: AppExploreRoute,
@@ -1010,7 +998,9 @@ const AppRouteChildren: AppRouteChildren = {
   AppDashboardAgencyRoute: AppDashboardAgencyRoute,
   AppDashboardCustomerRoute: AppDashboardCustomerRoute,
   AppDestinationsIdRoute: AppDestinationsIdRoute,
+  AppDiscoverIdRoute: AppDiscoverIdRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
+  AppDiscoverIndexRoute: AppDiscoverIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
