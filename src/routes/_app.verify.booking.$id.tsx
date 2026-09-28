@@ -32,7 +32,7 @@ function VerifyBooking() {
   useEffect(() => {
     const url = `${window.location.origin}/verify/booking/${id}`;
     import("qrcode")
-      .then((m) => m.toDataURL(url, { margin: 1, width: 320, color: { dark: "#0f172a", light: "#ffffff" } }))
+      .then((m) => m.toDataURL(url, { margin: 1, width: 320 }))
       .then(setQr)
       .catch(() => setQr(null));
   }, [id]);

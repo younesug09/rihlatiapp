@@ -38,8 +38,16 @@ export const createAdminUser = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: created, error } = await supabaseAdmin.auth.admin.createUser({ email: data.email, password: data.password, email_confirm: true, user_metadata: { full_name: data.fullName, account_type: data.role === "agency" ? "agency" : "customer" } });
     if (error || !created.user) throw error ?? new Error("تعذّر إنشاء المستخدم");
-    await supabaseAdmin.from("profiles").update({ full_name: data.fullName }).eq("id", created.user.id);
-    await supabaseAdmin.from("user_roles").upsert({ user_id: created.user.id, role: data.role });
+    const { error: profileError } = await supabaseAdmin.from("profiles").update({ full_name: data.fullName }).eq("id", created.user.id);
+    if (profileError) {
+      await supabaseAdmin.auth.admin.deleteUser(created.user.id);
+      throw profileError;
+    }
+    const { error: roleError } = await supabaseAdmin.from("user_roles").upsert({ user_id: created.user.id, role: data.role });
+    if (roleError) {
+      await supabaseAdmin.auth.admin.deleteUser(created.user.id);
+      throw roleError;
+    }
     return { id: created.user.id };
   });
 
@@ -52,9 +60,7 @@ export const updateAdminUser = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error: profileError } = await supabaseAdmin.from("profiles").update({ full_name: data.fullName, wilaya: data.wilaya || null }).eq("id", data.id);
     if (profileError) throw profileError;
-    const { error: clearError } = await supabaseAdmin.from("user_roles").delete().eq("user_id", data.id);
-    if (clearError) throw clearError;
-    const { error: roleError } = await supabaseAdmin.from("user_roles").insert({ user_id: data.id, role: data.role });
+    const { error: roleError } = await supabaseAdmin.from("user_roles").upsert({ user_id: data.id, role: data.role });
     if (roleError) throw roleError;
     return { ok: true };
   });
