@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { RihlatyLogo } from "@/components/RihlatyLogo";
+import logo from "@/assets/logo.png";
 import { Menu, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
@@ -55,7 +55,7 @@ export function DashboardShell({
     <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
       <div className="mb-5 flex items-center justify-between gap-3 lg:hidden">
         <div>
-          <RihlatyLogo className="mb-2 h-10 w-10" /><p className="text-xs font-bold text-primary">{subtitle}</p>
+          <img src={logo} alt="Rihlaty" className="mb-2 h-10 w-10 object-contain" /><p className="text-xs font-bold text-primary">{subtitle}</p>
           <h1 className="text-2xl font-black">{title}</h1>
         </div>
         <Button variant="outline" size="icon" onClick={() => setOpen(true)} aria-label="فتح القائمة">
@@ -75,7 +75,7 @@ export function DashboardShell({
       <div className="grid gap-7 lg:grid-cols-[16rem_minmax(0,1fr)]">
         <aside className="hidden self-start lg:sticky lg:top-24 lg:block">
           <div className="rounded-lg border border-border bg-card p-4 shadow-soft">
-            <RihlatyLogo className="mb-2 h-10 w-10" /><p className="text-xs font-bold text-primary">{subtitle}</p>
+            <img src={logo} alt="Rihlaty" className="mb-2 h-10 w-10 object-contain" /><p className="text-xs font-bold text-primary">{subtitle}</p>
             <h1 className="mt-1 text-xl font-black">{title}</h1>
             {badge && (
               <p className="mt-3 inline-flex items-center gap-1 rounded-full bg-success/10 px-2.5 py-1 text-xs font-bold text-success">

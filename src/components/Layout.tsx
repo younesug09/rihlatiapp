@@ -1,7 +1,7 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { Home, Compass, Heart, BedDouble, User, Bell, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
-import { RihlatyLogo } from "@/components/RihlatyLogo";
+import logo from "@/assets/logo.png";
 import { LanguageMenu } from "@/components/LanguageMenu";
 import { AppFooter } from "@/components/AppFooter";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -54,7 +54,7 @@ export function Layout() {
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-card/70 backdrop-blur-xl border-b border-border/60">
         <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
           <Link to="/home" className="flex items-center gap-2">
-            <RihlatyLogo className="h-9 w-9 object-contain" />
+            <img src={logo} alt="Rihlaty" className="h-9 w-9 object-contain" />
             <span className="text-lg font-bold text-primary">{t("appName")}</span>
           </Link>
 
