@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import logo from "@/assets/logo.png";
+import { RihlatyLogo } from "@/components/RihlatyLogo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,7 +40,7 @@ function Splash() {
 
       <div className="relative z-10 flex flex-col items-center animate-scale-in">
         <div className="h-28 w-28 rounded-3xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-glow mb-6">
-          <img src={logo} alt="رحلتي" className="h-20 w-20" width={80} height={80} />
+          <RihlatyLogo className="h-28 w-24" withText />
         </div>
         <h1 className="text-5xl font-bold tracking-tight mb-3">رحلتي</h1>
         <p className="text-base text-white/85">منصة السياحة والتواصل الإعلامي</p>
