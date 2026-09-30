@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { GraduationCap, Mail, Send } from "lucide-react";
-import { RihlatyLogo } from "@/components/RihlatyLogo";
+import logo from "@/assets/logo.png";
 import { useLanguage } from "@/hooks/useLanguage";
 
 export function AppFooter() {
@@ -15,7 +15,7 @@ export function AppFooter() {
       <div className="h-1 bg-accent" />
       <div className="mx-auto max-w-6xl px-4 py-12">
         <div className="flex items-center gap-3">
-          <RihlatyLogo className="h-10 w-10 object-contain rounded-xl bg-card p-1" />
+          <img src={logo} alt="Rihlaty" className="h-10 w-10 object-contain rounded-xl bg-card p-1" />
           <div>
             <p className="font-bold text-lg leading-tight">رحلتي · RIHLA</p>
             <p className="text-xs opacity-75">{copy.tagline}</p>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Lock, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { RihlatyLogo } from "@/components/RihlatyLogo";
+import logo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/reset-password")({
   head: () => ({ meta: [{ title: "إعادة تعيين كلمة المرور — رحلتي" }] }),
@@ -41,7 +41,7 @@ function ResetPassword() {
 
       <div className="w-full max-w-md bg-card/95 backdrop-blur-2xl rounded-3xl shadow-card p-7 animate-scale-in border border-white/40">
         <div className="flex items-center gap-3 mb-5">
-          <RihlatyLogo className="h-12 w-12" />
+          <img src={logo} alt="Rihlaty" className="h-12 w-12 object-contain" />
           <div>
             <h1 className="text-2xl font-black">كلمة مرور جديدة</h1>
             <p className="text-xs text-muted-foreground">اختر كلمة مرور قوية</p>
