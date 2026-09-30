@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Mail, ArrowLeft, KeyRound } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import logo from "@/assets/logo.png";
+import { RihlatyLogo } from "@/components/RihlatyLogo";
 
 export const Route = createFileRoute("/forgot-password")({
   head: () => ({ meta: [{ title: "نسيت كلمة المرور — رحلتي" }] }),
@@ -45,7 +45,7 @@ function ForgotPassword() {
         </Link>
         <div className="bg-card/95 backdrop-blur-2xl rounded-3xl shadow-card p-7 animate-scale-in border border-white/40">
           <div className="flex items-center gap-3 mb-5">
-            <img src={logo} alt="رحلتي" className="h-12 w-12" />
+            <RihlatyLogo className="h-12 w-12" />
             <div>
               <h1 className="text-2xl font-black">نسيت كلمة المرور؟</h1>
               <p className="text-xs text-muted-foreground">سنرسل لك رابطاً لإعادة تعيينها</p>

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Compass, Eye, Sparkles, ScrollText, BadgeCheck, Heart } from "lucide-react";
-import logo from "@/assets/logo.png";
+import { RihlatyLogo } from "@/components/RihlatyLogo";
 
 export const Route = createFileRoute("/_app/about")({
   head: () => ({
@@ -52,7 +52,7 @@ function About() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 animate-fade-in">
       <div className="flex items-center gap-3">
-        <img src={logo} alt="رحلتي RIHLA" width={56} height={56} className="h-14 w-14 object-contain" />
+        <RihlatyLogo className="h-14 w-14 object-contain" />
         <div>
           <h1 className="text-2xl font-bold">رحلتي · RIHLA</h1>
           <p className="text-sm text-muted-foreground">اكتشف. عِش. شارك.</p>
