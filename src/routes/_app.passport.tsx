@@ -25,6 +25,7 @@ function Passport() {
   const { user } = useAuth();
   const [visited, setVisited] = useState<string[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [vip, setVip] = useState(false);
 
   useEffect(() => {
     if (!user) { setLoaded(true); return; }
@@ -35,6 +36,8 @@ function Passport() {
         .eq("status", "completed");
       const ids = Array.from(new Set((data ?? []).map((b) => b.destination_id).filter(Boolean) as string[]));
       setVisited(ids);
+      const { data: badges } = await supabase.from("user_badges").select("badge").eq("user_id", user.id);
+      setVip((badges ?? []).some((b) => b.badge === "vip_flexstay"));
       setLoaded(true);
     })();
   }, [user]);
@@ -57,6 +60,7 @@ function Passport() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 animate-fade-in">
+      {vip && <div className="mb-4 rounded-lg border border-accent/50 bg-accent/10 p-4 text-center"><p className="text-xs font-bold tracking-widest text-accent font-latin">VIP · FLEXSTAY</p><p className="mt-1 font-black">شارة VIP — شكرًا لمرونتك مع رحلتي</p></div>}
       <header className="mb-5">
         <h1 className="flex items-center gap-2 text-2xl font-black">
           <Stamp className="h-6 w-6 text-primary" strokeWidth={1.5} /> جواز رحلتي

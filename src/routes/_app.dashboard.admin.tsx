@@ -22,7 +22,7 @@ type AgencyRow = { id: string; name: string; wilaya: string | null; email: strin
 type DestinationRow = { id: string; name: string; wilaya: string; tourism_type: string; short_description: string | null; is_published: boolean };
 type TripRow = { id: string; title: string; destination: string; status: string; created_at: string };
 type UserRow = { id: string; email: string; fullName: string; wilaya: string; roles: string[]; createdAt: string };
-type Section = "overview" | "agencies" | "destinations" | "trips" | "users";
+type Section = "overview" | "agencies" | "destinations" | "trips" | "users" | "earnings";
 type VStatus = "verified" | "rejected" | "suspended" | "under_review";
 
 function AdminDashboard() {
