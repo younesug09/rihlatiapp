@@ -1,7 +1,7 @@
 import { useId } from "react";
 
 // Official Rihlaty logo: emerald "R" with a gold flight trail and plane, optional Arabic name below.
-export function RihlatyLogo({ className = "h-10 w-10", withText = false, title = "رحلتي" }: { className?: string; withText?: boolean; title?: string }) {
+export function RihlatyLogo({ className = "h-10 w-10", withText = false, plate = false, title = "رحلتي" }: { className?: string; withText?: boolean; plate?: boolean; title?: string }) {
   const id = useId().replace(/:/g, "");
   return (
     <svg viewBox={withText ? "0 0 120 150" : "0 0 120 120"} className={className} role="img" aria-label={title} xmlns="http://www.w3.org/2000/svg">
@@ -15,6 +15,7 @@ export function RihlatyLogo({ className = "h-10 w-10", withText = false, title =
           <stop offset="100%" stopColor="#D4AF37" />
         </linearGradient>
       </defs>
+      {plate && <rect x="2" y="2" width="116" height={withText ? 146 : 116} rx="26" fill="#FDFBF7" />}
       {/* R */}
       <path
         fill={`url(#g${id})`}

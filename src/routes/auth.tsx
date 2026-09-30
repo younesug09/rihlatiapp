@@ -113,14 +113,14 @@ function AuthPage() {
         <div className="w-full max-w-md">
           <div className="text-center mb-5 lg:hidden animate-fade-in">
             <div className="h-24 w-24 mx-auto rounded-3xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-glow mb-3 border border-white/20">
-              <RihlatyLogo className="h-16 w-16" />
+              <RihlatyLogo className="h-16 w-16" plate />
             </div>
             <h1 className="text-3xl font-black text-white">{t("appName")}</h1>
           </div>
 
           <div className="bg-card/95 backdrop-blur-2xl rounded-3xl shadow-card p-7 animate-scale-in border border-white/40">
             <div className="hidden lg:flex items-center gap-3 mb-5">
-              <RihlatyLogo className="h-12 w-12" />
+              <RihlatyLogo className="h-12 w-12" plate />
               <div>
                 <h1 className="text-2xl font-black">{mode === "signin" ? t("welcomeBack") : t("startJourney")}</h1>
                 <p className="text-xs text-muted-foreground">{mode === "signin" ? t("continueExp") : t("createGo")}</p>
