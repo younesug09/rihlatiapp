@@ -171,63 +171,105 @@ export type Database = {
       }
       bookings: {
         Row: {
+          agency_compensation: number | null
+          agency_fee: number | null
           agency_id: string | null
+          agency_payout: number | null
+          base_price: number | null
           booking_ref: string | null
+          cancellation_reason: string | null
+          cancelled_at: string | null
           check_in: string
           check_out: string
           created_at: string
           decided_at: string | null
           decision_notes: string | null
           destination_id: string | null
+          flexstay_status: string | null
           guests: number
           id: string
           notes: string | null
           payment_method: string | null
           payment_status: string
+          penalty_amount: number | null
+          platform_penalty_fee: number | null
+          platform_revenue: number | null
+          refund_amount: number | null
+          service_fee: number | null
           status: string
           total_price: number
+          traveler_name: string | null
+          traveler_phone: string | null
           trip_id: string | null
           updated_at: string
           user_id: string
           verification_token: string
         }
         Insert: {
+          agency_compensation?: number | null
+          agency_fee?: number | null
           agency_id?: string | null
+          agency_payout?: number | null
+          base_price?: number | null
           booking_ref?: string | null
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
           check_in: string
           check_out: string
           created_at?: string
           decided_at?: string | null
           decision_notes?: string | null
           destination_id?: string | null
+          flexstay_status?: string | null
           guests?: number
           id?: string
           notes?: string | null
           payment_method?: string | null
           payment_status?: string
+          penalty_amount?: number | null
+          platform_penalty_fee?: number | null
+          platform_revenue?: number | null
+          refund_amount?: number | null
+          service_fee?: number | null
           status?: string
           total_price: number
+          traveler_name?: string | null
+          traveler_phone?: string | null
           trip_id?: string | null
           updated_at?: string
           user_id: string
           verification_token?: string
         }
         Update: {
+          agency_compensation?: number | null
+          agency_fee?: number | null
           agency_id?: string | null
+          agency_payout?: number | null
+          base_price?: number | null
           booking_ref?: string | null
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
           check_in?: string
           check_out?: string
           created_at?: string
           decided_at?: string | null
           decision_notes?: string | null
           destination_id?: string | null
+          flexstay_status?: string | null
           guests?: number
           id?: string
           notes?: string | null
           payment_method?: string | null
           payment_status?: string
+          penalty_amount?: number | null
+          platform_penalty_fee?: number | null
+          platform_revenue?: number | null
+          refund_amount?: number | null
+          service_fee?: number | null
           status?: string
           total_price?: number
+          traveler_name?: string | null
+          traveler_phone?: string | null
           trip_id?: string | null
           updated_at?: string
           user_id?: string
@@ -343,6 +385,39 @@ export type Database = {
         }
         Relationships: []
       }
+      discount_vouchers: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          percent: number
+          perks: string[]
+          source: string
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          percent?: number
+          perks?: string[]
+          source?: string
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          percent?: number
+          perks?: string[]
+          source?: string
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string
@@ -363,6 +438,44 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      flexstay_offers: {
+        Row: {
+          booking_id: string
+          created_at: string
+          id: string
+          offered_by: string | null
+          responded_at: string | null
+          shift_days: number
+          status: string
+        }
+        Insert: {
+          booking_id: string
+          created_at?: string
+          id?: string
+          offered_by?: string | null
+          responded_at?: string | null
+          shift_days?: number
+          status?: string
+        }
+        Update: {
+          booking_id?: string
+          created_at?: string
+          id?: string
+          offered_by?: string | null
+          responded_at?: string | null
+          shift_days?: number
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flexstay_offers_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       messages: {
         Row: {
@@ -686,6 +799,27 @@ export type Database = {
           },
         ]
       }
+      user_badges: {
+        Row: {
+          badge: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          badge: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          badge?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -716,24 +850,82 @@ export type Database = {
         Args: { _booking_id: string; _user_id: string }
         Returns: boolean
       }
-      decide_booking: {
-        Args: { _booking_id: string; _decision: string; _notes?: string }
+      cancel_booking: {
+        Args: { _booking_id: string; _reason?: string }
         Returns: {
+          agency_compensation: number | null
+          agency_fee: number | null
           agency_id: string | null
+          agency_payout: number | null
+          base_price: number | null
           booking_ref: string | null
+          cancellation_reason: string | null
+          cancelled_at: string | null
           check_in: string
           check_out: string
           created_at: string
           decided_at: string | null
           decision_notes: string | null
           destination_id: string | null
+          flexstay_status: string | null
           guests: number
           id: string
           notes: string | null
           payment_method: string | null
           payment_status: string
+          penalty_amount: number | null
+          platform_penalty_fee: number | null
+          platform_revenue: number | null
+          refund_amount: number | null
+          service_fee: number | null
           status: string
           total_price: number
+          traveler_name: string | null
+          traveler_phone: string | null
+          trip_id: string | null
+          updated_at: string
+          user_id: string
+          verification_token: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "bookings"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      decide_booking: {
+        Args: { _booking_id: string; _decision: string; _notes?: string }
+        Returns: {
+          agency_compensation: number | null
+          agency_fee: number | null
+          agency_id: string | null
+          agency_payout: number | null
+          base_price: number | null
+          booking_ref: string | null
+          cancellation_reason: string | null
+          cancelled_at: string | null
+          check_in: string
+          check_out: string
+          created_at: string
+          decided_at: string | null
+          decision_notes: string | null
+          destination_id: string | null
+          flexstay_status: string | null
+          guests: number
+          id: string
+          notes: string | null
+          payment_method: string | null
+          payment_status: string
+          penalty_amount: number | null
+          platform_penalty_fee: number | null
+          platform_revenue: number | null
+          refund_amount: number | null
+          service_fee: number | null
+          status: string
+          total_price: number
+          traveler_name: string | null
+          traveler_phone: string | null
           trip_id: string | null
           updated_at: string
           user_id: string
@@ -757,24 +949,74 @@ export type Database = {
         }
         Returns: boolean
       }
+      offer_flexstay: {
+        Args: { _booking_id: string }
+        Returns: {
+          booking_id: string
+          created_at: string
+          id: string
+          offered_by: string | null
+          responded_at: string | null
+          shift_days: number
+          status: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "flexstay_offers"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      respond_flexstay: {
+        Args: { _accept: boolean; _offer_id: string }
+        Returns: {
+          booking_id: string
+          created_at: string
+          id: string
+          offered_by: string | null
+          responded_at: string | null
+          shift_days: number
+          status: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "flexstay_offers"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       set_booking_payment_status: {
         Args: { _booking_id: string; _payment_status: string }
         Returns: {
+          agency_compensation: number | null
+          agency_fee: number | null
           agency_id: string | null
+          agency_payout: number | null
+          base_price: number | null
           booking_ref: string | null
+          cancellation_reason: string | null
+          cancelled_at: string | null
           check_in: string
           check_out: string
           created_at: string
           decided_at: string | null
           decision_notes: string | null
           destination_id: string | null
+          flexstay_status: string | null
           guests: number
           id: string
           notes: string | null
           payment_method: string | null
           payment_status: string
+          penalty_amount: number | null
+          platform_penalty_fee: number | null
+          platform_revenue: number | null
+          refund_amount: number | null
+          service_fee: number | null
           status: string
           total_price: number
+          traveler_name: string | null
+          traveler_phone: string | null
           trip_id: string | null
           updated_at: string
           user_id: string
