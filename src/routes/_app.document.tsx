@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { RihlatyLogo } from "@/components/RihlatyLogo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { BadgeCheck, Printer, QrCode } from "lucide-react";
@@ -112,11 +113,11 @@ function TravelDocument() {
 
       <article className="rounded-3xl border border-border bg-card p-6">
         <header className="flex items-start justify-between gap-4 border-b border-border pb-4">
-          <div className="min-w-0">
+          <div className="flex min-w-0 items-start gap-3"><RihlatyLogo className="h-16 w-14 shrink-0" withText /><div className="min-w-0">
             <p className="text-xs font-bold text-muted-foreground">RIHLA VERIFIED BOOKING VOUCHER</p>
             <h2 className="mt-1 text-xl font-black">قسيمة حجز رحلتي الموثّقة</h2>
             <p className="mt-1 text-xs text-muted-foreground">وثيقة صادرة عن منصة رحلتي — ليست وثيقة رسمية حكومية.</p>
-          </div>
+          </div></div>
           <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-3 py-1 text-[11px] font-bold text-primary-foreground">
             <BadgeCheck className="h-3.5 w-3.5" strokeWidth={1.5} /> رحلتي
           </span>
