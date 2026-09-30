@@ -9,66 +9,57 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppRouteImport } from './routes/_app'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as AppAboutRouteImport } from './routes/_app.about'
-import { Route as AppAgencyRouteImport } from './routes/_app.agency'
-import { Route as AppBookingRouteImport } from './routes/_app.booking'
-import { Route as AppCommunityRouteImport } from './routes/_app.community'
-import { Route as AppDiscoverRouteImport } from './routes/_app.discover'
-import { Route as AppDocumentRouteImport } from './routes/_app.document'
-import { Route as AppEventsRouteImport } from './routes/_app.events'
-import { Route as AppExploreRouteImport } from './routes/_app.explore'
-import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
-import { Route as AppHomeRouteImport } from './routes/_app.home'
-import { Route as AppHotelsRouteImport } from './routes/_app.hotels'
-import { Route as AppMagazineRouteImport } from './routes/_app.magazine'
-import { Route as AppMediaRouteImport } from './routes/_app.media'
-import { Route as AppMessagesRouteImport } from './routes/_app.messages'
-import { Route as AppNewsRouteImport } from './routes/_app.news'
-import { Route as AppPassportRouteImport } from './routes/_app.passport'
-import { Route as AppPitchRouteImport } from './routes/_app.pitch'
-import { Route as AppPlanRouteImport } from './routes/_app.plan'
-import { Route as AppProfileRouteImport } from './routes/_app.profile'
-import { Route as AppStaysRouteImport } from './routes/_app.stays'
-import { Route as AppTrustRouteImport } from './routes/_app.trust'
-import { Route as AppVerifyRouteImport } from './routes/_app.verify'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppWilayasRouteImport } from './routes/_app.wilayas'
-import { Route as AppAgenciesSlugRouteImport } from './routes/_app.agencies.$slug'
-import { Route as AppAgencyIndexRouteImport } from './routes/_app.agency.index'
-import { Route as AppAgencyBookingsRouteImport } from './routes/_app.agency.bookings'
-import { Route as AppAgencyTripsRouteImport } from './routes/_app.agency.trips'
-import { Route as AppDashboardIndexRouteImport } from './routes/_app.dashboard.index'
-import { Route as AppDashboardAdminRouteImport } from './routes/_app.dashboard.admin'
-import { Route as AppDashboardAgencyRouteImport } from './routes/_app.dashboard.agency'
-import { Route as AppDashboardCustomerRouteImport } from './routes/_app.dashboard.customer'
-import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
+import { Route as AppVerifyRouteImport } from './routes/_app.verify'
+import { Route as AppTrustRouteImport } from './routes/_app.trust'
+import { Route as AppStaysRouteImport } from './routes/_app.stays'
+import { Route as AppProfileRouteImport } from './routes/_app.profile'
+import { Route as AppPlanRouteImport } from './routes/_app.plan'
+import { Route as AppPitchRouteImport } from './routes/_app.pitch'
+import { Route as AppPassportRouteImport } from './routes/_app.passport'
+import { Route as AppNewsRouteImport } from './routes/_app.news'
+import { Route as AppMessagesRouteImport } from './routes/_app.messages'
+import { Route as AppMediaRouteImport } from './routes/_app.media'
+import { Route as AppMagazineRouteImport } from './routes/_app.magazine'
+import { Route as AppHotelsRouteImport } from './routes/_app.hotels'
+import { Route as AppHomeRouteImport } from './routes/_app.home'
+import { Route as AppFavoritesRouteImport } from './routes/_app.favorites'
+import { Route as AppExploreRouteImport } from './routes/_app.explore'
+import { Route as AppEventsRouteImport } from './routes/_app.events'
+import { Route as AppDocumentRouteImport } from './routes/_app.document'
+import { Route as AppDiscoverRouteImport } from './routes/_app.discover'
+import { Route as AppCommunityRouteImport } from './routes/_app.community'
+import { Route as AppBookingRouteImport } from './routes/_app.booking'
+import { Route as AppAgencyRouteImport } from './routes/_app.agency'
+import { Route as AppAboutRouteImport } from './routes/_app.about'
 import { Route as AppDiscoverIndexRouteImport } from './routes/_app.discover.index'
-import { Route as AppDiscoverIdRouteImport } from './routes/_app.discover.$id'
-import { Route as AppMagazineSlugRouteImport } from './routes/_app.magazine.$slug'
-import { Route as AppProfileBookingsRouteImport } from './routes/_app.profile.bookings'
-import { Route as AppProfileHelpRouteImport } from './routes/_app.profile.help'
-import { Route as AppProfileLanguageRouteImport } from './routes/_app.profile.language'
-import { Route as AppProfileNotificationsRouteImport } from './routes/_app.profile.notifications'
-import { Route as AppProfileSettingsRouteImport } from './routes/_app.profile.settings'
+import { Route as AppDashboardIndexRouteImport } from './routes/_app.dashboard.index'
+import { Route as AppAgencyIndexRouteImport } from './routes/_app.agency.index'
 import { Route as AppWilayasIdRouteImport } from './routes/_app.wilayas.$id'
+import { Route as AppProfileSettingsRouteImport } from './routes/_app.profile.settings'
+import { Route as AppProfileNotificationsRouteImport } from './routes/_app.profile.notifications'
+import { Route as AppProfileLanguageRouteImport } from './routes/_app.profile.language'
+import { Route as AppProfileHelpRouteImport } from './routes/_app.profile.help'
+import { Route as AppProfileBookingsRouteImport } from './routes/_app.profile.bookings'
+import { Route as AppMagazineSlugRouteImport } from './routes/_app.magazine.$slug'
+import { Route as AppDiscoverIdRouteImport } from './routes/_app.discover.$id'
+import { Route as AppDestinationsIdRouteImport } from './routes/_app.destinations.$id'
+import { Route as AppDashboardCustomerRouteImport } from './routes/_app.dashboard.customer'
+import { Route as AppDashboardAgencyRouteImport } from './routes/_app.dashboard.agency'
+import { Route as AppDashboardAdminRouteImport } from './routes/_app.dashboard.admin'
+import { Route as AppAgencyTripsRouteImport } from './routes/_app.agency.trips'
+import { Route as AppAgencyBookingsRouteImport } from './routes/_app.agency.bookings'
+import { Route as AppAgenciesSlugRouteImport } from './routes/_app.agencies.$slug'
 import { Route as AppVerifyBookingIdRouteImport } from './routes/_app.verify.booking.$id'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppRoute = AppRouteImport.update({
-  id: '/_app',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -76,114 +67,23 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppAboutRoute = AppAboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => AppRoute,
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AppAgencyRoute = AppAgencyRouteImport.update({
-  id: '/agency',
-  path: '/agency',
-  getParentRoute: () => AppRoute,
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AppBookingRoute = AppBookingRouteImport.update({
-  id: '/booking',
-  path: '/booking',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppCommunityRoute = AppCommunityRouteImport.update({
-  id: '/community',
-  path: '/community',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppDiscoverRoute = AppDiscoverRouteImport.update({
-  id: '/discover',
-  path: '/discover',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppDocumentRoute = AppDocumentRouteImport.update({
-  id: '/document',
-  path: '/document',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppEventsRoute = AppEventsRouteImport.update({
-  id: '/events',
-  path: '/events',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppExploreRoute = AppExploreRouteImport.update({
-  id: '/explore',
-  path: '/explore',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppFavoritesRoute = AppFavoritesRouteImport.update({
-  id: '/favorites',
-  path: '/favorites',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppHomeRoute = AppHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppHotelsRoute = AppHotelsRouteImport.update({
-  id: '/hotels',
-  path: '/hotels',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppMagazineRoute = AppMagazineRouteImport.update({
-  id: '/magazine',
-  path: '/magazine',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppMediaRoute = AppMediaRouteImport.update({
-  id: '/media',
-  path: '/media',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppMessagesRoute = AppMessagesRouteImport.update({
-  id: '/messages',
-  path: '/messages',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppNewsRoute = AppNewsRouteImport.update({
-  id: '/news',
-  path: '/news',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPassportRoute = AppPassportRouteImport.update({
-  id: '/passport',
-  path: '/passport',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPitchRoute = AppPitchRouteImport.update({
-  id: '/pitch',
-  path: '/pitch',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPlanRoute = AppPlanRouteImport.update({
-  id: '/plan',
-  path: '/plan',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppProfileRoute = AppProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppStaysRoute = AppStaysRouteImport.update({
-  id: '/stays',
-  path: '/stays',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppTrustRoute = AppTrustRouteImport.update({
-  id: '/trust',
-  path: '/trust',
+const AppWilayasRoute = AppWilayasRouteImport.update({
+  id: '/wilayas',
+  path: '/wilayas',
   getParentRoute: () => AppRoute,
 } as any)
 const AppVerifyRoute = AppVerifyRouteImport.update({
@@ -191,54 +91,109 @@ const AppVerifyRoute = AppVerifyRouteImport.update({
   path: '/verify',
   getParentRoute: () => AppRoute,
 } as any)
-const AppWilayasRoute = AppWilayasRouteImport.update({
-  id: '/wilayas',
-  path: '/wilayas',
+const AppTrustRoute = AppTrustRouteImport.update({
+  id: '/trust',
+  path: '/trust',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAgenciesSlugRoute = AppAgenciesSlugRouteImport.update({
-  id: '/agencies/$slug',
-  path: '/agencies/$slug',
+const AppStaysRoute = AppStaysRouteImport.update({
+  id: '/stays',
+  path: '/stays',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAgencyIndexRoute = AppAgencyIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppAgencyRoute,
-} as any)
-const AppAgencyBookingsRoute = AppAgencyBookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
-  getParentRoute: () => AppAgencyRoute,
-} as any)
-const AppAgencyTripsRoute = AppAgencyTripsRouteImport.update({
-  id: '/trips',
-  path: '/trips',
-  getParentRoute: () => AppAgencyRoute,
-} as any)
-const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
-const AppDashboardAdminRoute = AppDashboardAdminRouteImport.update({
-  id: '/dashboard/admin',
-  path: '/dashboard/admin',
+const AppPlanRoute = AppPlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
   getParentRoute: () => AppRoute,
 } as any)
-const AppDashboardAgencyRoute = AppDashboardAgencyRouteImport.update({
-  id: '/dashboard/agency',
-  path: '/dashboard/agency',
+const AppPitchRoute = AppPitchRouteImport.update({
+  id: '/pitch',
+  path: '/pitch',
   getParentRoute: () => AppRoute,
 } as any)
-const AppDashboardCustomerRoute = AppDashboardCustomerRouteImport.update({
-  id: '/dashboard/customer',
-  path: '/dashboard/customer',
+const AppPassportRoute = AppPassportRouteImport.update({
+  id: '/passport',
+  path: '/passport',
   getParentRoute: () => AppRoute,
 } as any)
-const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
-  id: '/destinations/$id',
-  path: '/destinations/$id',
+const AppNewsRoute = AppNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMessagesRoute = AppMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMediaRoute = AppMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMagazineRoute = AppMagazineRouteImport.update({
+  id: '/magazine',
+  path: '/magazine',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHotelsRoute = AppHotelsRouteImport.update({
+  id: '/hotels',
+  path: '/hotels',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHomeRoute = AppHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFavoritesRoute = AppFavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppExploreRoute = AppExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEventsRoute = AppEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDocumentRoute = AppDocumentRouteImport.update({
+  id: '/document',
+  path: '/document',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDiscoverRoute = AppDiscoverRouteImport.update({
+  id: '/discover',
+  path: '/discover',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCommunityRoute = AppCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBookingRoute = AppBookingRouteImport.update({
+  id: '/booking',
+  path: '/booking',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAgencyRoute = AppAgencyRouteImport.update({
+  id: '/agency',
+  path: '/agency',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAboutRoute = AppAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDiscoverIndexRoute = AppDiscoverIndexRouteImport.update({
@@ -246,29 +201,24 @@ const AppDiscoverIndexRoute = AppDiscoverIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppDiscoverRoute,
 } as any)
-const AppDiscoverIdRoute = AppDiscoverIdRouteImport.update({
+const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAgencyIndexRoute = AppAgencyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppAgencyRoute,
+} as any)
+const AppWilayasIdRoute = AppWilayasIdRouteImport.update({
   id: '/$id',
   path: '/$id',
-  getParentRoute: () => AppDiscoverRoute,
+  getParentRoute: () => AppWilayasRoute,
 } as any)
-const AppMagazineSlugRoute = AppMagazineSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => AppMagazineRoute,
-} as any)
-const AppProfileBookingsRoute = AppProfileBookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
-  getParentRoute: () => AppProfileRoute,
-} as any)
-const AppProfileHelpRoute = AppProfileHelpRouteImport.update({
-  id: '/help',
-  path: '/help',
-  getParentRoute: () => AppProfileRoute,
-} as any)
-const AppProfileLanguageRoute = AppProfileLanguageRouteImport.update({
-  id: '/language',
-  path: '/language',
+const AppProfileSettingsRoute = AppProfileSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AppProfileRoute,
 } as any)
 const AppProfileNotificationsRoute = AppProfileNotificationsRouteImport.update({
@@ -276,15 +226,65 @@ const AppProfileNotificationsRoute = AppProfileNotificationsRouteImport.update({
   path: '/notifications',
   getParentRoute: () => AppProfileRoute,
 } as any)
-const AppProfileSettingsRoute = AppProfileSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
+const AppProfileLanguageRoute = AppProfileLanguageRouteImport.update({
+  id: '/language',
+  path: '/language',
   getParentRoute: () => AppProfileRoute,
 } as any)
-const AppWilayasIdRoute = AppWilayasIdRouteImport.update({
+const AppProfileHelpRoute = AppProfileHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => AppProfileRoute,
+} as any)
+const AppProfileBookingsRoute = AppProfileBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AppProfileRoute,
+} as any)
+const AppMagazineSlugRoute = AppMagazineSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => AppMagazineRoute,
+} as any)
+const AppDiscoverIdRoute = AppDiscoverIdRouteImport.update({
   id: '/$id',
   path: '/$id',
-  getParentRoute: () => AppWilayasRoute,
+  getParentRoute: () => AppDiscoverRoute,
+} as any)
+const AppDestinationsIdRoute = AppDestinationsIdRouteImport.update({
+  id: '/destinations/$id',
+  path: '/destinations/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardCustomerRoute = AppDashboardCustomerRouteImport.update({
+  id: '/dashboard/customer',
+  path: '/dashboard/customer',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardAgencyRoute = AppDashboardAgencyRouteImport.update({
+  id: '/dashboard/agency',
+  path: '/dashboard/agency',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardAdminRoute = AppDashboardAdminRouteImport.update({
+  id: '/dashboard/admin',
+  path: '/dashboard/admin',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAgencyTripsRoute = AppAgencyTripsRouteImport.update({
+  id: '/trips',
+  path: '/trips',
+  getParentRoute: () => AppAgencyRoute,
+} as any)
+const AppAgencyBookingsRoute = AppAgencyBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AppAgencyRoute,
+} as any)
+const AppAgenciesSlugRoute = AppAgenciesSlugRouteImport.update({
+  id: '/agencies/$slug',
+  path: '/agencies/$slug',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppVerifyBookingIdRoute = AppVerifyBookingIdRouteImport.update({
   id: '/booking/$id',
@@ -592,25 +592,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AppRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -620,158 +606,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/about': {
-      id: '/_app/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AppAboutRouteImport
-      parentRoute: typeof AppRoute
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/agency': {
-      id: '/_app/agency'
-      path: '/agency'
-      fullPath: '/agency'
-      preLoaderRoute: typeof AppAgencyRouteImport
-      parentRoute: typeof AppRoute
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/booking': {
-      id: '/_app/booking'
-      path: '/booking'
-      fullPath: '/booking'
-      preLoaderRoute: typeof AppBookingRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/community': {
-      id: '/_app/community'
-      path: '/community'
-      fullPath: '/community'
-      preLoaderRoute: typeof AppCommunityRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/discover': {
-      id: '/_app/discover'
-      path: '/discover'
-      fullPath: '/discover'
-      preLoaderRoute: typeof AppDiscoverRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/document': {
-      id: '/_app/document'
-      path: '/document'
-      fullPath: '/document'
-      preLoaderRoute: typeof AppDocumentRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/events': {
-      id: '/_app/events'
-      path: '/events'
-      fullPath: '/events'
-      preLoaderRoute: typeof AppEventsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/explore': {
-      id: '/_app/explore'
-      path: '/explore'
-      fullPath: '/explore'
-      preLoaderRoute: typeof AppExploreRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/favorites': {
-      id: '/_app/favorites'
-      path: '/favorites'
-      fullPath: '/favorites'
-      preLoaderRoute: typeof AppFavoritesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/home': {
-      id: '/_app/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof AppHomeRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/hotels': {
-      id: '/_app/hotels'
-      path: '/hotels'
-      fullPath: '/hotels'
-      preLoaderRoute: typeof AppHotelsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/magazine': {
-      id: '/_app/magazine'
-      path: '/magazine'
-      fullPath: '/magazine'
-      preLoaderRoute: typeof AppMagazineRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/media': {
-      id: '/_app/media'
-      path: '/media'
-      fullPath: '/media'
-      preLoaderRoute: typeof AppMediaRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/messages': {
-      id: '/_app/messages'
-      path: '/messages'
-      fullPath: '/messages'
-      preLoaderRoute: typeof AppMessagesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/news': {
-      id: '/_app/news'
-      path: '/news'
-      fullPath: '/news'
-      preLoaderRoute: typeof AppNewsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/passport': {
-      id: '/_app/passport'
-      path: '/passport'
-      fullPath: '/passport'
-      preLoaderRoute: typeof AppPassportRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/pitch': {
-      id: '/_app/pitch'
-      path: '/pitch'
-      fullPath: '/pitch'
-      preLoaderRoute: typeof AppPitchRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/plan': {
-      id: '/_app/plan'
-      path: '/plan'
-      fullPath: '/plan'
-      preLoaderRoute: typeof AppPlanRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/profile': {
-      id: '/_app/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AppProfileRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/stays': {
-      id: '/_app/stays'
-      path: '/stays'
-      fullPath: '/stays'
-      preLoaderRoute: typeof AppStaysRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/trust': {
-      id: '/_app/trust'
-      path: '/trust'
-      fullPath: '/trust'
-      preLoaderRoute: typeof AppTrustRouteImport
+    '/_app/wilayas': {
+      id: '/_app/wilayas'
+      path: '/wilayas'
+      fullPath: '/wilayas'
+      preLoaderRoute: typeof AppWilayasRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/verify': {
@@ -781,74 +641,151 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppVerifyRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/wilayas': {
-      id: '/_app/wilayas'
-      path: '/wilayas'
-      fullPath: '/wilayas'
-      preLoaderRoute: typeof AppWilayasRouteImport
+    '/_app/trust': {
+      id: '/_app/trust'
+      path: '/trust'
+      fullPath: '/trust'
+      preLoaderRoute: typeof AppTrustRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/agencies/$slug': {
-      id: '/_app/agencies/$slug'
-      path: '/agencies/$slug'
-      fullPath: '/agencies/$slug'
-      preLoaderRoute: typeof AppAgenciesSlugRouteImport
+    '/_app/stays': {
+      id: '/_app/stays'
+      path: '/stays'
+      fullPath: '/stays'
+      preLoaderRoute: typeof AppStaysRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/agency/': {
-      id: '/_app/agency/'
-      path: '/'
-      fullPath: '/agency/'
-      preLoaderRoute: typeof AppAgencyIndexRouteImport
-      parentRoute: typeof AppAgencyRoute
-    }
-    '/_app/agency/bookings': {
-      id: '/_app/agency/bookings'
-      path: '/bookings'
-      fullPath: '/agency/bookings'
-      preLoaderRoute: typeof AppAgencyBookingsRouteImport
-      parentRoute: typeof AppAgencyRoute
-    }
-    '/_app/agency/trips': {
-      id: '/_app/agency/trips'
-      path: '/trips'
-      fullPath: '/agency/trips'
-      preLoaderRoute: typeof AppAgencyTripsRouteImport
-      parentRoute: typeof AppAgencyRoute
-    }
-    '/_app/dashboard/': {
-      id: '/_app/dashboard/'
-      path: '/dashboard'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof AppDashboardIndexRouteImport
+    '/_app/profile': {
+      id: '/_app/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/dashboard/admin': {
-      id: '/_app/dashboard/admin'
-      path: '/dashboard/admin'
-      fullPath: '/dashboard/admin'
-      preLoaderRoute: typeof AppDashboardAdminRouteImport
+    '/_app/plan': {
+      id: '/_app/plan'
+      path: '/plan'
+      fullPath: '/plan'
+      preLoaderRoute: typeof AppPlanRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/dashboard/agency': {
-      id: '/_app/dashboard/agency'
-      path: '/dashboard/agency'
-      fullPath: '/dashboard/agency'
-      preLoaderRoute: typeof AppDashboardAgencyRouteImport
+    '/_app/pitch': {
+      id: '/_app/pitch'
+      path: '/pitch'
+      fullPath: '/pitch'
+      preLoaderRoute: typeof AppPitchRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/dashboard/customer': {
-      id: '/_app/dashboard/customer'
-      path: '/dashboard/customer'
-      fullPath: '/dashboard/customer'
-      preLoaderRoute: typeof AppDashboardCustomerRouteImport
+    '/_app/passport': {
+      id: '/_app/passport'
+      path: '/passport'
+      fullPath: '/passport'
+      preLoaderRoute: typeof AppPassportRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/destinations/$id': {
-      id: '/_app/destinations/$id'
-      path: '/destinations/$id'
-      fullPath: '/destinations/$id'
-      preLoaderRoute: typeof AppDestinationsIdRouteImport
+    '/_app/news': {
+      id: '/_app/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof AppNewsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/messages': {
+      id: '/_app/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof AppMessagesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/media': {
+      id: '/_app/media'
+      path: '/media'
+      fullPath: '/media'
+      preLoaderRoute: typeof AppMediaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/magazine': {
+      id: '/_app/magazine'
+      path: '/magazine'
+      fullPath: '/magazine'
+      preLoaderRoute: typeof AppMagazineRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hotels': {
+      id: '/_app/hotels'
+      path: '/hotels'
+      fullPath: '/hotels'
+      preLoaderRoute: typeof AppHotelsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/home': {
+      id: '/_app/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof AppHomeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/favorites': {
+      id: '/_app/favorites'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof AppFavoritesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/explore': {
+      id: '/_app/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof AppExploreRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/events': {
+      id: '/_app/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof AppEventsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/document': {
+      id: '/_app/document'
+      path: '/document'
+      fullPath: '/document'
+      preLoaderRoute: typeof AppDocumentRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/discover': {
+      id: '/_app/discover'
+      path: '/discover'
+      fullPath: '/discover'
+      preLoaderRoute: typeof AppDiscoverRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/community': {
+      id: '/_app/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof AppCommunityRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/booking': {
+      id: '/_app/booking'
+      path: '/booking'
+      fullPath: '/booking'
+      preLoaderRoute: typeof AppBookingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/agency': {
+      id: '/_app/agency'
+      path: '/agency'
+      fullPath: '/agency'
+      preLoaderRoute: typeof AppAgencyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/about': {
+      id: '/_app/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AppAboutRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/discover/': {
@@ -858,39 +795,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDiscoverIndexRouteImport
       parentRoute: typeof AppDiscoverRoute
     }
-    '/_app/discover/$id': {
-      id: '/_app/discover/$id'
+    '/_app/dashboard/': {
+      id: '/_app/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AppDashboardIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/agency/': {
+      id: '/_app/agency/'
+      path: '/'
+      fullPath: '/agency/'
+      preLoaderRoute: typeof AppAgencyIndexRouteImport
+      parentRoute: typeof AppAgencyRoute
+    }
+    '/_app/wilayas/$id': {
+      id: '/_app/wilayas/$id'
       path: '/$id'
-      fullPath: '/discover/$id'
-      preLoaderRoute: typeof AppDiscoverIdRouteImport
-      parentRoute: typeof AppDiscoverRoute
+      fullPath: '/wilayas/$id'
+      preLoaderRoute: typeof AppWilayasIdRouteImport
+      parentRoute: typeof AppWilayasRoute
     }
-    '/_app/magazine/$slug': {
-      id: '/_app/magazine/$slug'
-      path: '/$slug'
-      fullPath: '/magazine/$slug'
-      preLoaderRoute: typeof AppMagazineSlugRouteImport
-      parentRoute: typeof AppMagazineRoute
-    }
-    '/_app/profile/bookings': {
-      id: '/_app/profile/bookings'
-      path: '/bookings'
-      fullPath: '/profile/bookings'
-      preLoaderRoute: typeof AppProfileBookingsRouteImport
-      parentRoute: typeof AppProfileRoute
-    }
-    '/_app/profile/help': {
-      id: '/_app/profile/help'
-      path: '/help'
-      fullPath: '/profile/help'
-      preLoaderRoute: typeof AppProfileHelpRouteImport
-      parentRoute: typeof AppProfileRoute
-    }
-    '/_app/profile/language': {
-      id: '/_app/profile/language'
-      path: '/language'
-      fullPath: '/profile/language'
-      preLoaderRoute: typeof AppProfileLanguageRouteImport
+    '/_app/profile/settings': {
+      id: '/_app/profile/settings'
+      path: '/settings'
+      fullPath: '/profile/settings'
+      preLoaderRoute: typeof AppProfileSettingsRouteImport
       parentRoute: typeof AppProfileRoute
     }
     '/_app/profile/notifications': {
@@ -900,19 +830,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileNotificationsRouteImport
       parentRoute: typeof AppProfileRoute
     }
-    '/_app/profile/settings': {
-      id: '/_app/profile/settings'
-      path: '/settings'
-      fullPath: '/profile/settings'
-      preLoaderRoute: typeof AppProfileSettingsRouteImport
+    '/_app/profile/language': {
+      id: '/_app/profile/language'
+      path: '/language'
+      fullPath: '/profile/language'
+      preLoaderRoute: typeof AppProfileLanguageRouteImport
       parentRoute: typeof AppProfileRoute
     }
-    '/_app/wilayas/$id': {
-      id: '/_app/wilayas/$id'
+    '/_app/profile/help': {
+      id: '/_app/profile/help'
+      path: '/help'
+      fullPath: '/profile/help'
+      preLoaderRoute: typeof AppProfileHelpRouteImport
+      parentRoute: typeof AppProfileRoute
+    }
+    '/_app/profile/bookings': {
+      id: '/_app/profile/bookings'
+      path: '/bookings'
+      fullPath: '/profile/bookings'
+      preLoaderRoute: typeof AppProfileBookingsRouteImport
+      parentRoute: typeof AppProfileRoute
+    }
+    '/_app/magazine/$slug': {
+      id: '/_app/magazine/$slug'
+      path: '/$slug'
+      fullPath: '/magazine/$slug'
+      preLoaderRoute: typeof AppMagazineSlugRouteImport
+      parentRoute: typeof AppMagazineRoute
+    }
+    '/_app/discover/$id': {
+      id: '/_app/discover/$id'
       path: '/$id'
-      fullPath: '/wilayas/$id'
-      preLoaderRoute: typeof AppWilayasIdRouteImport
-      parentRoute: typeof AppWilayasRoute
+      fullPath: '/discover/$id'
+      preLoaderRoute: typeof AppDiscoverIdRouteImport
+      parentRoute: typeof AppDiscoverRoute
+    }
+    '/_app/destinations/$id': {
+      id: '/_app/destinations/$id'
+      path: '/destinations/$id'
+      fullPath: '/destinations/$id'
+      preLoaderRoute: typeof AppDestinationsIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard/customer': {
+      id: '/_app/dashboard/customer'
+      path: '/dashboard/customer'
+      fullPath: '/dashboard/customer'
+      preLoaderRoute: typeof AppDashboardCustomerRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard/agency': {
+      id: '/_app/dashboard/agency'
+      path: '/dashboard/agency'
+      fullPath: '/dashboard/agency'
+      preLoaderRoute: typeof AppDashboardAgencyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard/admin': {
+      id: '/_app/dashboard/admin'
+      path: '/dashboard/admin'
+      fullPath: '/dashboard/admin'
+      preLoaderRoute: typeof AppDashboardAdminRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/agency/trips': {
+      id: '/_app/agency/trips'
+      path: '/trips'
+      fullPath: '/agency/trips'
+      preLoaderRoute: typeof AppAgencyTripsRouteImport
+      parentRoute: typeof AppAgencyRoute
+    }
+    '/_app/agency/bookings': {
+      id: '/_app/agency/bookings'
+      path: '/bookings'
+      fullPath: '/agency/bookings'
+      preLoaderRoute: typeof AppAgencyBookingsRouteImport
+      parentRoute: typeof AppAgencyRoute
+    }
+    '/_app/agencies/$slug': {
+      id: '/_app/agencies/$slug'
+      path: '/agencies/$slug'
+      fullPath: '/agencies/$slug'
+      preLoaderRoute: typeof AppAgenciesSlugRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/verify/booking/$id': {
       id: '/_app/verify/booking/$id'
