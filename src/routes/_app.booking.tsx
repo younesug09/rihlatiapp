@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { formatDZ, DZD } from "@/lib/format";
+import { commission } from "@/lib/pricing";
 
 export const Route = createFileRoute("/_app/booking")({
   validateSearch: z.object({
@@ -72,7 +73,12 @@ function Booking() {
   const breakdown = priceBreakdown(nightlyPrice, nights, taxRate);
   const rooms = trip ? nightlyPrice * guests : breakdown.rooms;
   const taxes = trip ? 0 : breakdown.taxes;
-  const total = trip ? rooms : breakdown.total;
+  const base = trip ? rooms : breakdown.total;
+  const fees = commission(base);
+  const total = fees.customerTotal;
+  const [travelerName, setTravelerName] = useState("");
+  const [travelerPhone, setTravelerPhone] = useState("");
+  const [travelerNotes, setTravelerNotes] = useState("");
 
   const title = trip?.title ?? stay?.name ?? hotel?.name ?? d.name;
   const image = trip?.cover_url ?? stay?.image ?? hotel?.image ?? d.image;
@@ -111,13 +117,16 @@ function Booking() {
         check_in: checkIn,
         check_out: checkOut,
         guests,
-        total_price: total,
+        total_price: base,
+        base_price: base,
         status: "pending",
         agency_id: trip?.agency_id ?? null,
         trip_id: trip?.id ?? null,
         payment_status: "unpaid",
         payment_method: payment,
-        notes: `${title} · ${method.label}`,
+        traveler_name: travelerName.trim() || null,
+        traveler_phone: travelerPhone.trim() || null,
+        notes: `${title} · ${method.label}${travelerNotes.trim() ? ` · ${travelerNotes.trim()}` : ""}`,
       })
       .select("booking_ref")
       .single();
@@ -233,9 +242,10 @@ function Booking() {
           <label className="flex items-center gap-2 text-sm font-semibold">
             <CreditCard className="h-4 w-4 text-primary" strokeWidth={1.5} /> معلومات الاتصال
           </label>
-          <input required maxLength={100} placeholder="الاسم الكامل" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
+          <input required maxLength={100} value={travelerName} onChange={(e) => setTravelerName(e.target.value)} placeholder="الاسم الكامل" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
           <input required type="email" maxLength={255} placeholder="البريد الإلكتروني" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
-          <input required maxLength={20} placeholder="رقم الهاتف" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
+          <input required maxLength={20} value={travelerPhone} onChange={(e) => setTravelerPhone(e.target.value)} placeholder="رقم الهاتف" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
+          <textarea maxLength={500} value={travelerNotes} onChange={(e) => setTravelerNotes(e.target.value)} placeholder="ملاحظات للوكالة (اختياري)" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
         </div>
 
         <fieldset className="rounded-2xl border border-border bg-card p-4">
@@ -283,14 +293,15 @@ function Booking() {
             <span>{formatDZ(taxes)} {DZD}</span>
            </div>}
           <div className="mb-3 flex justify-between text-sm">
-            <span className="text-muted-foreground">عمولة رحلتي</span>
-            <span>0 {DZD}</span>
+            <span className="text-muted-foreground">رسوم خدمة رحلتي (4%)</span>
+            <span>{formatDZ(fees.serviceFee)} {DZD}</span>
           </div>
           <div className="flex items-center justify-between border-t border-border pt-3">
             <span className="font-bold">الإجمالي</span>
             <span className="text-xl font-black text-primary">{formatDZ(total)} {DZD}</span>
           </div>
-           <p className="mt-2 text-[11px] text-muted-foreground">{trip ? "سعر الرحلة × عدد المسافرين = الإجمالي" : "(سعر الليلة × عدد الليالي) + الرسوم = الإجمالي"}</p>
+           <p className="mt-2 text-[11px] text-muted-foreground">{trip ? "سعر الرحلة × عدد المسافرين + 4% رسوم خدمة = الإجمالي" : "(سعر الليلة × عدد الليالي) + الرسوم + 4% رسوم خدمة = الإجمالي"}</p>
+           <p className="mt-1 text-[11px] text-muted-foreground">إلغاء مجاني قبل أكثر من 48 ساعة من الانطلاق · أقل من 48 ساعة: خصم 15%.</p>
         </div>
 
         <button

@@ -5,6 +5,7 @@ import { AlgeriaMap } from "@/components/AlgeriaMap";
 import { Button } from "@/components/ui/button";
 import { regions, wilayas, type Region } from "@/data/wilayas";
 import { getTourismTypes, tourismFilters, tourismLabel, type TourismType } from "@/data/discover";
+import { LiveTrips } from "@/components/LiveTrips";
 
 export const Route = createFileRoute("/_app/discover/")({
   head: () => ({
@@ -50,6 +51,8 @@ function DiscoverPage() {
           </div>
         </div>
       </section>
+
+      <LiveTrips />
 
       <div className="mx-auto max-w-6xl px-4 py-8">
         <section aria-labelledby="map-heading">

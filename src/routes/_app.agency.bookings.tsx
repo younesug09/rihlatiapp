@@ -45,6 +45,11 @@ function AgencyBookings() {
     if (error) return toast.error("تعذّر تحديث حالة الدفع");
     toast.success("تم تحديث حالة الدفع"); await load();
   };
+  const offerFlex = async (id: string) => {
+    const { error } = await supabase.rpc("offer_flexstay", { _booking_id: id });
+    if (error) return toast.error("تعذّر إرسال عرض FlexStay");
+    toast.success("تم إرسال عرض FlexStay للمسافر"); await load();
+  };
 
   const statuses = ["pending", "confirmed", "rejected", "completed"];
   const shown = filter === "all" ? bookings : bookings.filter((booking) => booking.status === filter);
