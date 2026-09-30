@@ -21,7 +21,7 @@ function AgencyHome() {
   const { agency } = useRole();
   const { t } = useLanguage();
   const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState({ trips: 0, pending: 0, confirmed: 0, customers: 0, revenue: 0 });
+  const [stats, setStats] = useState({ trips: 0, pending: 0, confirmed: 0, customers: 0, revenue: 0, gross: 0, fee: 0, payout: 0, comp: 0 });
   const [recent, setRecent] = useState<{ id: string; booking_ref: string | null; status: string; total_price: number; created_at: string }[]>([]);
 
   useEffect(() => {
@@ -29,10 +29,10 @@ function AgencyHome() {
     void Promise.all([
       supabase.from("trips").select("id", { count: "exact", head: true }).eq("agency_id", agency.id),
       supabase.from("bookings").select("id", { count: "exact", head: true }).eq("agency_id", agency.id).eq("status", "pending"),
-      supabase.from("bookings").select("id, booking_ref, status, total_price, created_at, user_id").eq("agency_id", agency.id).order("created_at", { ascending: false }),
+      supabase.from("bookings").select("id, booking_ref, status, total_price, created_at, user_id, base_price, agency_fee, agency_payout, agency_compensation").eq("agency_id", agency.id).order("created_at", { ascending: false }),
     ]).then(([tripResult, pendingResult, bookingResult]) => {
       const rows = bookingResult.data ?? [];
-      setStats({ trips: tripResult.count ?? 0, pending: pendingResult.count ?? 0, confirmed: rows.filter((row) => row.status === "confirmed").length, customers: new Set(rows.map((row) => row.user_id)).size, revenue: rows.filter((row) => row.status === "confirmed").reduce((sum, row) => sum + Number(row.total_price), 0) });
+      setStats({ trips: tripResult.count ?? 0, pending: pendingResult.count ?? 0, confirmed: rows.filter((row) => row.status === "confirmed").length, customers: new Set(rows.map((row) => row.user_id)).size, revenue: rows.filter((row) => row.status === "confirmed").reduce((sum, row) => sum + Number(row.total_price), 0), gross: rows.filter((r) => ["confirmed","completed"].includes(r.status)).reduce((s2, r) => s2 + Number(r.base_price ?? 0), 0), fee: rows.filter((r) => ["confirmed","completed"].includes(r.status)).reduce((s2, r) => s2 + Number(r.agency_fee ?? 0), 0), payout: rows.filter((r) => ["confirmed","completed"].includes(r.status)).reduce((s2, r) => s2 + Number(r.agency_payout ?? 0), 0), comp: rows.reduce((s2, r) => s2 + Number(r.agency_compensation ?? 0), 0) });
       setRecent(rows.slice(0, 5));
       setLoading(false);
     });
@@ -50,6 +50,7 @@ function AgencyHome() {
     {!agency ? <div className="border border-dashed border-border py-16 text-center"><Building2 className="mx-auto h-10 w-10 text-muted-foreground" /><h2 className="mt-3 text-xl font-black">أكمل ملف وكالتك</h2><Button asChild className="mt-5"><Link to="/agency">إنشاء الملف</Link></Button></div> : loading ? <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{[1,2,3,4].map((item) => <div key={item} className="h-32 animate-pulse rounded-lg bg-secondary" />)}</div> : <div className="space-y-9">
       <div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm text-muted-foreground">RIHLA PARTNER</p><h2 className="text-3xl font-black">نظرة تشغيلية</h2></div><Button asChild><Link to="/agency/trips"><Plus className="h-4 w-4" />{t("addTrip")}</Link></Button></div>
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-5">{[{label:t("myTrips"),value:stats.trips,icon:Map},{label:"طلبات معلّقة",value:stats.pending,icon:Bell},{label:"حجوزات مؤكدة",value:stats.confirmed,icon:CalendarCheck},{label:t("customers"),value:stats.customers,icon:Users},{label:"قيمة مؤكدة",value:`${stats.revenue.toLocaleString()} دج`,icon:BarChart3}].map((item) => <div key={item.label} className="rounded-lg border border-border bg-card p-4"><item.icon className="h-5 w-5 text-primary" /><p className="mt-4 text-2xl font-black">{item.value}</p><p className="text-xs text-muted-foreground">{item.label}</p></div>)}</div>
+      <section><h2 className="text-2xl font-black">المستحقات (Payouts)</h2><p className="text-sm text-muted-foreground">تقتطع المنصة 8% من قيمة كل حجز مؤكد.</p><div className="mt-4 grid grid-cols-2 gap-3 xl:grid-cols-4">{[{l:"إجمالي المبيعات",v:stats.gross},{l:"رسوم المنصة 8%",v:stats.fee},{l:"صافي المستحقات",v:stats.payout},{l:"تعويضات الإلغاء",v:stats.comp}].map((x) => <div key={x.l} className="rounded-lg border border-border bg-card p-4"><p className="text-2xl font-black">{x.v.toLocaleString()} دج</p><p className="text-xs text-muted-foreground">{x.l}</p></div>)}</div></section>
       <section><div className="flex items-center justify-between"><h2 className="text-2xl font-black">أحدث الطلبات</h2><Button asChild variant="ghost"><Link to="/agency/bookings">عرض الكل</Link></Button></div>{recent.length === 0 ? <div className="mt-4 border border-dashed border-border py-12 text-center text-muted-foreground">لا توجد طلبات حجز بعد.</div> : <div className="mt-4 overflow-x-auto"><table className="w-full min-w-[36rem] text-sm"><thead><tr className="border-b border-border text-muted-foreground"><th className="p-3 text-start">المرجع</th><th className="p-3 text-start">الحالة</th><th className="p-3 text-start">القيمة</th><th className="p-3 text-start">التاريخ</th></tr></thead><tbody>{recent.map((booking) => <tr key={booking.id} className="border-b border-border"><td className="p-3 font-mono font-bold">{booking.booking_ref}</td><td className="p-3">{booking.status}</td><td className="p-3">{Number(booking.total_price).toLocaleString()} دج</td><td className="p-3">{new Date(booking.created_at).toLocaleDateString()}</td></tr>)}</tbody></table></div>}</section>
     </div>}
   </DashboardShell>;
