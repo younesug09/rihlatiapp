@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/")({
 
 function Splash() {
   const navigate = useNavigate();
+  const { tr } = useLanguage();
   const [show, setShow] = useState(true);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ function Splash() {
           <img src={logo} alt="Rihlaty" className="h-28 w-24 object-contain" />
         </div>
         <h1 className="text-5xl font-bold tracking-tight mb-3">رحلتي</h1>
-        <p className="text-base text-white/85">منصة السياحة والتواصل الإعلامي</p>
+        <p className="text-base text-white/85">{tr("منصة السياحة والتواصل الإعلامي", "Plateforme de tourisme et de médias", "Tourism & media platform")}</p>
         <div className="mt-12 flex gap-1.5">
           <span className="h-2 w-2 rounded-full bg-white/80 animate-pulse" />
           <span className="h-2 w-2 rounded-full bg-white/60 animate-pulse" style={{ animationDelay: "0.2s" }} />
@@ -52,7 +54,7 @@ function Splash() {
       </div>
 
       <Link to="/auth" className="absolute bottom-8 text-white/70 text-sm hover:text-white transition-colors">
-        ابدأ الآن
+        {tr("ابدأ الآن", "Commencer", "Get started")}
       </Link>
     </div>
   );

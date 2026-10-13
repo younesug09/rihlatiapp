@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { wilayas } from "@/data/wilayas";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/community")({
   head: () => ({
@@ -28,13 +29,14 @@ type Post = {
   created_at: string;
 };
 
-const statusLabel: Record<Post["status"], string> = {
-  pending: "قيد المراجعة",
-  approved: "منشور",
-  rejected: "مرفوض",
-};
-
 function Community() {
+  const { tr } = useLanguage();
+  const statusLabel: Record<Post["status"], string> = {
+    pending: tr("قيد المراجعة", "En cours de révision", "Under review"),
+    approved: tr("منشور", "Publié", "Published"),
+    rejected: tr("مرفوض", "Rejeté", "Rejected"),
+  };
+
   const { user, loading } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
   const [mine, setMine] = useState<Post[]>([]);
@@ -100,7 +102,7 @@ function Community() {
     e.preventDefault();
     if (!user) return;
     if (!caption.trim()) {
-      toast.error("اكتب نصًا مرافقًا للمنشور");
+      toast.error(tr("اكتب نصًا مرافقًا للمنشور", "Écrivez un texte pour accompagner la publication", "Write a caption for the post"));
       return;
     }
     setSaving(true);
@@ -121,14 +123,14 @@ function Community() {
         status: "pending",
       });
       if (error) throw error;
-      toast.success("تم إرسال منشورك — سيظهر بعد المراجعة");
+      toast.success(tr("تم إرسال منشورك — سيظهر بعد المراجعة", "Votre publication a été envoyée — elle apparaîtra après révision", "Your post has been submitted — it will appear after review"));
       setCaption("");
       setWilaya("");
       pickFile(null);
       if (inputRef.current) inputRef.current.value = "";
       await load();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "تعذّر إرسال المنشور");
+      toast.error(err instanceof Error ? err.message : tr("تعذّر إرسال المنشور", "Impossible d'envoyer la publication", "Could not submit the post"));
     } finally {
       setSaving(false);
     }
@@ -136,9 +138,9 @@ function Community() {
 
   const remove = async (id: string) => {
     const { error } = await supabase.from("community_posts").delete().eq("id", id);
-    if (error) toast.error("تعذّر حذف المنشور");
+    if (error) toast.error(tr("تعذّر حذف المنشور", "Impossible de supprimer la publication", "Could not delete the post"));
     else {
-      toast.success("تم حذف المنشور");
+      toast.success(tr("تم حذف المنشور", "Publication supprimée", "Post deleted"));
       await load();
     }
   };
@@ -147,20 +149,20 @@ function Community() {
     <div className="mx-auto max-w-5xl px-4 py-8 animate-fade-in">
       <header className="border-b border-border pb-6">
         <p className="text-xs tracking-[0.3em] text-muted-foreground uppercase">RIHLA STORIES</p>
-        <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold">قصص رحلتي</h1>
-        <p className="mt-3 text-muted-foreground">جدار المسافرين: شارك صورة وقصة قصيرة من رحلتك داخل الجزائر.</p>
+        <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold">{tr("قصص رحلتي", "Histoires Rihlaty", "Rihlaty stories")}</h1>
+        <p className="mt-3 text-muted-foreground">{tr("جدار المسافرين: شارك صورة وقصة قصيرة من رحلتك داخل الجزائر.", "Le mur des voyageurs : partagez une photo et une courte histoire de votre voyage en Algérie.", "The travelers' wall: share a photo and a short story from your trip in Algeria.")}</p>
         <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5 text-xs font-semibold text-secondary-foreground">
           <ShieldCheck className="h-4 w-4" strokeWidth={1.5} />
-          كل منشور يبدأ بحالة «قيد المراجعة» قبل نشره
+          {tr("كل منشور يبدأ بحالة «قيد المراجعة» قبل نشره", "Chaque publication commence au statut « en cours de révision » avant publication", "Every post starts as “under review” before being published")}
         </p>
       </header>
 
       {!loading && !user && (
         <div className="mt-6 rounded-2xl border border-border bg-card p-5 text-sm">
-          <p className="font-semibold">سجّل الدخول لمشاركة قصتك</p>
-          <p className="mt-1 text-muted-foreground">يمكنك تصفّح الجدار، والنشر متاح للأعضاء المسجّلين.</p>
+          <p className="font-semibold">{tr("سجّل الدخول لمشاركة قصتك", "Connectez-vous pour partager votre histoire", "Sign in to share your story")}</p>
+          <p className="mt-1 text-muted-foreground">{tr("يمكنك تصفّح الجدار، والنشر متاح للأعضاء المسجّلين.", "Vous pouvez parcourir le mur ; la publication est réservée aux membres inscrits.", "You can browse the wall; posting is available to registered members.")}</p>
           <Link to="/auth" className="mt-3 inline-block rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground">
-            تسجيل الدخول
+            {tr("تسجيل الدخول", "Se connecter", "Sign in")}
           </Link>
         </div>
       )}
@@ -169,13 +171,13 @@ function Community() {
         <form onSubmit={submit} className="mt-6 rounded-2xl border border-border bg-card p-5">
           <h2 className="flex items-center gap-2 text-base font-bold">
             <Users className="h-4 w-4 text-primary" strokeWidth={1.5} />
-            منشور جديد
+            {tr("منشور جديد", "Nouvelle publication", "New post")}
           </h2>
           <textarea
             value={caption}
             onChange={(ev) => setCaption(ev.target.value)}
             rows={3}
-            placeholder="احكِ عن المكان الذي زرته…"
+            placeholder={tr("احكِ عن المكان الذي زرته…", "Racontez l'endroit que vous avez visité…", "Tell us about the place you visited…")}
             className="mt-3 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
           />
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -184,14 +186,14 @@ function Community() {
               onChange={(ev) => setWilaya(ev.target.value)}
               className="rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
             >
-              <option value="">اختر الولاية (اختياري)</option>
+              <option value="">{tr("اختر الولاية (اختياري)", "Choisir la wilaya (facultatif)", "Choose wilaya (optional)")}</option>
               {wilayas.map((w) => (
                 <option key={w.id} value={w.name}>{w.name}</option>
               ))}
             </select>
             <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-border px-4 py-3 text-sm text-muted-foreground hover:border-primary">
               <ImagePlus className="h-4 w-4" strokeWidth={1.5} />
-              {file ? file.name : "أضف صورة"}
+              {file ? file.name : tr("أضف صورة", "Ajouter une photo", "Add a photo")}
               <input
                 ref={inputRef}
                 type="file"
@@ -202,21 +204,21 @@ function Community() {
             </label>
           </div>
           {preview && (
-            <img src={preview} alt="معاينة الصورة قبل النشر" className="mt-3 h-44 w-full rounded-xl object-cover" />
+            <img src={preview} alt={tr("معاينة الصورة قبل النشر", "Aperçu de l'image avant publication", "Image preview before posting")} className="mt-3 h-44 w-full rounded-xl object-cover" />
           )}
           <button
             type="submit"
             disabled={saving}
             className="mt-4 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-60"
           >
-            {saving ? "جارٍ الإرسال…" : "أرسل للمراجعة"}
+            {saving ? tr("جارٍ الإرسال…", "Envoi en cours…", "Sending…") : tr("أرسل للمراجعة", "Envoyer pour révision", "Submit for review")}
           </button>
         </form>
       )}
 
       {mine.length > 0 && (
         <section className="mt-10">
-          <h2 className="text-lg font-bold">منشوراتي</h2>
+          <h2 className="text-lg font-bold">{tr("منشوراتي", "Mes publications", "My posts")}</h2>
           <div className="mt-4 space-y-3">
             {mine.map((p) => (
               <div key={p.id} className="flex items-start gap-3 rounded-2xl border border-border bg-card p-4">
@@ -237,7 +239,7 @@ function Community() {
                   </div>
                   <p className="mt-2 text-sm">{p.caption}</p>
                 </div>
-                <button onClick={() => remove(p.id)} aria-label="حذف المنشور" className="text-muted-foreground hover:text-destructive">
+                <button onClick={() => remove(p.id)} aria-label={tr("حذف المنشور", "Supprimer la publication", "Delete post")} className="text-muted-foreground hover:text-destructive">
                   <Trash2 className="h-4 w-4" strokeWidth={1.5} />
                 </button>
               </div>
@@ -247,11 +249,11 @@ function Community() {
       )}
 
       <section className="mt-10">
-        <h2 className="text-lg font-bold">الجدار</h2>
+        <h2 className="text-lg font-bold">{tr("الجدار", "Le mur", "The wall")}</h2>
         {posts.length === 0 ? (
           <p className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
             <Clock3 className="h-4 w-4" strokeWidth={1.5} />
-            لا توجد منشورات معتمدة بعد — كن أول من يشارك قصته.
+            {tr("لا توجد منشورات معتمدة بعد — كن أول من يشارك قصته.", "Aucune publication approuvée pour le moment — soyez le premier à partager votre histoire.", "No approved posts yet — be the first to share your story.")}
           </p>
         ) : (
           <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

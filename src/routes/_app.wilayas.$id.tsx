@@ -3,6 +3,7 @@ import { ArrowRight, Landmark, Mountain, Palette, UtensilsCrossed, Bike, Calenda
 import { getWilaya, wilayas } from "@/data/wilayas";
 import { hotels } from "@/data/hotels";
 import { DemoNotice } from "@/components/DemoBadge";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/wilayas/$id")({
   loader: ({ params }) => {
@@ -28,38 +29,41 @@ export const Route = createFileRoute("/_app/wilayas/$id")({
     };
   },
   component: WilayaDetail,
-  notFoundComponent: () => (
-    <div className="mx-auto max-w-6xl px-4 py-20 text-center">
-      <h1 className="text-2xl font-bold mb-2">لم نجد هذه الولاية</h1>
-      <Link to="/wilayas" className="text-primary font-semibold">العودة إلى الولايات</Link>
-    </div>
-  ),
+  notFoundComponent: () => {
+    return (
+      <div className="mx-auto max-w-6xl px-4 py-20 text-center">
+        <h1 className="text-2xl font-bold mb-2">لم نجد هذه الولاية</h1>
+        <Link to="/wilayas" className="text-primary font-semibold">العودة إلى الولايات</Link>
+      </div>
+    );
+  },
 });
 
 function WilayaDetail() {
+  const { tr } = useLanguage();
   const { w } = Route.useLoaderData();
   const stays = hotels.filter((h) => h.destinationId === w.id).slice(0, 3);
   const nearbyWilayas = wilayas.filter((x) => w.nearby.includes(x.name));
 
   const sections = [
-    { icon: Mountain, title: "الطبيعة", items: w.nature },
-    { icon: Landmark, title: "التاريخ", items: w.history },
-    { icon: Palette, title: "الثقافة", items: w.culture },
-    { icon: UtensilsCrossed, title: "المطاعم والمأكولات", items: w.food },
-    { icon: Bike, title: "الأنشطة", items: w.activities },
-    { icon: CalendarDays, title: "الفعاليات", items: w.events },
+    { icon: Mountain, title: tr("الطبيعة", "Nature", "Nature"), items: w.nature },
+    { icon: Landmark, title: tr("التاريخ", "Histoire", "History"), items: w.history },
+    { icon: Palette, title: tr("الثقافة", "Culture", "Culture"), items: w.culture },
+    { icon: UtensilsCrossed, title: tr("المطاعم والمأكولات", "Restaurants et cuisine", "Restaurants & food"), items: w.food },
+    { icon: Bike, title: tr("الأنشطة", "Activités", "Activities"), items: w.activities },
+    { icon: CalendarDays, title: tr("الفعاليات", "Événements", "Events"), items: w.events },
   ];
 
   return (
     <div className="animate-fade-in">
       <section className="relative h-[22rem] sm:h-[28rem] overflow-hidden">
-        <img src={w.image} alt={`منظر من ولاية ${w.name}`} className="absolute inset-0 h-full w-full object-cover" />
+        <img src={w.image} alt={`${tr("منظر من ولاية", "Vue de la wilaya de", "View of the wilaya of")} ${w.name}`} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10" />
         <div className="relative h-full mx-auto max-w-6xl px-4 flex flex-col justify-end pb-8 text-white">
           <Link to="/wilayas" className="inline-flex items-center gap-1 text-sm text-white/80 mb-3 w-fit">
-            <ArrowRight className="h-4 w-4" /> كل الولايات
+            <ArrowRight className="h-4 w-4" /> {tr("كل الولايات", "Toutes les wilayas", "All wilayas")}
           </Link>
-          <span className="text-[11px] font-bold tracking-[0.3em] text-white/70">ولاية رقم {w.code}</span>
+          <span className="text-[11px] font-bold tracking-[0.3em] text-white/70">{tr("ولاية رقم", "Wilaya n°", "Wilaya No.")} {w.code}</span>
           <h1 className="text-4xl sm:text-5xl font-bold">{w.name}</h1>
           <p className="text-white/85 mt-1">{w.tagline}</p>
         </div>
@@ -90,14 +94,14 @@ function WilayaDetail() {
 
         {stays.length > 0 && (
           <section className="mt-10">
-            <h2 className="text-xl font-bold mb-3">إقامات في {w.name}</h2>
+            <h2 className="text-xl font-bold mb-3">{tr("إقامات في", "Hébergements à", "Stays in")} {w.name}</h2>
             <div className="grid gap-3 sm:grid-cols-3">
               {stays.map((h) => (
                 <div key={h.id} className="rounded-2xl border border-border bg-card overflow-hidden">
                   <img src={h.image} alt={h.name} loading="lazy" className="h-32 w-full object-cover" />
                   <div className="p-3">
                     <p className="font-semibold text-sm">{h.name}</p>
-                    <p className="text-xs text-muted-foreground">{h.pricePerNight.toLocaleString()} دج / ليلة</p>
+                    <p className="text-xs text-muted-foreground">{h.pricePerNight.toLocaleString()} {tr("دج / ليلة", "DZD / nuit", "DZD / night")}</p>
                   </div>
                 </div>
               ))}
@@ -107,7 +111,7 @@ function WilayaDetail() {
 
         <section className="mt-10">
           <h2 className="text-xl font-bold mb-3 flex items-center gap-2">
-            <MapPin className="h-5 w-5 text-primary" /> أماكن قريبة
+            <MapPin className="h-5 w-5 text-primary" /> {tr("أماكن قريبة", "Lieux à proximité", "Nearby places")}
           </h2>
           <div className="flex flex-wrap gap-2">
             {w.nearby.map((n) => {
@@ -131,10 +135,10 @@ function WilayaDetail() {
         </section>
 
         <div className="mt-10 rounded-3xl p-6 text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>
-          <h3 className="text-xl font-bold mb-2">خطّط رحلتك إلى {w.name}</h3>
-          <p className="text-sm text-white/85 mb-4">برنامج يومي مقترح حسب أيامك وميزانيتك ونوع رحلتك.</p>
+          <h3 className="text-xl font-bold mb-2">{tr("خطّط رحلتك إلى", "Planifiez votre voyage à", "Plan your trip to")} {w.name}</h3>
+          <p className="text-sm text-white/85 mb-4">{tr("برنامج يومي مقترح حسب أيامك وميزانيتك ونوع رحلتك.", "Un itinéraire journalier suggéré selon vos jours, votre budget et votre type de voyage.", "A suggested daily itinerary based on your days, budget, and trip type.")}</p>
           <Link to="/plan" search={{ to: w.id }} className="inline-flex bg-white text-primary px-4 py-2 rounded-xl text-sm font-bold">
-            ابدأ التخطيط
+            {tr("ابدأ التخطيط", "Commencer la planification", "Start planning")}
           </Link>
         </div>
       </div>

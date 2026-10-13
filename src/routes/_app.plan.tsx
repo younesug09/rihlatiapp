@@ -4,17 +4,11 @@ import { CalendarDays, Printer, Share2, Sparkles, Save, Trash2, Route as RouteIc
 import { wilayas, tripTypes, durations, type TripType } from "@/data/wilayas";
 import { hotels } from "@/data/hotels";
 import { DemoNotice } from "@/components/DemoBadge";
+import { useLanguage } from "@/hooks/useLanguage";
 
 type PlanSearch = { to?: string };
 
-const transports = [
-  { id: "car", label: "سيارة", perKm: 12, speed: 70 },
-  { id: "bus", label: "حافلة", perKm: 5, speed: 55 },
-  { id: "train", label: "قطار", perKm: 6, speed: 80 },
-  { id: "plane", label: "طائرة", perKm: 22, speed: 500 },
-] as const;
-
-type TransportId = (typeof transports)[number]["id"];
+type TransportId = "car" | "bus" | "train" | "plane";
 
 type SavedTrip = {
   id: string;
@@ -59,6 +53,15 @@ export const Route = createFileRoute("/_app/plan")({
 
 function PlanPage() {
   const { to } = Route.useSearch();
+  const { tr } = useLanguage();
+
+  const transports: { id: TransportId; label: string; perKm: number; speed: number }[] = [
+    { id: "car", label: tr("سيارة", "Voiture", "Car"), perKm: 12, speed: 70 },
+    { id: "bus", label: tr("حافلة", "Bus", "Bus"), perKm: 5, speed: 55 },
+    { id: "train", label: tr("قطار", "Train", "Train"), perKm: 6, speed: 80 },
+    { id: "plane", label: tr("طائرة", "Avion", "Plane"), perKm: 22, speed: 500 },
+  ];
+
   const [fromId, setFromId] = useState("setif");
   const [wilayaId, setWilayaId] = useState(to ?? "jijel");
   const [people, setPeople] = useState(2);
@@ -101,31 +104,35 @@ function PlanPage() {
     return Array.from({ length: days }, (_, i) => ({
       day: i + 1,
       morning: i === 0
-        ? `الانطلاق من ${origin.name} نحو ${wilaya.name} (${km} كم ≈ ${travelHours} سا بـ${mode.label})`
-        : pick([...wilaya.nature, ...wilaya.activities], i, "وقت حر لاستكشاف المدينة"),
-      afternoon: pick([...wilaya.history, ...wilaya.culture], i, "جولة في وسط المدينة"),
+        ? tr(
+            `الانطلاق من ${origin.name} نحو ${wilaya.name} (${km} كم ≈ ${travelHours} سا بـ${mode.label})`,
+            `Départ de ${origin.name} vers ${wilaya.name} (${km} km ≈ ${travelHours} h en ${mode.label})`,
+            `Departing from ${origin.name} to ${wilaya.name} (${km} km ≈ ${travelHours} hr by ${mode.label})`
+          )
+        : pick([...wilaya.nature, ...wilaya.activities], i, tr("وقت حر لاستكشاف المدينة", "Temps libre pour explorer la ville", "Free time to explore the city")),
+      afternoon: pick([...wilaya.history, ...wilaya.culture], i, tr("جولة في وسط المدينة", "Tour du centre-ville", "City center tour")),
       evening: i === days - 1
-        ? `عشاء وداعي ثم العودة إلى ${origin.name}`
-        : pick([...wilaya.food, ...wilaya.events], i, "سهرة هادئة قرب الإقامة"),
-      food: pick(wilaya.food, i, "مطاعم محلية في وسط المدينة"),
-      activity: pick(wilaya.activities, i, "نشاط حر"),
-      stay: stays.length ? stays[i % stays.length].name : "إقامة داخل المدينة",
+        ? tr(`عشاء وداعي ثم العودة إلى ${origin.name}`, `Dîner d'adieu puis retour à ${origin.name}`, `Farewell dinner then return to ${origin.name}`)
+        : pick([...wilaya.food, ...wilaya.events], i, tr("سهرة هادئة قرب الإقامة", "Soirée calme près de l'hébergement", "Quiet evening near the stay")),
+      food: pick(wilaya.food, i, tr("مطاعم محلية في وسط المدينة", "Restaurants locaux au centre-ville", "Local restaurants downtown")),
+      activity: pick(wilaya.activities, i, tr("نشاط حر", "Activité libre", "Free activity")),
+      stay: stays.length ? stays[i % stays.length].name : tr("إقامة داخل المدينة", "Hébergement en ville", "Stay in the city"),
       dayBudget: Math.round(cost.total / days),
     }));
-  }, [wilaya, origin, days, km, travelHours, mode, stays, cost]);
+  }, [wilaya, origin, days, km, travelHours, mode, stays, cost, tr]);
 
   const summaryText = () =>
-    `رحلتي: ${origin.name} → ${wilaya.name}\n${days} أيام • ${people} أشخاص • ${mode.label} • ${km} كم\n` +
-    `ميزانية تقديرية: ${cost.total.toLocaleString()} دج\n` +
-    itinerary.map((d) => `اليوم ${d.day}: ${d.morning} / ${d.afternoon} / ${d.evening}`).join("\n");
+    `${tr("رحلتي", "Mon voyage", "My trip")}: ${origin.name} → ${wilaya.name}\n${days} ${tr("أيام", "jours", "days")} • ${people} ${tr("أشخاص", "personnes", "people")} • ${mode.label} • ${km} ${tr("كم", "km", "km")}\n` +
+    `${tr("ميزانية تقديرية", "Budget estimé", "Estimated budget")}: ${cost.total.toLocaleString()} ${tr("دج", "DA", "DZD")}\n` +
+    itinerary.map((d) => `${tr("اليوم", "Jour", "Day")} ${d.day}: ${d.morning} / ${d.afternoon} / ${d.evening}`).join("\n");
 
   const share = async () => {
     const text = summaryText();
     if (navigator.share) {
-      try { await navigator.share({ title: `رحلتي إلى ${wilaya.name}`, text }); return; } catch { /* cancelled */ }
+      try { await navigator.share({ title: `${tr("رحلتي إلى", "Mon voyage à", "My trip to")} ${wilaya.name}`, text }); return; } catch { /* cancelled */ }
     }
     await navigator.clipboard.writeText(text);
-    setFlash("تم نسخ تفاصيل الرحلة");
+    setFlash(tr("تم نسخ تفاصيل الرحلة", "Les détails du voyage ont été copiés", "Trip details copied"));
   };
 
   const saveTrip = () => {
@@ -137,7 +144,7 @@ function PlanPage() {
     const next = [trip, ...saved].slice(0, 12);
     setSaved(next);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    setFlash("تم حفظ الرحلة على هذا الجهاز");
+    setFlash(tr("تم حفظ الرحلة على هذا الجهاز", "Le voyage a été enregistré sur cet appareil", "Trip saved on this device"));
   };
 
   const removeTrip = (id: string) => {
@@ -163,50 +170,54 @@ function PlanPage() {
     <div className="animate-fade-in mx-auto max-w-5xl px-4 py-8">
       <header className="mb-6">
         <p className="text-sm font-semibold text-primary mb-1">RIHLATY PLANNER</p>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">خطّط رحلتي</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{tr("خطّط رحلتي", "Planifiez mon voyage", "Plan my trip")}</h1>
         <p className="text-muted-foreground mt-2 max-w-2xl">
-          حدّد نقطة الانطلاق والوجهة وعدد الأشخاص والأيام والميزانية ووسيلة النقل — ونقترح لك برنامجًا يوميًا كاملًا.
+          {tr(
+            "حدّد نقطة الانطلاق والوجهة وعدد الأشخاص والأيام والميزانية ووسيلة النقل — ونقترح لك برنامجًا يوميًا كاملًا.",
+            "Choisissez le point de départ, la destination, le nombre de personnes, les jours, le budget et le transport — nous vous proposons un programme journalier complet.",
+            "Set the departure point, destination, number of people, days, budget and transport — we'll suggest a full daily itinerary."
+          )}
         </p>
       </header>
 
       <DemoNotice />
 
       <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 print:hidden">
-        <Field label="أنطلق من">
+        <Field label={tr("أنطلق من", "Je pars de", "Departing from")}>
           <select value={fromId} onChange={(e) => setFromId(e.target.value)} className={selectCls}>
             {wilayas.map((w) => <option key={w.id} value={w.id}>{w.name}</option>)}
           </select>
         </Field>
 
-        <Field label="الوجهة">
+        <Field label={tr("الوجهة", "Destination", "Destination")}>
           <select value={wilayaId} onChange={(e) => setWilayaId(e.target.value)} className={selectCls}>
             {wilayas.map((w) => <option key={w.id} value={w.id}>{w.name}</option>)}
           </select>
         </Field>
 
-        <Field label="عدد الأشخاص">
+        <Field label={tr("عدد الأشخاص", "Nombre de personnes", "Number of people")}>
           <input type="number" min={1} max={20} value={people}
             onChange={(e) => setPeople(Math.max(1, Number(e.target.value) || 1))} className={selectCls} />
         </Field>
 
-        <Field label="عدد الأيام">
+        <Field label={tr("عدد الأيام", "Nombre de jours", "Number of days")}>
           <select value={days} onChange={(e) => setDays(Number(e.target.value))} className={selectCls}>
             {durations.map((d) => <option key={d.id} value={d.days}>{d.label}</option>)}
           </select>
         </Field>
 
-        <Field label="الميزانية (دج)">
+        <Field label={tr("الميزانية (دج)", "Budget (DA)", "Budget (DZD)")}>
           <input type="number" min={0} step={1000} value={budget}
             onChange={(e) => setBudget(Math.max(0, Number(e.target.value) || 0))} className={selectCls} />
         </Field>
 
-        <Field label="نوع الرحلة">
+        <Field label={tr("نوع الرحلة", "Type de voyage", "Trip type")}>
           <select value={type} onChange={(e) => setType(e.target.value as TripType)} className={selectCls}>
             {tripTypes.filter((t) => t.id !== "all").map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
           </select>
         </Field>
 
-        <Field label="وسيلة النقل">
+        <Field label={tr("وسيلة النقل", "Moyen de transport", "Transport")}>
           <select value={transport} onChange={(e) => setTransport(e.target.value as TransportId)} className={selectCls}>
             {transports.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
           </select>
@@ -214,7 +225,7 @@ function PlanPage() {
 
         <div className="flex items-end gap-2">
           <button onClick={saveTrip} className="flex-1 inline-flex items-center justify-center gap-1 rounded-xl bg-primary text-primary-foreground px-3 py-2 text-sm font-semibold">
-            <Save className="h-4 w-4" /> احفظ الرحلة
+            <Save className="h-4 w-4" /> {tr("احفظ الرحلة", "Enregistrer le voyage", "Save trip")}
           </button>
         </div>
       </section>
@@ -227,37 +238,45 @@ function PlanPage() {
           <div>
             <h2 className="text-xl font-bold">{origin.name} ← {wilaya.name}</h2>
             <p className="text-sm text-muted-foreground mt-1">
-              {days} أيام • {people} أشخاص • {mode.label} • {km} كم ≈ {travelHours} سا
+              {days} {tr("أيام", "jours", "days")} • {people} {tr("أشخاص", "personnes", "people")} • {mode.label} • {km} {tr("كم", "km", "km")} ≈ {travelHours} {tr("سا", "h", "hr")}
             </p>
           </div>
           <div className="flex gap-2 print:hidden">
             <button onClick={share} className="inline-flex items-center gap-1 rounded-xl border border-border px-3 py-2 text-sm">
-              <Share2 className="h-4 w-4" /> شارك
+              <Share2 className="h-4 w-4" /> {tr("شارك", "Partager", "Share")}
             </button>
             <button onClick={() => window.print()} className="inline-flex items-center gap-1 rounded-xl bg-primary text-primary-foreground px-3 py-2 text-sm font-semibold">
-              <Printer className="h-4 w-4" /> اطبع PDF
+              <Printer className="h-4 w-4" /> {tr("اطبع PDF", "Imprimer PDF", "Print PDF")}
             </button>
           </div>
         </div>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-4 text-sm">
-          <Stat icon={<RouteIcon className="h-4 w-4" />} label="النقل" value={`${cost.travel.toLocaleString()} دج`} />
-          <Stat icon={<Users className="h-4 w-4" />} label="الإقامة" value={`${cost.stay.toLocaleString()} دج`} />
-          <Stat icon={<Sparkles className="h-4 w-4" />} label="مطاعم وأنشطة" value={`${(cost.food + cost.activities).toLocaleString()} دج`} />
-          <Stat icon={<Wallet className="h-4 w-4" />} label="الإجمالي التقديري" value={`${cost.total.toLocaleString()} دج`} />
+          <Stat icon={<RouteIcon className="h-4 w-4" />} label={tr("النقل", "Transport", "Transport")} value={`${cost.travel.toLocaleString()} ${tr("دج", "DA", "DZD")}`} />
+          <Stat icon={<Users className="h-4 w-4" />} label={tr("الإقامة", "Hébergement", "Stay")} value={`${cost.stay.toLocaleString()} ${tr("دج", "DA", "DZD")}`} />
+          <Stat icon={<Sparkles className="h-4 w-4" />} label={tr("مطاعم وأنشطة", "Restaurants et activités", "Food & activities")} value={`${(cost.food + cost.activities).toLocaleString()} ${tr("دج", "DA", "DZD")}`} />
+          <Stat icon={<Wallet className="h-4 w-4" />} label={tr("الإجمالي التقديري", "Total estimé", "Estimated total")} value={`${cost.total.toLocaleString()} ${tr("دج", "DA", "DZD")}`} />
         </div>
 
         <p className={`mt-3 text-sm font-medium ${overBudget ? "text-destructive" : "text-primary"}`}>
           {overBudget
-            ? `التقدير يتجاوز ميزانيتك بـ ${(cost.total - budget).toLocaleString()} دج — جرّب تقليل الأيام أو اختيار إقامة أوفر.`
-            : `ضمن ميزانيتك، ويتبقى نحو ${(budget - cost.total).toLocaleString()} دج.`}
+            ? tr(
+                `التقدير يتجاوز ميزانيتك بـ ${(cost.total - budget).toLocaleString()} دج — جرّب تقليل الأيام أو اختيار إقامة أوفر.`,
+                `L'estimation dépasse votre budget de ${(cost.total - budget).toLocaleString()} DA — essayez de réduire les jours ou choisir un hébergement moins cher.`,
+                `The estimate exceeds your budget by ${(cost.total - budget).toLocaleString()} DZD — try reducing the days or choosing a cheaper stay.`
+              )
+            : tr(
+                `ضمن ميزانيتك، ويتبقى نحو ${(budget - cost.total).toLocaleString()} دج.`,
+                `Dans votre budget, il vous reste environ ${(budget - cost.total).toLocaleString()} DA.`,
+                `Within your budget, with about ${(budget - cost.total).toLocaleString()} DZD remaining.`
+              )}
         </p>
       </section>
 
       {/* Itinerary */}
       <section className="mt-8">
         <h2 className="text-xl font-bold flex items-center gap-2 mb-4">
-          <Sparkles className="h-5 w-5 text-primary" /> برنامج {days} أيام في {wilaya.name}
+          <Sparkles className="h-5 w-5 text-primary" /> {tr(`برنامج ${days} أيام في ${wilaya.name}`, `Programme de ${days} jours à ${wilaya.name}`, `${days}-day itinerary in ${wilaya.name}`)}
         </h2>
 
         <ol className="space-y-3">
@@ -268,15 +287,15 @@ function PlanPage() {
                 DAY {String(d.day).padStart(2, "0")}
               </p>
               <div className="grid gap-2 sm:grid-cols-3 text-sm">
-                <p><span className="text-muted-foreground">08:00 صباحًا — </span>{d.morning}</p>
-                <p><span className="text-muted-foreground">13:00 ظهرًا — </span>{d.afternoon}</p>
-                <p><span className="text-muted-foreground">19:00 مساءً — </span>{d.evening}</p>
+                <p><span className="text-muted-foreground">08:00 {tr("صباحًا", "matin", "AM")} — </span>{d.morning}</p>
+                <p><span className="text-muted-foreground">13:00 {tr("ظهرًا", "après-midi", "PM")} — </span>{d.afternoon}</p>
+                <p><span className="text-muted-foreground">19:00 {tr("مساءً", "soir", "PM")} — </span>{d.evening}</p>
               </div>
               <div className="mt-3 grid gap-2 sm:grid-cols-4 text-xs text-muted-foreground">
-                <p>النقل: {mode.label}</p>
-                <p>الإقامة: {d.stay}</p>
-                <p>المطاعم: {d.food}</p>
-                <p>ميزانية اليوم: {d.dayBudget.toLocaleString()} دج</p>
+                <p>{tr("النقل", "Transport", "Transport")}: {mode.label}</p>
+                <p>{tr("الإقامة", "Hébergement", "Stay")}: {d.stay}</p>
+                <p>{tr("المطاعم", "Restaurants", "Food")}: {d.food}</p>
+                <p>{tr("ميزانية اليوم", "Budget du jour", "Day budget")}: {d.dayBudget.toLocaleString()} {tr("دج", "DA", "DZD")}</p>
               </div>
             </li>
           ))}
@@ -285,14 +304,14 @@ function PlanPage() {
 
       {stays.length > 0 && (
         <section className="mt-10">
-          <h2 className="text-xl font-bold mb-3">اقتراحات إقامة</h2>
+          <h2 className="text-xl font-bold mb-3">{tr("اقتراحات إقامة", "Suggestions d'hébergement", "Stay suggestions")}</h2>
           <div className="grid gap-3 sm:grid-cols-2">
             {stays.map((h) => (
               <div key={h.id} className="flex gap-3 rounded-2xl border border-border bg-card overflow-hidden">
                 <img src={h.image} alt={h.name} loading="lazy" className="h-24 w-28 object-cover" />
                 <div className="py-3 pe-3">
                   <p className="font-semibold text-sm">{h.name}</p>
-                  <p className="text-xs text-muted-foreground">{h.pricePerNight.toLocaleString()} دج / ليلة</p>
+                  <p className="text-xs text-muted-foreground">{h.pricePerNight.toLocaleString()} {tr("دج / ليلة", "DA / nuit", "DZD / night")}</p>
                 </div>
               </div>
             ))}
@@ -302,7 +321,7 @@ function PlanPage() {
 
       {saved.length > 0 && (
         <section className="mt-10 print:hidden">
-          <h2 className="text-xl font-bold mb-3">رحلاتي المحفوظة</h2>
+          <h2 className="text-xl font-bold mb-3">{tr("رحلاتي المحفوظة", "Mes voyages enregistrés", "My saved trips")}</h2>
           <ul className="grid gap-2 sm:grid-cols-2">
             {saved.map((t) => {
               const f = wilayas.find((w) => w.id === t.from)?.name ?? t.from;
@@ -311,9 +330,9 @@ function PlanPage() {
                 <li key={t.id} className="flex items-center justify-between rounded-2xl border border-border bg-card px-4 py-3">
                   <button onClick={() => loadTrip(t)} className="text-start">
                     <p className="text-sm font-semibold">{f} ← {d}</p>
-                    <p className="text-xs text-muted-foreground">{t.days} أيام • {t.people} أشخاص</p>
+                    <p className="text-xs text-muted-foreground">{t.days} {tr("أيام", "jours", "days")} • {t.people} {tr("أشخاص", "personnes", "people")}</p>
                   </button>
-                  <button onClick={() => removeTrip(t.id)} aria-label="حذف الرحلة" className="text-muted-foreground hover:text-destructive">
+                  <button onClick={() => removeTrip(t.id)} aria-label={tr("حذف الرحلة", "Supprimer le voyage", "Delete trip")} className="text-muted-foreground hover:text-destructive">
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </li>
@@ -325,7 +344,7 @@ function PlanPage() {
 
       <div className="mt-10 print:hidden">
         <Link to="/wilayas/$id" params={{ id: wilaya.id }} className="text-sm font-semibold text-primary">
-          اكتشف {wilaya.name} بالتفصيل ←
+          {tr(`اكتشف ${wilaya.name} بالتفصيل ←`, `Découvrir ${wilaya.name} en détail ←`, `Discover ${wilaya.name} in detail ←`)}
         </Link>
       </div>
     </div>
