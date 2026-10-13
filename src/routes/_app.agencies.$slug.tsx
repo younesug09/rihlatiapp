@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { BadgeCheck, Building2, Globe, Mail, MapPin, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/agencies/$slug")({
   head: () => ({
@@ -39,6 +40,7 @@ type Trip = {
 };
 
 function AgencyPublic() {
+  const { tr } = useLanguage();
   const { slug } = Route.useParams();
   const [agency, setAgency] = useState<Agency | null>(null);
   const [trips, setTrips] = useState<Trip[]>([]);
@@ -71,10 +73,10 @@ function AgencyPublic() {
     return (
       <div className="mx-auto max-w-xl px-4 py-16 text-center">
         <Building2 className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
-        <h1 className="text-xl font-black mb-2">الوكالة غير متاحة</h1>
-        <p className="text-sm text-muted-foreground mb-5">قد تكون غير موثّقة أو تم تعديل الرابط.</p>
+        <h1 className="text-xl font-black mb-2">{tr("الوكالة غير متاحة", "Agence indisponible", "Agency unavailable")}</h1>
+        <p className="text-sm text-muted-foreground mb-5">{tr("قد تكون غير موثّقة أو تم تعديل الرابط.", "Elle n'est peut-être pas vérifiée ou le lien a été modifié.", "It may not be verified or the link has been changed.")}</p>
         <Link to="/home" className="inline-block rounded-2xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
-          العودة للرئيسية
+          {tr("العودة للرئيسية", "Retour à l'accueil", "Back to home")}
         </Link>
       </div>
     );
@@ -113,31 +115,35 @@ function AgencyPublic() {
           )}
           {agency.website && (
             <a href={agency.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-primary">
-              <Globe className="h-3.5 w-3.5" /> الموقع
+              <Globe className="h-3.5 w-3.5" /> {tr("الموقع", "Site web", "Website")}
             </a>
           )}
         </div>
         <p className="mt-4 text-[11px] text-muted-foreground">
-          التوثيق داخل منصة رحلتي يعني مراجعة الملف والوثائق المقدَّمة، ولا يمثّل اعتمادًا حكوميًا.
+          {tr(
+            "التوثيق داخل منصة رحلتي يعني مراجعة الملف والوثائق المقدَّمة، ولا يمثّل اعتمادًا حكوميًا.",
+            "La vérification sur la plateforme Rihlaty signifie que le dossier et les documents fournis ont été examinés, et ne constitue pas un agrément gouvernemental.",
+            "Verification on the Rihlaty platform means the profile and submitted documents have been reviewed, and does not represent government approval."
+          )}
         </p>
       </header>
 
       <section className="space-y-3">
-        <h2 className="text-lg font-black">الرحلات المنشورة</h2>
+        <h2 className="text-lg font-black">{tr("الرحلات المنشورة", "Voyages publiés", "Published trips")}</h2>
         {trips.length === 0 ? (
           <div className="rounded-3xl bg-card p-8 text-center shadow-soft">
-            <p className="text-sm text-muted-foreground">لا توجد رحلات منشورة حاليًا</p>
+            <p className="text-sm text-muted-foreground">{tr("لا توجد رحلات منشورة حاليًا", "Aucun voyage publié pour le moment", "No published trips currently")}</p>
           </div>
         ) : (
           trips.map((t) => (
             <article key={t.id} className="rounded-3xl bg-card p-4 shadow-soft">
               <h3 className="font-bold">{t.title}</h3>
               <p className="text-xs text-muted-foreground mt-1">
-                {t.destination} · {t.duration_days} أيام
-                {t.departure_date ? ` · انطلاق ${t.departure_date}` : ""}
+                {t.destination} · {t.duration_days} {tr("أيام", "jours", "days")}
+                {t.departure_date ? ` · ${tr("انطلاق", "départ", "departure")} ${t.departure_date}` : ""}
               </p>
               <p className="text-sm font-semibold text-primary mt-2">
-                {Number(t.price).toLocaleString("ar")} دج / شخص
+                {Number(t.price).toLocaleString("ar")} {tr("دج / شخص", "DZD / personne", "DZD / person")}
               </p>
             </article>
           ))
