@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Play, Camera, Headphones, MapPin } from "lucide-react";
 import { destinations } from "@/data/destinations";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/media")({
   head: () => ({
@@ -26,11 +27,12 @@ const podcasts = [
 ];
 
 function Media() {
+  const { tr } = useLanguage();
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 animate-fade-in space-y-8">
       <header>
-        <h1 className="text-2xl font-bold mb-1">الإعلام البصري والرقمي</h1>
-        <p className="text-sm text-muted-foreground">فيديوهات، صور، وبودكاست لاكتشاف الوجهات</p>
+        <h1 className="text-2xl font-bold mb-1">{tr("الإعلام البصري والرقمي", "Médias visuels et numériques", "Visual & Digital Media")}</h1>
+        <p className="text-sm text-muted-foreground">{tr("فيديوهات، صور، وبودكاست لاكتشاف الوجهات", "Vidéos, photos et podcasts pour découvrir les destinations", "Videos, photos and podcasts to discover destinations")}</p>
       </header>
 
       {/* Videos */}
@@ -39,7 +41,7 @@ function Media() {
           <div className="h-9 w-9 rounded-xl bg-accent text-primary flex items-center justify-center">
             <Play className="h-4 w-4" />
           </div>
-          <h2 className="text-lg font-bold">فيديوهات سياحية</h2>
+          <h2 className="text-lg font-bold">{tr("فيديوهات سياحية", "Vidéos touristiques", "Tourism videos")}</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {videos.map((v) => (
@@ -71,7 +73,7 @@ function Media() {
           <div className="h-9 w-9 rounded-xl bg-accent text-primary flex items-center justify-center">
             <Camera className="h-4 w-4" />
           </div>
-          <h2 className="text-lg font-bold">معرض الصور</h2>
+          <h2 className="text-lg font-bold">{tr("معرض الصور", "Galerie photo", "Photo gallery")}</h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           {destinations.map((d) => (
@@ -91,7 +93,7 @@ function Media() {
           <div className="h-9 w-9 rounded-xl bg-accent text-primary flex items-center justify-center">
             <Headphones className="h-4 w-4" />
           </div>
-          <h2 className="text-lg font-bold">بودكاست سياحي</h2>
+          <h2 className="text-lg font-bold">{tr("بودكاست سياحي", "Podcast touristique", "Tourism podcast")}</h2>
         </div>
         <div className="space-y-3">
           {podcasts.map((p, i) => (

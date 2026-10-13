@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, Link, useNavigate } from "@tanstack/react-rout
 import { useEffect } from "react";
 import { LayoutDashboard, Map, CalendarCheck } from "lucide-react";
 import { useRole } from "@/hooks/useRole";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/agency")({
   head: () => ({
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/_app/agency")({
 });
 
 function AgencyLayout() {
+  const { tr } = useLanguage();
   const { user, isAgency, isAdmin, loading } = useRole();
   const navigate = useNavigate();
 
@@ -31,9 +33,9 @@ function AgencyLayout() {
   }
 
   const tabs = [
-    { to: "/agency" as const, icon: LayoutDashboard, label: "اللوحة" },
-    { to: "/agency/trips" as const, icon: Map, label: "الرحلات" },
-    { to: "/agency/bookings" as const, icon: CalendarCheck, label: "الحجوزات" },
+    { to: "/agency" as const, icon: LayoutDashboard, label: tr("اللوحة", "Tableau de bord", "Dashboard") },
+    { to: "/agency/trips" as const, icon: Map, label: tr("الرحلات", "Voyages", "Trips") },
+    { to: "/agency/bookings" as const, icon: CalendarCheck, label: tr("الحجوزات", "Réservations", "Bookings") },
   ];
 
   return (
