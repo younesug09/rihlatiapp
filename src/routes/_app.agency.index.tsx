@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { wilayas } from "@/data/wilayas";
+import { AgencyUploads } from "@/components/agency/AgencyUploads";
 
 export const Route = createFileRoute("/_app/agency/")({
   component: AgencyDashboard,
@@ -167,6 +168,18 @@ function AgencyDashboard() {
             ))}
           </div>
         </div>
+      )}
+
+      {agency && (
+        <AgencyUploads
+          agencyId={agency.id}
+          logoUrl={agency.logo_url}
+          onLogo={async (url) => {
+            const { error } = await supabase.from("agencies").update({ logo_url: url }).eq("id", agency.id);
+            if (error) return toast.error(error.message);
+            setAgency({ ...agency, logo_url: url });
+          }}
+        />
       )}
 
       <form onSubmit={save} className="rounded-3xl bg-card p-5 shadow-soft space-y-3">
