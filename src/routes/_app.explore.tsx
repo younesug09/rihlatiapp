@@ -71,7 +71,7 @@ function Explore() {
         ))}
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-2 mb-5 -mx-4 px-4 scrollbar-hide">
+      <div className="flex gap-2 overflow-x-auto pb-2 mb-5 scrollbar-hide">
         {categories.map((c) => (
           <button
             key={c.id}

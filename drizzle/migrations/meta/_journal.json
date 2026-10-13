@@ -29,6 +29,13 @@
       "when": 1790812256590,
       "tag": "0003_commission_cancellation_flexstay",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791911333271,
+      "tag": "0004_harden_definer_function_grants",
+      "breakpoints": true
     }
   ]
 }
