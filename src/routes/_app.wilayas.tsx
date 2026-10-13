@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 import { wilayas, tripTypes, budgets, durations, type Region, type TripType } from "@/data/wilayas";
 import { AlgeriaMap } from "@/components/AlgeriaMap";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/wilayas")({
   head: () => ({
@@ -19,6 +20,7 @@ export const Route = createFileRoute("/_app/wilayas")({
 });
 
 function WilayasPage() {
+  const { tr } = useLanguage();
   const [q, setQ] = useState("");
   const [region, setRegion] = useState<Region | "all">("all");
   const [type, setType] = useState<TripType | "all">("all");
@@ -38,9 +40,9 @@ function WilayasPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 animate-fade-in">
       <p className="text-[11px] font-bold tracking-[0.3em] text-primary mb-2">EXPLORE ALGERIA</p>
-      <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-2">اكتشف الجزائر ولايةً بولاية</h1>
+      <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-2">{tr("اكتشف الجزائر ولايةً بولاية", "Découvrez l'Algérie wilaya par wilaya", "Discover Algeria wilaya by wilaya")}</h1>
       <p className="text-muted-foreground max-w-xl leading-relaxed mb-6">
-        من ساحل جيجل إلى كثبان الطاسيلي — اختر منطقتك ونوع رحلتك وميزانيتك، ودع الباقي علينا.
+        {tr("من ساحل جيجل إلى كثبان الطاسيلي — اختر منطقتك ونوع رحلتك وميزانيتك، ودع الباقي علينا.", "De la côte de Jijel aux dunes du Tassili — choisissez votre région, le type de voyage et votre budget, et laissez-nous faire le reste.", "From the Jijel coast to the Tassili dunes — pick your region, trip type, and budget, and leave the rest to us.")}
       </p>
 
       {/* Interactive Algeria map */}
@@ -54,23 +56,23 @@ function WilayasPage() {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="ابحث عن ولاية…"
+          placeholder={tr("ابحث عن ولاية…", "Rechercher une wilaya…", "Search for a wilaya…")}
           className="flex-1 bg-transparent outline-none text-sm"
         />
       </div>
 
-      <FilterRow label="نوع الرحلة" options={tripTypes.map((t) => ({ id: t.id, label: t.label }))} value={type} onChange={(v) => setType(v as TripType | "all")} />
-      <FilterRow label="الميزانية" options={budgets.map((b) => ({ id: b.id, label: b.label }))} value={budget} onChange={setBudget} />
+      <FilterRow label={tr("نوع الرحلة", "Type de voyage", "Trip type")} options={tripTypes.map((t) => ({ id: t.id, label: t.label }))} value={type} onChange={(v) => setType(v as TripType | "all")} />
+      <FilterRow label={tr("الميزانية", "Budget", "Budget")} options={budgets.map((b) => ({ id: b.id, label: b.label }))} value={budget} onChange={setBudget} />
       <FilterRow
-        label="المدة"
-        options={[{ id: "all", label: "أي مدة" }, ...durations.map((d) => ({ id: d.id, label: d.label }))]}
+        label={tr("المدة", "Durée", "Duration")}
+        options={[{ id: "all", label: tr("أي مدة", "N'importe quelle durée", "Any duration") }, ...durations.map((d) => ({ id: d.id, label: d.label }))]}
         value={duration}
         onChange={setDuration}
       />
 
       <div className="flex items-center justify-between mt-6 mb-3">
-        <p className="text-sm text-muted-foreground">{filtered.length} ولاية</p>
-        <Link to="/plan" className="text-sm font-semibold text-primary">خطّط رحلتي ←</Link>
+        <p className="text-sm text-muted-foreground">{filtered.length} {tr("ولاية", "wilayas", "wilayas")}</p>
+        <Link to="/plan" className="text-sm font-semibold text-primary">{tr("خطّط رحلتي ←", "Planifier mon voyage ←", "Plan my trip ←")}</Link>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -98,7 +100,7 @@ function WilayasPage() {
       </div>
 
       {filtered.length === 0 && (
-        <p className="text-center py-16 text-muted-foreground">لا توجد نتائج مطابقة. جرّب تخفيف الفلاتر.</p>
+        <p className="text-center py-16 text-muted-foreground">{tr("لا توجد نتائج مطابقة. جرّب تخفيف الفلاتر.", "Aucun résultat correspondant. Essayez de réduire les filtres.", "No matching results. Try loosening the filters.")}</p>
       )}
     </div>
   );

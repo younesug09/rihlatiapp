@@ -1,3 +1,5 @@
+import { useLanguage } from "@/hooks/useLanguage";
+
 export type StampId = "explorer" | "algeria-lover" | "desert" | "heritage" | "coastal";
 
 type Props = { id: StampId; label: string; earned: boolean; className?: string };
@@ -7,6 +9,7 @@ type Props = { id: StampId; label: string; earned: boolean; className?: string }
  * unearned ones stay faint so the wall reads as a progress map.
  */
 export function PassportStamp({ id, label, earned, className = "" }: Props) {
+  const { tr } = useLanguage();
   const stroke = earned ? "var(--primary)" : "var(--muted-foreground)";
   const fill = earned ? "var(--accent)" : "transparent";
 
@@ -16,7 +19,7 @@ export function PassportStamp({ id, label, earned, className = "" }: Props) {
         viewBox="0 0 120 120"
         className={`h-24 w-24 ${earned ? "" : "opacity-35"}`}
         role="img"
-        aria-label={`${label}${earned ? " — تم الحصول عليه" : " — لم يُفتح بعد"}`}
+        aria-label={`${label}${earned ? tr(" — تم الحصول عليه", " — obtenu", " — earned") : tr(" — لم يُفتح بعد", " — non débloqué", " — not unlocked yet")}`}
       >
         <circle cx="60" cy="60" r="54" fill={fill} fillOpacity={earned ? 0.25 : 0} stroke={stroke} strokeWidth="2.5" strokeDasharray="6 5" />
         <circle cx="60" cy="60" r="44" fill="none" stroke={stroke} strokeWidth="1.5" />

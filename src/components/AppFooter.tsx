@@ -6,9 +6,9 @@ import { useLanguage } from "@/hooks/useLanguage";
 export function AppFooter() {
   const { lang } = useLanguage();
   const copy = {
-    ar: { tagline: "اكتشف. عِش. شارك.", browse: "التصفح", discover: "اكتشف", stays: "الإقامات", magazine: "مجلة رحلتي", events: "الفعاليات", stories: "قصص رحلتي", passport: "جواز رحلتي", news: "الأخبار", media: "الوسائط", favorites: "المفضلة", trust: "الثقة", trustCenter: "مركز الثقة", about: "من نحن", pitch: "العرض الأكاديمي", help: "المساعدة والدعم", newsletter: "اشترك في نشرة رحلتي", newsletterBody: "أفضل الوجهات والقصص السياحية في بريدك.", email: "بريدك الإلكتروني", soon: "قريبًا", platform: "منصة اتصال سياحي رقمية جزائرية" },
-    fr: { tagline: "Découvrez. Vivez. Partagez.", browse: "Explorer", discover: "Découvrir", stays: "Hébergements", magazine: "Magazine RIHLA", events: "Événements", stories: "Récits RIHLA", passport: "Passeport RIHLA", news: "Actualités", media: "Médias", favorites: "Favoris", trust: "Confiance", trustCenter: "Centre de confiance", about: "À propos", pitch: "Présentation académique", help: "Aide et support", newsletter: "Recevez la newsletter RIHLA", newsletterBody: "Les meilleures destinations et histoires dans votre boîte mail.", email: "Votre e-mail", soon: "Bientôt", platform: "Plateforme numérique algérienne de tourisme" },
-    en: { tagline: "Discover. Live. Share.", browse: "Browse", discover: "Discover", stays: "Stays", magazine: "RIHLA Magazine", events: "Events", stories: "RIHLA Stories", passport: "RIHLA Passport", news: "News", media: "Media", favorites: "Favorites", trust: "Trust", trustCenter: "Trust Center", about: "About", pitch: "Academic pitch", help: "Help & Support", newsletter: "Join the RIHLA newsletter", newsletterBody: "Top destinations and travel stories, delivered.", email: "Your email", soon: "Coming soon", platform: "Algerian digital tourism platform" },
+    ar: { tagline: "اكتشف. عِش. شارك.", browse: "التصفح", discover: "اكتشف", stays: "الإقامات", magazine: "مجلة رحلتي", events: "الفعاليات", stories: "قصص رحلتي", passport: "جواز رحلتي", news: "الأخبار", media: "الوسائط", favorites: "المفضلة", trust: "الثقة", trustCenter: "مركز الثقة", about: "من نحن", pitch: "العرض الأكاديمي", help: "المساعدة والدعم", newsletter: "اشترك في نشرة رحلتي", newsletterBody: "أفضل الوجهات والقصص السياحية في بريدك.", email: "بريدك الإلكتروني", soon: "قريبًا", platform: "منصة اتصال سياحي رقمية جزائرية", newsletterAria: "الاشتراك في النشرة", emailLabel: "البريد الإلكتروني" },
+    fr: { tagline: "Découvrez. Vivez. Partagez.", browse: "Explorer", discover: "Découvrir", stays: "Hébergements", magazine: "Magazine RIHLA", events: "Événements", stories: "Récits RIHLA", passport: "Passeport RIHLA", news: "Actualités", media: "Médias", favorites: "Favoris", trust: "Confiance", trustCenter: "Centre de confiance", about: "À propos", pitch: "Présentation académique", help: "Aide et support", newsletter: "Recevez la newsletter RIHLA", newsletterBody: "Les meilleures destinations et histoires dans votre boîte mail.", email: "Votre e-mail", soon: "Bientôt", platform: "Plateforme numérique algérienne de tourisme", newsletterAria: "S'abonner à la newsletter", emailLabel: "Adresse e-mail" },
+    en: { tagline: "Discover. Live. Share.", browse: "Browse", discover: "Discover", stays: "Stays", magazine: "RIHLA Magazine", events: "Events", stories: "RIHLA Stories", passport: "RIHLA Passport", news: "News", media: "Media", favorites: "Favorites", trust: "Trust", trustCenter: "Trust Center", about: "About", pitch: "Academic pitch", help: "Help & Support", newsletter: "Join the RIHLA newsletter", newsletterBody: "Top destinations and travel stories, delivered.", email: "Your email", soon: "Coming soon", platform: "Algerian digital tourism platform", newsletterAria: "Subscribe to the newsletter", emailLabel: "Email address" },
   }[lang];
   return (
     <footer className="mt-12 bg-primary-glow text-primary-foreground">
@@ -54,9 +54,9 @@ export function AppFooter() {
           <form
             className="mt-3 flex gap-2"
             onSubmit={(e) => e.preventDefault()}
-            aria-label="الاشتراك في النشرة"
+            aria-label={copy.newsletterAria}
           >
-            <label className="sr-only" htmlFor="newsletter-email">البريد الإلكتروني</label>
+            <label className="sr-only" htmlFor="newsletter-email">{copy.emailLabel}</label>
             <input
               id="newsletter-email"
               type="email"

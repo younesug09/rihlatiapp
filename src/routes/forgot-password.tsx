@@ -4,6 +4,7 @@ import { Mail, ArrowLeft, KeyRound } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/forgot-password")({
   head: () => ({ meta: [{ title: "نسيت كلمة المرور — رحلتي" }] }),
@@ -12,6 +13,7 @@ export const Route = createFileRoute("/forgot-password")({
 
 function ForgotPassword() {
   const navigate = useNavigate();
+  const { tr } = useLanguage();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -25,9 +27,9 @@ function ForgotPassword() {
       });
       if (error) throw error;
       setSent(true);
-      toast.success("تم إرسال رابط الاستعادة إلى بريدك");
+      toast.success(tr("تم إرسال رابط الاستعادة إلى بريدك", "Le lien de récupération a été envoyé à votre e-mail", "The recovery link has been sent to your email"));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "تعذر إرسال الرابط");
+      toast.error(err instanceof Error ? err.message : tr("تعذر إرسال الرابط", "Impossible d'envoyer le lien", "Could not send the link"));
     } finally {
       setLoading(false);
     }
@@ -41,14 +43,14 @@ function ForgotPassword() {
 
       <div className="w-full max-w-md">
         <Link to="/auth" className="inline-flex items-center gap-1 text-white/90 text-sm mb-4">
-          <ArrowLeft className="h-4 w-4" /> عودة لتسجيل الدخول
+          <ArrowLeft className="h-4 w-4" /> {tr("عودة لتسجيل الدخول", "Retour à la connexion", "Back to sign in")}
         </Link>
         <div className="bg-card/95 backdrop-blur-2xl rounded-3xl shadow-card p-7 animate-scale-in border border-white/40">
           <div className="flex items-center gap-3 mb-5">
             <img src={logo} alt="Rihlaty" className="h-12 w-12 object-contain" />
             <div>
-              <h1 className="text-2xl font-black">نسيت كلمة المرور؟</h1>
-              <p className="text-xs text-muted-foreground">سنرسل لك رابطاً لإعادة تعيينها</p>
+              <h1 className="text-2xl font-black">{tr("نسيت كلمة المرور؟", "Mot de passe oublié ?", "Forgot your password?")}</h1>
+              <p className="text-xs text-muted-foreground">{tr("سنرسل لك رابطاً لإعادة تعيينها", "Nous vous enverrons un lien pour le réinitialiser", "We'll send you a link to reset it")}</p>
             </div>
           </div>
 
@@ -58,9 +60,9 @@ function ForgotPassword() {
                 <KeyRound className="h-7 w-7 text-success" />
               </div>
               <div>
-                <h2 className="font-bold text-lg">تحقق من بريدك الإلكتروني</h2>
+                <h2 className="font-bold text-lg">{tr("تحقق من بريدك الإلكتروني", "Vérifiez votre e-mail", "Check your email")}</h2>
                 <p className="text-sm text-muted-foreground mt-1">
-                  أرسلنا رابط إعادة تعيين كلمة المرور إلى <b>{email}</b>
+                  {tr("أرسلنا رابط إعادة تعيين كلمة المرور إلى", "Nous avons envoyé le lien de réinitialisation à", "We sent the password reset link to")} <b>{email}</b>
                 </p>
               </div>
               <button
@@ -68,7 +70,7 @@ function ForgotPassword() {
                 className="w-full py-3 rounded-2xl font-bold text-primary-foreground"
                 style={{ background: "var(--gradient-primary)" }}
               >
-                العودة لتسجيل الدخول
+                {tr("العودة لتسجيل الدخول", "Retour à la connexion", "Back to sign in")}
               </button>
             </div>
           ) : (
@@ -80,7 +82,7 @@ function ForgotPassword() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   type="email"
-                  placeholder="بريدك الإلكتروني"
+                  placeholder={tr("بريدك الإلكتروني", "Votre e-mail", "Your email")}
                   className="flex-1 bg-transparent outline-none text-sm"
                 />
               </div>
@@ -90,7 +92,7 @@ function ForgotPassword() {
                 className="w-full py-3.5 rounded-2xl font-bold text-primary-foreground shadow-glow disabled:opacity-50"
                 style={{ background: "var(--gradient-primary)" }}
               >
-                {loading ? "..." : "إرسال رابط الاستعادة"}
+                {loading ? "..." : tr("إرسال رابط الاستعادة", "Envoyer le lien de récupération", "Send recovery link")}
               </button>
             </form>
           )}

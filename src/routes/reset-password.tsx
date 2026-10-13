@@ -4,6 +4,7 @@ import { Lock, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/reset-password")({
   head: () => ({ meta: [{ title: "إعادة تعيين كلمة المرور — رحلتي" }] }),
@@ -12,6 +13,7 @@ export const Route = createFileRoute("/reset-password")({
 
 function ResetPassword() {
   const navigate = useNavigate();
+  const { tr } = useLanguage();
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [show, setShow] = useState(false);
@@ -19,16 +21,16 @@ function ResetPassword() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirm) return toast.error("كلمتا المرور غير متطابقتين");
-    if (password.length < 6) return toast.error("كلمة المرور قصيرة جداً");
+    if (password !== confirm) return toast.error(tr("كلمتا المرور غير متطابقتين", "Les mots de passe ne correspondent pas", "Passwords do not match"));
+    if (password.length < 6) return toast.error(tr("كلمة المرور قصيرة جداً", "Le mot de passe est trop court", "Password is too short"));
     setLoading(true);
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
-      toast.success("تم تحديث كلمة المرور بنجاح");
+      toast.success(tr("تم تحديث كلمة المرور بنجاح", "Mot de passe mis à jour avec succès", "Password updated successfully"));
       navigate({ to: "/home" });
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "تعذر تحديث كلمة المرور");
+      toast.error(err instanceof Error ? err.message : tr("تعذر تحديث كلمة المرور", "Impossible de mettre à jour le mot de passe", "Could not update the password"));
     } finally {
       setLoading(false);
     }
@@ -43,8 +45,8 @@ function ResetPassword() {
         <div className="flex items-center gap-3 mb-5">
           <img src={logo} alt="Rihlaty" className="h-12 w-12 object-contain" />
           <div>
-            <h1 className="text-2xl font-black">كلمة مرور جديدة</h1>
-            <p className="text-xs text-muted-foreground">اختر كلمة مرور قوية</p>
+            <h1 className="text-2xl font-black">{tr("كلمة مرور جديدة", "Nouveau mot de passe", "New password")}</h1>
+            <p className="text-xs text-muted-foreground">{tr("اختر كلمة مرور قوية", "Choisissez un mot de passe fort", "Choose a strong password")}</p>
           </div>
         </div>
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -56,7 +58,7 @@ function ResetPassword() {
               required
               type={show ? "text" : "password"}
               minLength={6}
-              placeholder="كلمة المرور الجديدة"
+              placeholder={tr("كلمة المرور الجديدة", "Nouveau mot de passe", "New password")}
               className="flex-1 bg-transparent outline-none text-sm"
             />
             <button type="button" onClick={() => setShow(!show)} className="text-muted-foreground">
@@ -71,7 +73,7 @@ function ResetPassword() {
               required
               type={show ? "text" : "password"}
               minLength={6}
-              placeholder="تأكيد كلمة المرور"
+              placeholder={tr("تأكيد كلمة المرور", "Confirmer le mot de passe", "Confirm password")}
               className="flex-1 bg-transparent outline-none text-sm"
             />
           </div>
@@ -81,7 +83,7 @@ function ResetPassword() {
             className="w-full py-3.5 rounded-2xl font-bold text-primary-foreground shadow-glow disabled:opacity-50"
             style={{ background: "var(--gradient-primary)" }}
           >
-            {loading ? "..." : "حفظ كلمة المرور"}
+            {loading ? "..." : tr("حفظ كلمة المرور", "Enregistrer le mot de passe", "Save password")}
           </button>
         </form>
       </div>

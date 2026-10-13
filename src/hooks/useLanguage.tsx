@@ -405,8 +405,8 @@ const dict: Record<string, Record<string, string>> = {
   },
 };
 
-type LangCtx = { lang: Lang; setLang: (l: Lang) => void; t: (key: string) => string };
-const LanguageContext = createContext<LangCtx>({ lang: "ar", setLang: () => {}, t: (k) => k });
+type LangCtx = { lang: Lang; setLang: (l: Lang) => void; t: (key: string) => string; tr: (ar: string, fr: string, en: string) => string };
+const LanguageContext = createContext<LangCtx>({ lang: "ar", setLang: () => {}, t: (k) => k, tr: (ar) => ar });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ar");
@@ -444,7 +444,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   };
 
   const value = useMemo(
-    () => ({ lang, setLang, t: (k: string) => dict[lang]?.[k] ?? dict.en[k] ?? dict.ar[k] ?? k }),
+    () => ({
+      lang,
+      setLang,
+      t: (k: string) => dict[lang]?.[k] ?? dict.en[k] ?? dict.ar[k] ?? k,
+      tr: (ar: string, fr: string, en: string) => (lang === "fr" ? fr : lang === "en" ? en : ar),
+    }),
     [lang]
   );
 

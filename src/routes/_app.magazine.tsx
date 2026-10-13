@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Clock, PenLine } from "lucide-react";
 import { articles, magazineCategories, type MagazineCategory } from "@/data/magazine";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/magazine")({
   head: () => ({
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/_app/magazine")({
 });
 
 function Magazine() {
+  const { tr } = useLanguage();
   const [cat, setCat] = useState<MagazineCategory | "all">("all");
   const list = useMemo(() => (cat === "all" ? articles : articles.filter((a) => a.category === cat)), [cat]);
   const [lead, ...rest] = list;
@@ -24,9 +26,13 @@ function Magazine() {
     <div className="mx-auto max-w-6xl px-4 py-8 animate-fade-in">
       <header className="border-b border-border pb-6">
         <p className="text-xs tracking-[0.3em] text-muted-foreground uppercase">RIHLA MAGAZINE</p>
-        <h1 className="mt-2 text-4xl sm:text-5xl font-extrabold leading-tight">مجلة رحلتي</h1>
+        <h1 className="mt-2 text-4xl sm:text-5xl font-extrabold leading-tight">{tr("مجلة رحلتي", "Magazine Rihla", "Rihla Magazine")}</h1>
         <p className="mt-3 max-w-2xl text-muted-foreground leading-relaxed">
-          تقارير وتحقيقات ومقابلات وقصص مسافرين — قراءة متأنّية في السياحة والتراث والثقافة الجزائرية.
+          {tr(
+            "تقارير وتحقيقات ومقابلات وقصص مسافرين — قراءة متأنّية في السياحة والتراث والثقافة الجزائرية.",
+            "Reportages, enquêtes, interviews et récits de voyageurs — un regard approfondi sur le tourisme, le patrimoine et la culture algérienne.",
+            "Reports, investigations, interviews and traveler stories — a thoughtful look at Algerian tourism, heritage and culture."
+          )}
         </p>
       </header>
 
@@ -68,10 +74,10 @@ function Magazine() {
             <p className="mt-3 text-muted-foreground leading-relaxed">{lead.dek}</p>
             <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
               <span className="flex items-center gap-1"><PenLine className="h-3.5 w-3.5" strokeWidth={1.5} />{lead.author}</span>
-              <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" strokeWidth={1.5} />{lead.readMinutes} دقائق قراءة</span>
+              <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" strokeWidth={1.5} />{lead.readMinutes} {tr("دقائق قراءة", "min de lecture", "min read")}</span>
             </div>
             <span className="mt-5 inline-flex items-center gap-1 text-primary font-semibold text-sm">
-              اقرأ المقال <ArrowLeft className="h-4 w-4" strokeWidth={1.5} />
+              {tr("اقرأ المقال", "Lire l'article", "Read article")} <ArrowLeft className="h-4 w-4" strokeWidth={1.5} />
             </span>
           </div>
         </Link>
@@ -96,14 +102,14 @@ function Magazine() {
             <div className="mt-3 flex items-center gap-3 text-[11px] text-muted-foreground">
               <span>{a.author}</span>
               <span>·</span>
-              <span>{a.readMinutes} دقائق</span>
+              <span>{a.readMinutes} {tr("دقائق", "min", "min")}</span>
             </div>
           </Link>
         ))}
       </div>
 
       {list.length === 0 && (
-        <p className="py-16 text-center text-muted-foreground">لا توجد مقالات في هذا القسم بعد.</p>
+        <p className="py-16 text-center text-muted-foreground">{tr("لا توجد مقالات في هذا القسم بعد.", "Aucun article dans cette catégorie pour l'instant.", "No articles in this category yet.")}</p>
       )}
     </div>
   );

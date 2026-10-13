@@ -4,6 +4,8 @@ import { Map, Plus, Trash2, Pencil, X } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/hooks/useLanguage";
+import { ImageUploadButton } from "@/components/agency/AgencyUploads";
 
 export const Route = createFileRoute("/_app/agency/trips")({
   component: AgencyTrips,
@@ -22,6 +24,7 @@ type Trip = {
   seats_booked: number;
   price: number;
   status: TripStatus;
+  cover_url: string | null;
 };
 
 type TripStatus =
@@ -54,10 +57,13 @@ const empty = {
   seats: 20,
   price: 0,
   status: "draft" as TripStatus,
+  cover_url: "" as string,
 };
 
 function AgencyTrips() {
   const { user } = useAuth();
+  const { tr } = useLanguage();
+  const statusText: Record<TripStatus, string> = { draft: tr("مسودة","Brouillon","Draft"), pending_approval: tr("بانتظار الموافقة","En attente","Pending approval"), published: tr("منشورة","Publié","Published"), paused: tr("متوقفة","En pause","Paused"), sold_out: tr("مكتملة","Complet","Sold out"), completed: tr("منتهية","Terminé","Completed"), cancelled: tr("ملغاة","Annulé","Cancelled") };
   const [agencyId, setAgencyId] = useState<string | null>(null);
   const [verified, setVerified] = useState(false);
   const [trips, setTrips] = useState<Trip[]>([]);
@@ -110,6 +116,7 @@ function AgencyTrips() {
       seats: t.seats,
       price: Number(t.price),
       status: t.status as TripStatus,
+      cover_url: t.cover_url ?? "",
     });
     setOpen(true);
   };
@@ -122,6 +129,7 @@ function AgencyTrips() {
       ...form,
       departure_date: form.departure_date || null,
       return_date: form.return_date || null,
+      cover_url: form.cover_url || null,
       agency_id: agencyId,
     };
     try {
@@ -129,16 +137,16 @@ function AgencyTrips() {
         const { error } = await supabase.from("trips").update(payload).eq("id", editing);
         if (error) throw error;
         setTrips((prev) => prev.map((t) => (t.id === editing ? ({ ...t, ...payload } as Trip) : t)));
-        toast.success("تم تحديث الرحلة");
+        toast.success(tr("تم تحديث الرحلة","Voyage mis à jour","Trip updated"));
       } else {
         const { data, error } = await supabase.from("trips").insert(payload).select("*").single();
         if (error) throw error;
         setTrips((prev) => [data as Trip, ...prev]);
-        toast.success("تمت إضافة الرحلة");
+        toast.success(tr("تمت إضافة الرحلة","Voyage ajouté","Trip added"));
       }
       setOpen(false);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "تعذّر الحفظ");
+      toast.error(err instanceof Error ? err.message : tr("تعذّر الحفظ","Échec de l'enregistrement","Save failed"));
     } finally {
       setSaving(false);
     }
@@ -146,9 +154,9 @@ function AgencyTrips() {
 
   const remove = async (id: string) => {
     const { error } = await supabase.from("trips").delete().eq("id", id);
-    if (error) return toast.error("تعذّر الحذف");
+    if (error) return toast.error(tr("تعذّر الحذف","Suppression impossible","Delete failed"));
     setTrips((prev) => prev.filter((t) => t.id !== id));
-    toast.success("تم حذف الرحلة");
+    toast.success(tr("تم حذف الرحلة","Voyage supprimé","Trip deleted"));
   };
 
   if (loading) return <p className="text-center text-muted-foreground py-10">...</p>;
@@ -157,7 +165,7 @@ function AgencyTrips() {
     return (
       <div className="rounded-3xl bg-card p-8 text-center shadow-soft">
         <Map className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
-        <p className="text-sm text-muted-foreground">سجّل بيانات وكالتك أولًا من تبويب «اللوحة».</p>
+        <p className="text-sm text-muted-foreground">{tr("سجّل بيانات وكالتك أولًا من تبويب «اللوحة».","Enregistrez d'abord votre agence.","Register your agency first.")}</p>
       </div>
     );
 
@@ -165,26 +173,26 @@ function AgencyTrips() {
     <div className="space-y-4 animate-fade-in">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-black flex items-center gap-2">
-          <Map className="h-5 w-5 text-primary" /> رحلاتي
+          <Map className="h-5 w-5 text-primary" /> {tr("رحلاتي","Mes voyages","My trips")}
         </h1>
         <button
           onClick={startNew}
           className="inline-flex items-center gap-1 rounded-2xl px-4 py-2 text-sm font-bold text-primary-foreground"
           style={{ background: "var(--gradient-primary)" }}
         >
-          <Plus className="h-4 w-4" /> رحلة جديدة
+          <Plus className="h-4 w-4" /> {tr("رحلة جديدة","Nouveau voyage","New trip")}
         </button>
       </div>
 
       {!verified && (
         <p className="rounded-2xl bg-secondary p-3 text-xs text-muted-foreground">
-          وكالتك غير موثّقة بعد — يمكنك تجهيز الرحلات، لكنها لن تظهر للعموم قبل التوثيق.
+          {tr("وكالتك غير موثّقة بعد — يمكنك تجهيز الرحلات، لكنها لن تظهر للعموم قبل التوثيق.","Agence non vérifiée : vos voyages resteront privés jusqu'à la vérification.","Your agency is not verified yet: trips stay private until verification.")}
         </p>
       )}
 
       {trips.length === 0 ? (
         <div className="rounded-3xl bg-card p-10 text-center shadow-soft">
-          <p className="text-muted-foreground text-sm">لا توجد رحلات بعد</p>
+          <p className="text-muted-foreground text-sm">{tr("لا توجد رحلات بعد","Aucun voyage","No trips yet")}</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -194,16 +202,16 @@ function AgencyTrips() {
                 <div className="flex-1 min-w-0">
                   <h3 className="font-bold truncate">{t.title}</h3>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    {t.destination} · {t.duration_days} أيام · {Number(t.price).toLocaleString("ar")} دج
+                    {t.destination} · {t.duration_days} {tr("أيام","jours","days")} · {Number(t.price).toLocaleString("ar")} {tr("دج","DA","DZD")}
                   </p>
                   <p className="text-[11px] text-muted-foreground mt-1">
-                    المقاعد: {t.seats_booked}/{t.seats} · {statusLabel[t.status] ?? t.status}
+                    {tr("المقاعد","Places","Seats")}: {t.seats_booked}/{t.seats} · {statusText[t.status] ?? t.status}
                   </p>
                 </div>
-                <button onClick={() => startEdit(t)} className="rounded-xl bg-secondary p-2" aria-label="تعديل">
+                <button onClick={() => startEdit(t)} className="rounded-xl bg-secondary p-2" aria-label={tr("تعديل","Modifier","Edit")}>
                   <Pencil className="h-4 w-4" />
                 </button>
-                <button onClick={() => remove(t.id)} className="rounded-xl bg-secondary p-2 text-destructive" aria-label="حذف">
+                <button onClick={() => remove(t.id)} className="rounded-xl bg-secondary p-2 text-destructive" aria-label={tr("حذف","Supprimer","Delete")}>
                   <Trash2 className="h-4 w-4" />
                 </button>
               </div>
@@ -219,16 +227,20 @@ function AgencyTrips() {
             className="w-full sm:max-w-lg max-h-[90vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-card p-5 space-y-3"
           >
             <div className="flex items-center justify-between">
-              <h2 className="font-black text-lg">{editing ? "تعديل الرحلة" : "رحلة جديدة"}</h2>
+              <h2 className="font-black text-lg">{editing ? tr("تعديل الرحلة","Modifier le voyage","Edit trip") : tr("رحلة جديدة","Nouveau voyage","New trip")}</h2>
               <button type="button" onClick={() => setOpen(false)} className="rounded-xl bg-secondary p-2">
                 <X className="h-4 w-4" />
               </button>
             </div>
 
+            <div className="space-y-2">
+              {form.cover_url && <img src={form.cover_url} alt="" className="aspect-[16/9] w-full rounded-2xl object-cover" />}
+              {agencyId && <ImageUploadButton agencyId={agencyId} label={tr("صورة الغلاف", "Photo de couverture", "Cover photo")} onUploaded={(url) => setForm((f) => ({ ...f, cover_url: url }))} />}
+            </div>
             <input
               required
               maxLength={150}
-              placeholder="عنوان الرحلة"
+              placeholder={tr("عنوان الرحلة","Titre du voyage","Trip title")}
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               className="w-full rounded-2xl bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
@@ -236,14 +248,14 @@ function AgencyTrips() {
             <input
               required
               maxLength={100}
-              placeholder="الوجهة"
+              placeholder={tr("الوجهة","Destination","Destination")}
               value={form.destination}
               onChange={(e) => setForm({ ...form, destination: e.target.value })}
               className="w-full rounded-2xl bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
             />
             <input
               maxLength={100}
-              placeholder="نقطة الانطلاق"
+              placeholder={tr("نقطة الانطلاق","Point de départ","Meeting point")}
               value={form.departure_location}
               onChange={(e) => setForm({ ...form, departure_location: e.target.value })}
               className="w-full rounded-2xl bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
@@ -264,7 +276,7 @@ function AgencyTrips() {
             </div>
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="text-[11px] text-muted-foreground">الأيام</label>
+                <label className="text-[11px] text-muted-foreground">{tr("الأيام","Jours","Days")}</label>
                 <input
                   type="number"
                   min={1}
@@ -274,7 +286,7 @@ function AgencyTrips() {
                 />
               </div>
               <div>
-                <label className="text-[11px] text-muted-foreground">المقاعد</label>
+                <label className="text-[11px] text-muted-foreground">{tr("المقاعد","Places","Seats")}</label>
                 <input
                   type="number"
                   min={0}
@@ -284,7 +296,7 @@ function AgencyTrips() {
                 />
               </div>
               <div>
-                <label className="text-[11px] text-muted-foreground">السعر (دج)</label>
+                <label className="text-[11px] text-muted-foreground">{tr("السعر (دج)","Prix (DA)","Price (DZD)")}</label>
                 <input
                   type="number"
                   min={0}
@@ -297,7 +309,7 @@ function AgencyTrips() {
             <textarea
               rows={4}
               maxLength={2000}
-              placeholder="وصف الرحلة والبرنامج"
+              placeholder={tr("وصف الرحلة والبرنامج","Description et programme","Description & itinerary")}
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               className="w-full rounded-2xl bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
@@ -307,7 +319,7 @@ function AgencyTrips() {
               onChange={(e) => setForm({ ...form, status: e.target.value as TripStatus })}
               className="w-full rounded-2xl bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
             >
-              {(Object.entries(statusLabel) as [TripStatus, string][]).map(([k, v]) => (
+              {(Object.entries(statusText) as [TripStatus, string][]).map(([k, v]) => (
                 <option key={k} value={k}>
                   {v}
                 </option>
@@ -319,7 +331,7 @@ function AgencyTrips() {
               className="w-full rounded-2xl py-3 font-bold text-primary-foreground disabled:opacity-50"
               style={{ background: "var(--gradient-primary)" }}
             >
-              {saving ? "..." : "حفظ"}
+              {saving ? "..." : tr("حفظ","Enregistrer","Save")}
             </button>
           </form>
         </div>

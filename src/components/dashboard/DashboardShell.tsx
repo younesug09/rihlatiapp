@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export type DashboardNavItem = {
   label: string;
@@ -26,11 +27,12 @@ export function DashboardShell({
   items: DashboardNavItem[];
   children: ReactNode;
 }) {
+  const { tr } = useLanguage();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const [open, setOpen] = useState(false);
 
   const navigation = (
-    <nav className="space-y-1" aria-label="تنقل لوحة التحكم">
+    <nav className="space-y-1" aria-label={tr("تنقل لوحة التحكم", "Navigation du tableau de bord", "Dashboard navigation")}>
       {items.map((item) => {
         const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
         return (
@@ -58,7 +60,7 @@ export function DashboardShell({
           <img src={logo} alt="Rihlaty" className="mb-2 h-10 w-10 object-contain" /><p className="text-xs font-bold text-primary">{subtitle}</p>
           <h1 className="text-2xl font-black">{title}</h1>
         </div>
-        <Button variant="outline" size="icon" onClick={() => setOpen(true)} aria-label="فتح القائمة">
+        <Button variant="outline" size="icon" onClick={() => setOpen(true)} aria-label={tr("فتح القائمة", "Ouvrir le menu", "Open menu")}>
           <Menu className="h-5 w-5" />
         </Button>
       </div>

@@ -2,10 +2,12 @@ import { Link } from "@tanstack/react-router";
 import { Heart, Star, MapPin } from "lucide-react";
 import type { Destination } from "@/data/destinations";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export function DestinationCard({ d, large = false }: { d: Destination; large?: boolean }) {
   const { favorites, toggle } = useFavorites();
   const isFav = favorites.has(d.id);
+  const { tr } = useLanguage();
 
   return (
     <Link
@@ -27,7 +29,7 @@ export function DestinationCard({ d, large = false }: { d: Destination; large?: 
             type="button"
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(d.id); }}
             className="absolute top-3 left-3 h-9 w-9 rounded-full bg-background/90 backdrop-blur flex items-center justify-center hover:scale-110 transition-transform"
-            aria-label="إضافة للمفضلة"
+            aria-label={tr("إضافة للمفضلة", "Ajouter aux favoris", "Add to favorites")}
           >
             <Heart strokeWidth={1.75} className={`h-4 w-4 transition-colors ${isFav ? "fill-destructive text-destructive" : "text-foreground"}`} />
           </button>
@@ -46,8 +48,8 @@ export function DestinationCard({ d, large = false }: { d: Destination; large?: 
               </p>
             </div>
             <div className="text-left shrink-0">
-              <p className="text-sm font-bold text-primary">{d.price.toLocaleString("ar")} دج</p>
-              <p className="text-[10px] text-muted-foreground">لليلة</p>
+              <p className="text-sm font-bold text-primary">{d.price.toLocaleString("ar")} {tr("دج", "DZD", "DZD")}</p>
+              <p className="text-[10px] text-muted-foreground">{tr("لليلة", "par nuit", "per night")}</p>
             </div>
           </div>
         </div>

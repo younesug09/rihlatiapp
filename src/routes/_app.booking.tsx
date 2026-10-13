@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { formatDZ, DZD } from "@/lib/format";
 import { commission } from "@/lib/pricing";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/booking")({
   validateSearch: z.object({
@@ -30,16 +31,17 @@ export const Route = createFileRoute("/_app/booking")({
   component: Booking,
 });
 
-const paymentMethods = [
-  { id: "at_property", label: "الدفع عند الوصول", note: "تدفع مباشرة في الإقامة عند تسجيل الدخول.", icon: Banknote, available: true },
-  { id: "bank_transfer", label: "تحويل بنكي / CCP", note: "تتلقى معطيات التحويل بعد تأكيد الحجز.", icon: Building2, available: true },
-  { id: "online", label: "الدفع الإلكتروني", note: "قريبًا — غير متاح حاليًا.", icon: Globe, available: false },
-] as const;
-
 function Booking() {
+  const { tr } = useLanguage();
   const { id, hotel: hotelId, stay: stayId, trip: tripId } = Route.useSearch();
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  const paymentMethods = [
+    { id: "at_property", label: tr("الدفع عند الوصول", "Paiement sur place", "Pay on arrival"), note: tr("تدفع مباشرة في الإقامة عند تسجيل الدخول.", "Vous payez directement sur place lors de l'enregistrement.", "You pay directly at the stay upon check-in."), icon: Banknote, available: true },
+    { id: "bank_transfer", label: tr("تحويل بنكي / CCP", "Virement bancaire / CCP", "Bank transfer / CCP"), note: tr("تتلقى معطيات التحويل بعد تأكيد الحجز.", "Vous recevrez les coordonnées de virement après confirmation de la réservation.", "You will receive transfer details after the booking is confirmed."), icon: Building2, available: true },
+    { id: "online", label: tr("الدفع الإلكتروني", "Paiement en ligne", "Online payment"), note: tr("قريبًا — غير متاح حاليًا.", "Bientôt disponible — indisponible pour le moment.", "Coming soon — not available yet."), icon: Globe, available: false },
+  ] as const;
 
   const stay = stayId ? getStay(stayId) : undefined;
   const d = destinations.find((x) => x.id === id) ?? destinations[0];
@@ -87,25 +89,25 @@ function Booking() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      toast.error("سجّل الدخول لإكمال الحجز");
+      toast.error(tr("سجّل الدخول لإكمال الحجز", "Connectez-vous pour finaliser la réservation", "Sign in to complete the booking"));
       navigate({ to: "/auth" });
       return;
     }
     const method = paymentMethods.find((m) => m.id === payment);
     if (!method?.available) {
-      toast.error("طريقة الدفع هذه غير متاحة بعد");
+      toast.error(tr("طريقة الدفع هذه غير متاحة بعد", "Ce mode de paiement n'est pas encore disponible", "This payment method is not available yet"));
       return;
     }
     if (tripId && !trip) {
-      toast.error("هذه الرحلة غير متاحة للحجز");
+      toast.error(tr("هذه الرحلة غير متاحة للحجز", "Ce voyage n'est pas disponible à la réservation", "This trip is not available for booking"));
       return;
     }
     if (trip && trip.seats - trip.seats_booked < guests) {
-      toast.error("عدد المقاعد المتاحة غير كافٍ");
+      toast.error(tr("عدد المقاعد المتاحة غير كافٍ", "Le nombre de places disponibles est insuffisant", "Not enough available seats"));
       return;
     }
     if (!checkIn || !checkOut || checkOut < checkIn) {
-      toast.error("تحقق من تواريخ الحجز");
+      toast.error(tr("تحقق من تواريخ الحجز", "Vérifiez les dates de réservation", "Check the booking dates"));
       return;
     }
     setSubmitting(true);
@@ -132,10 +134,10 @@ function Booking() {
       .single();
     setSubmitting(false);
     if (error) {
-      toast.error("تعذّر إتمام الحجز: " + error.message);
+      toast.error(tr("تعذّر إتمام الحجز: ", "Impossible de finaliser la réservation : ", "Could not complete the booking: ") + error.message);
       return;
     }
-    toast.success("تم إرسال طلب الحجز إلى الوكالة");
+    toast.success(tr("تم إرسال طلب الحجز إلى الوكالة", "La demande de réservation a été envoyée à l'agence", "The booking request has been sent to the agency"));
     setBookingRef(data?.booking_ref ?? null);
   };
 
@@ -145,12 +147,12 @@ function Booking() {
         <div className="mx-auto mb-4 grid h-20 w-20 place-items-center rounded-full bg-success/20">
           <CheckCircle2 className="h-10 w-10 text-success" strokeWidth={1.5} />
         </div>
-        <h1 className="mb-2 text-2xl font-bold">تم إرسال طلب الحجز</h1>
-        <p className="mb-2 text-muted-foreground">الطلب بانتظار موافقة الوكالة، وسنرسل لك إشعارًا عند اتخاذ القرار.</p>
+        <h1 className="mb-2 text-2xl font-bold">{tr("تم إرسال طلب الحجز", "Demande de réservation envoyée", "Booking request sent")}</h1>
+        <p className="mb-2 text-muted-foreground">{tr("الطلب بانتظار موافقة الوكالة، وسنرسل لك إشعارًا عند اتخاذ القرار.", "La demande est en attente d'approbation de l'agence, nous vous informerons dès la décision prise.", "The request is awaiting agency approval, and we'll notify you once a decision is made.")}</p>
         <p className="mb-6 font-mono text-lg font-black text-primary">{bookingRef}</p>
         <div className="space-y-2">
           <Link to="/profile/bookings" className="block rounded-2xl border border-border py-3 font-semibold">
-            حجوزاتي
+            {tr("حجوزاتي", "Mes réservations", "My bookings")}
           </Link>
         </div>
       </div>
@@ -161,17 +163,17 @@ function Booking() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6 animate-fade-in">
-      <h1 className="mb-5 text-2xl font-bold">إكمال الحجز</h1>
+      <h1 className="mb-5 text-2xl font-bold">{tr("إكمال الحجز", "Finaliser la réservation", "Complete booking")}</h1>
 
       <div className="mb-5 flex gap-3 rounded-2xl border border-border bg-card p-3">
         <img src={image} alt={imageAlt} width={96} height={96} loading="lazy" className="h-24 w-24 rounded-xl object-cover" />
         <div className="min-w-0 flex-1">
           {trip ? (
             <>
-              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">رحلة وكالة موثّقة</span>
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">{tr("رحلة وكالة موثّقة", "Voyage d'agence vérifiée", "Verified agency trip")}</span>
               <h2 className="mt-1 truncate font-bold leading-tight">{trip.title}</h2>
               <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="h-3 w-3" /> {trip.destination}</p>
-              <p className="mt-1 text-xs text-muted-foreground">متاح {trip.seats - trip.seats_booked} مقعد</p>
+              <p className="mt-1 text-xs text-muted-foreground">{tr("متاح", "Disponible :", "Available")} {trip.seats - trip.seats_booked} {tr("مقعد", "place(s)", "seat(s)")}</p>
             </>
           ) : stay ? (
             <>
@@ -204,21 +206,21 @@ function Booking() {
               <p className="text-sm text-muted-foreground">{d.country}</p>
             </>
           )}
-          <p className="mt-2 text-sm font-semibold text-primary">{formatDZ(nightlyPrice)} {DZD} {trip ? "/ مسافر" : "/ ليلة"}</p>
+          <p className="mt-2 text-sm font-semibold text-primary">{formatDZ(nightlyPrice)} {DZD} {trip ? tr("/ مسافر", "/ voyageur", "/ traveler") : tr("/ ليلة", "/ nuit", "/ night")}</p>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="rounded-2xl border border-border bg-card p-4">
           <label className="mb-3 flex items-center gap-2 text-sm font-semibold">
-            <Calendar className="h-4 w-4 text-primary" strokeWidth={1.5} /> تواريخ الإقامة
+            <Calendar className="h-4 w-4 text-primary" strokeWidth={1.5} /> {tr("تواريخ الإقامة", "Dates de séjour", "Stay dates")}
           </label>
           <div className="grid grid-cols-2 gap-3">
             <input type="date" required value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="rounded-xl bg-secondary px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--ring)]" />
             <input type="date" required value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="rounded-xl bg-secondary px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--ring)]" />
           </div>
            {!trip && <div className="mt-3 flex items-center justify-between">
-            <span className="text-sm">عدد الليالي</span>
+            <span className="text-sm">{tr("عدد الليالي", "Nombre de nuits", "Number of nights")}</span>
             <div className="flex items-center gap-3">
               <button type="button" onClick={() => setNights(Math.max(1, nights - 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">-</button>
               <span className="w-6 text-center font-bold">{nights}</span>
@@ -229,7 +231,7 @@ function Booking() {
 
         <div className="flex items-center justify-between rounded-2xl border border-border bg-card p-4">
           <label className="flex items-center gap-2 text-sm font-semibold">
-            <Users className="h-4 w-4 text-primary" strokeWidth={1.5} /> عدد المسافرين
+            <Users className="h-4 w-4 text-primary" strokeWidth={1.5} /> {tr("عدد المسافرين", "Nombre de voyageurs", "Number of travelers")}
           </label>
           <div className="flex items-center gap-3">
             <button type="button" onClick={() => setGuests(Math.max(1, guests - 1))} className="h-8 w-8 rounded-full bg-secondary font-bold">-</button>
@@ -240,16 +242,16 @@ function Booking() {
 
         <div className="space-y-3 rounded-2xl border border-border bg-card p-4">
           <label className="flex items-center gap-2 text-sm font-semibold">
-            <CreditCard className="h-4 w-4 text-primary" strokeWidth={1.5} /> معلومات الاتصال
+            <CreditCard className="h-4 w-4 text-primary" strokeWidth={1.5} /> {tr("معلومات الاتصال", "Informations de contact", "Contact information")}
           </label>
-          <input required maxLength={100} value={travelerName} onChange={(e) => setTravelerName(e.target.value)} placeholder="الاسم الكامل" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
-          <input required type="email" maxLength={255} placeholder="البريد الإلكتروني" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
-          <input required maxLength={20} value={travelerPhone} onChange={(e) => setTravelerPhone(e.target.value)} placeholder="رقم الهاتف" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
-          <textarea maxLength={500} value={travelerNotes} onChange={(e) => setTravelerNotes(e.target.value)} placeholder="ملاحظات للوكالة (اختياري)" className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
+          <input required maxLength={100} value={travelerName} onChange={(e) => setTravelerName(e.target.value)} placeholder={tr("الاسم الكامل", "Nom complet", "Full name")} className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
+          <input required type="email" maxLength={255} placeholder={tr("البريد الإلكتروني", "Adresse e-mail", "Email address")} className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
+          <input required maxLength={20} value={travelerPhone} onChange={(e) => setTravelerPhone(e.target.value)} placeholder={tr("رقم الهاتف", "Numéro de téléphone", "Phone number")} className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
+          <textarea maxLength={500} value={travelerNotes} onChange={(e) => setTravelerNotes(e.target.value)} placeholder={tr("ملاحظات للوكالة (اختياري)", "Notes pour l'agence (facultatif)", "Notes for the agency (optional)")} className="w-full rounded-xl bg-secondary px-4 py-3 text-sm outline-none" />
         </div>
 
         <fieldset className="rounded-2xl border border-border bg-card p-4">
-          <legend className="px-1 text-sm font-semibold">طريقة الدفع</legend>
+          <legend className="px-1 text-sm font-semibold">{tr("طريقة الدفع", "Mode de paiement", "Payment method")}</legend>
           <div className="mt-2 space-y-2">
             {paymentMethods.map((m) => (
               <label
@@ -271,7 +273,7 @@ function Booking() {
                 <span className="min-w-0">
                   <span className="block text-sm font-bold">
                     {m.label}
-                    {!m.available && <span className="mr-2 rounded-full bg-warning/20 px-2 py-0.5 text-[10px] font-bold">قريبًا</span>}
+                    {!m.available && <span className="mr-2 rounded-full bg-warning/20 px-2 py-0.5 text-[10px] font-bold">{tr("قريبًا", "Bientôt", "Coming soon")}</span>}
                   </span>
                   <span className="block text-xs text-muted-foreground">{m.note}</span>
                 </span>
@@ -282,26 +284,26 @@ function Booking() {
 
         <div className="rounded-2xl border border-border bg-card p-4">
           <h2 className="mb-2 flex items-center gap-2 text-sm font-bold">
-            <ShieldCheck className="h-4 w-4 text-primary" strokeWidth={1.5} /> تفصيل السعر
+            <ShieldCheck className="h-4 w-4 text-primary" strokeWidth={1.5} /> {tr("تفصيل السعر", "Détail du prix", "Price breakdown")}
           </h2>
           <div className="mb-1 flex justify-between text-sm">
-             <span className="text-muted-foreground">{formatDZ(nightlyPrice)} × {trip ? `${guests} مسافر` : `${nights} ليلة`}</span>
+             <span className="text-muted-foreground">{formatDZ(nightlyPrice)} × {trip ? `${guests} ${tr("مسافر", "voyageur(s)", "traveler(s)")}` : `${nights} ${tr("ليلة", "nuit(s)", "night(s)")}`}</span>
             <span>{formatDZ(rooms)} {DZD}</span>
           </div>
            {!trip && <div className="mb-1 flex justify-between text-sm">
-            <span className="text-muted-foreground">الرسوم ({Math.round(taxRate * 100)}%)</span>
+            <span className="text-muted-foreground">{tr("الرسوم", "Taxes", "Fees")} ({Math.round(taxRate * 100)}%)</span>
             <span>{formatDZ(taxes)} {DZD}</span>
            </div>}
           <div className="mb-3 flex justify-between text-sm">
-            <span className="text-muted-foreground">رسوم خدمة رحلتي (4%)</span>
+            <span className="text-muted-foreground">{tr("رسوم خدمة رحلتي (4%)", "Frais de service Rihlaty (4%)", "Rihlaty service fee (4%)")}</span>
             <span>{formatDZ(fees.serviceFee)} {DZD}</span>
           </div>
           <div className="flex items-center justify-between border-t border-border pt-3">
-            <span className="font-bold">الإجمالي</span>
+            <span className="font-bold">{tr("الإجمالي", "Total", "Total")}</span>
             <span className="text-xl font-black text-primary">{formatDZ(total)} {DZD}</span>
           </div>
-           <p className="mt-2 text-[11px] text-muted-foreground">{trip ? "سعر الرحلة × عدد المسافرين + 4% رسوم خدمة = الإجمالي" : "(سعر الليلة × عدد الليالي) + الرسوم + 4% رسوم خدمة = الإجمالي"}</p>
-           <p className="mt-1 text-[11px] text-muted-foreground">إلغاء مجاني قبل أكثر من 48 ساعة من الانطلاق · أقل من 48 ساعة: خصم 15%.</p>
+           <p className="mt-2 text-[11px] text-muted-foreground">{trip ? tr("سعر الرحلة × عدد المسافرين + 4% رسوم خدمة = الإجمالي", "Prix du voyage × nombre de voyageurs + 4% de frais de service = total", "Trip price × number of travelers + 4% service fee = total") : tr("(سعر الليلة × عدد الليالي) + الرسوم + 4% رسوم خدمة = الإجمالي", "(Prix de la nuit × nombre de nuits) + taxes + 4% de frais de service = total", "(Nightly price × number of nights) + fees + 4% service fee = total")}</p>
+           <p className="mt-1 text-[11px] text-muted-foreground">{tr("إلغاء مجاني قبل أكثر من 48 ساعة من الانطلاق · أقل من 48 ساعة: خصم 15%.", "Annulation gratuite plus de 48 heures avant le départ · moins de 48 heures : retenue de 15%.", "Free cancellation more than 48 hours before departure · less than 48 hours: 15% deduction.")}</p>
         </div>
 
         <button
@@ -309,7 +311,7 @@ function Booking() {
           disabled={submitting}
           className="w-full rounded-2xl bg-primary py-4 font-bold text-primary-foreground disabled:opacity-60"
         >
-           {submitting ? "جارٍ الإرسال…" : trip ? "إرسال طلب الحجز" : "تأكيد الحجز"}
+           {submitting ? tr("جارٍ الإرسال…", "Envoi en cours…", "Sending…") : trip ? tr("إرسال طلب الحجز", "Envoyer la demande de réservation", "Send booking request") : tr("تأكيد الحجز", "Confirmer la réservation", "Confirm booking")}
         </button>
       </form>
 

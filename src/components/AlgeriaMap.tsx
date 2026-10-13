@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { wilayas, regions, type Region } from "@/data/wilayas";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const MIN_LNG = -9.5;
 const MAX_LNG = 12.5;
@@ -39,6 +40,7 @@ export function AlgeriaMap({
   showRegionControls?: boolean;
 }) {
   const navigate = useNavigate();
+  const { tr } = useLanguage();
   const [hovered, setHovered] = useState<string | null>(null);
 
   const shown = wilayas.filter((w) => region === "all" || w.region === region);
@@ -69,7 +71,7 @@ export function AlgeriaMap({
           viewBox={`0 0 ${W} ${H}`}
           className="w-full h-auto"
           role="img"
-          aria-label="خريطة تفاعلية للجزائر — اضغط على ولاية لعرض صفحتها"
+          aria-label={tr("خريطة تفاعلية للجزائر — اضغط على ولاية لعرض صفحتها", "Carte interactive de l'Algérie — cliquez sur une wilaya pour voir sa page", "Interactive map of Algeria — click a wilaya to view its page")}
         >
           <defs>
             <linearGradient id="rihla-map" x1="0" y1="0" x2="0" y2="1">
@@ -100,7 +102,7 @@ export function AlgeriaMap({
                 onClick={() => navigate({ to: destinationPath, params: { id: w.id } })}
                 role="button"
                 tabIndex={0}
-                aria-label={`ولاية ${w.name}`}
+                aria-label={`${tr("ولاية", "Wilaya", "Wilaya")} ${w.name}`}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
@@ -138,7 +140,7 @@ export function AlgeriaMap({
       </div>
 
       <p className="text-xs text-muted-foreground mt-3">
-        خريطة مبسّطة للتوضيح — اضغط على أي نقطة للانتقال إلى صفحة الولاية.
+        {tr("خريطة مبسّطة للتوضيح — اضغط على أي نقطة للانتقال إلى صفحة الولاية.", "Carte simplifiée à titre illustratif — cliquez sur un point pour accéder à la page de la wilaya.", "Simplified illustrative map — click any point to go to the wilaya page.")}
       </p>
     </div>
   );

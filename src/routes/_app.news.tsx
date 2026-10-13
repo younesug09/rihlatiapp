@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Calendar, ArrowLeft, Camera } from "lucide-react";
 import { news } from "@/data/destinations";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const Route = createFileRoute("/_app/news")({
   head: () => ({ meta: [{ title: "أخبار السياحة — رحلتي" }] }),
@@ -8,16 +9,17 @@ export const Route = createFileRoute("/_app/news")({
 });
 
 function News() {
+  const { tr } = useLanguage();
   const [featured, ...rest] = news;
   return (
     <div className="mx-auto max-w-4xl px-4 py-6 animate-fade-in">
-      <h1 className="text-2xl font-bold mb-1">أخبار السياحة</h1>
-      <p className="text-sm text-muted-foreground mb-6">آخر المستجدات السياحية والإعلامية</p>
+      <h1 className="text-2xl font-bold mb-1">{tr("أخبار السياحة", "Actualités du tourisme", "Tourism News")}</h1>
+      <p className="text-sm text-muted-foreground mb-6">{tr("آخر المستجدات السياحية والإعلامية", "Les dernières nouvelles touristiques et médiatiques", "Latest tourism and media updates")}</p>
 
       <article className="rounded-3xl overflow-hidden bg-card shadow-card mb-6 group cursor-pointer">
         <div className="relative aspect-[16/9] overflow-hidden">
           <img src={featured.image} alt={featured.title} loading="lazy" width={1600} height={900} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-          <span className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs font-bold px-3 py-1.5 rounded-full">عاجل</span>
+          <span className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs font-bold px-3 py-1.5 rounded-full">{tr("عاجل", "Urgent", "Breaking")}</span>
         </div>
         <div className="p-5">
           <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
@@ -27,7 +29,7 @@ function News() {
           <h2 className="text-xl font-bold mb-2">{featured.title}</h2>
           <p className="text-muted-foreground text-sm leading-relaxed">{featured.excerpt}</p>
           <button className="mt-4 inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            اقرأ المزيد <ArrowLeft className="h-4 w-4" />
+            {tr("اقرأ المزيد", "Lire plus", "Read more")} <ArrowLeft className="h-4 w-4" />
           </button>
         </div>
       </article>
@@ -53,10 +55,10 @@ function News() {
       <div className="mt-10 rounded-3xl p-6 bg-primary text-primary-foreground">
         <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
           <Camera className="h-5 w-5" strokeWidth={1.5} aria-hidden />
-          معرض الوسائط
+          {tr("معرض الوسائط", "Galerie médias", "Media gallery")}
         </h3>
-        <p className="text-sm opacity-85 mb-4">شاهد مجموعتنا من الصور والفيديوهات السياحية</p>
-        <Link to="/media" className="inline-block bg-background text-primary px-4 py-2 rounded-xl text-sm font-semibold">استكشف المعرض</Link>
+        <p className="text-sm opacity-85 mb-4">{tr("شاهد مجموعتنا من الصور والفيديوهات السياحية", "Découvrez notre collection de photos et vidéos touristiques", "See our collection of tourism photos and videos")}</p>
+        <Link to="/media" className="inline-block bg-background text-primary px-4 py-2 rounded-xl text-sm font-semibold">{tr("استكشف المعرض", "Explorer la galerie", "Explore gallery")}</Link>
       </div>
     </div>
   );
