@@ -41,10 +41,11 @@ function Splash() {
       <div className="absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-white/10 blur-3xl animate-float" style={{ animationDelay: "2s" }} />
 
       <div className="relative z-10 flex flex-col items-center animate-scale-in">
-        <div className="h-28 w-28 rounded-3xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-glow mb-6">
-          <img src={logo} alt="Rihlaty" className="h-28 w-24 object-contain" />
+        <div className="h-36 w-36 rounded-3xl bg-white/10 border border-white/25 backdrop-blur-md flex flex-col items-center justify-center shadow-glow mb-6">
+          <img src={logo} alt="Rihlaty" className="h-24 w-24 object-contain brightness-0 invert" />
+          <span className="text-[10px] font-semibold tracking-[0.35em] text-white font-latin -mt-1">RIHLATY</span>
         </div>
-        <h1 className="text-5xl font-bold tracking-tight mb-3">رحلتي</h1>
+        <h1 className="text-5xl font-bold tracking-tight mb-3 text-white">رحلتي</h1>
         <p className="text-base text-white/85">{tr("منصة السياحة والتواصل الإعلامي", "Plateforme de tourisme et de médias", "Tourism & media platform")}</p>
         <div className="mt-12 flex gap-1.5">
           <span className="h-2 w-2 rounded-full bg-white/80 animate-pulse" />
