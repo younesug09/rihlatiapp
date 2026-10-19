@@ -54,8 +54,11 @@ export function Layout() {
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-card/70 backdrop-blur-xl border-b border-border/60">
         <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
           <Link to="/home" className="flex items-center gap-2">
-            <img src={logo} alt="Rihlaty" className="h-9 w-9 object-contain" />
-            <span className="text-lg font-bold text-primary">{t("appName")}</span>
+            <img src={logo} alt="Rihlaty" className="h-10 w-10 object-contain" />
+            <span className="flex flex-col leading-none">
+              <span className="text-lg font-bold text-primary">رحلتي</span>
+              <span className="text-[10px] font-semibold tracking-[0.3em] text-primary/80 font-latin">RIHLATY</span>
+            </span>
           </Link>
 
           <div className="flex items-center gap-1">
