@@ -8,6 +8,7 @@ import { DestinationCard } from "@/components/DestinationCard";
 import { useLanguage } from "@/hooks/useLanguage";
 import { DemoNotice } from "@/components/DemoBadge";
 import { realImages } from "@/data/images";
+import { FeatureCards } from "@/components/home/FeatureCards";
 
 const heroShots = [realImages.tassili, realImages.alger, realImages.ghardaia];
 
@@ -134,6 +135,7 @@ function Home() {
           <HeroSearch />
         </div>
       </section>
+      <FeatureCards />
 
       <div className="mx-auto max-w-6xl px-4 mt-5">
         <DemoNotice />

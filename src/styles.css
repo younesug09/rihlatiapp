@@ -91,36 +91,36 @@
    Sand canvas · deep emerald primary · desert gold accent */
 :root {
   --radius: 1rem;
-  --background: #fdfbf7;
-  --foreground: #0b1f1a;
+  --background: #f7fbfa;
+  --foreground: #1f2937;
   --card: #ffffff;
-  --card-foreground: #0b1f1a;
+  --card-foreground: #1f2937;
   --popover: #ffffff;
-  --popover-foreground: #0b1f1a;
-  --primary: #047857;
+  --popover-foreground: #1f2937;
+  --primary: #0e7a5b;
   --primary-foreground: #ffffff;
-  --primary-glow: #064e3b;
-  --secondary: #f5f2eb;
-  --secondary-foreground: #064e3b;
-  --muted: #f5f2eb;
-  --muted-foreground: #5f6b66;
-  --accent: #d97706;
+  --primary-glow: #0a5c45;
+  --secondary: #e8f5f1;
+  --secondary-foreground: #0e7a5b;
+  --muted: #e8f5f1;
+  --muted-foreground: #4b5563;
+  --accent: #27ae8f;
   --accent-foreground: #ffffff;
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --success: #d97706;
+  --success: #27ae8f;
   --success-foreground: #ffffff;
   --warning: #d97706;
   --warning-foreground: #ffffff;
-  --border: #e9e3d6;
-  --input: #e9e3d6;
-  --ring: #047857;
-  --gradient-hero: #064e3b;
-  --gradient-primary: #047857;
-  --gradient-sky: #fdfbf7;
-  --shadow-soft: 0 2px 12px -4px rgb(6 78 59 / 0.08);
-  --shadow-card: 0 16px 36px -18px rgb(6 78 59 / 0.22);
-  --shadow-glow: 0 10px 28px -10px rgb(4 120 87 / 0.45);
+  --border: #d4ebe3;
+  --input: #d4ebe3;
+  --ring: #0e7a5b;
+  --gradient-hero: #0a5c45;
+  --gradient-primary: #0e7a5b;
+  --gradient-sky: #e8f5f1;
+  --shadow-soft: 0 2px 12px -4px rgb(14 122 91 / 0.10);
+  --shadow-card: 0 16px 36px -18px rgb(14 122 91 / 0.25);
+  --shadow-glow: 0 10px 28px -10px rgb(14 122 91 / 0.45);
 }
 
 .dark {
@@ -130,16 +130,16 @@
   --card-foreground: #f1ede4;
   --popover: #0e2019;
   --popover-foreground: #f1ede4;
-  --primary: #10b981;
+  --primary: #27ae8f;
   --primary-foreground: #04120c;
-  --primary-glow: #34d399;
+  --primary-glow: #0e7a5b;
   --secondary: #16302a;
   --secondary-foreground: #f1ede4;
   --muted: #13291f;
   --muted-foreground: #a3b1aa;
-  --accent: #f59e0b;
+  --accent: #27ae8f;
   --accent-foreground: #04120c;
-  --success: #f59e0b;
+  --success: #27ae8f;
   --success-foreground: #04120c;
   --warning: #f59e0b;
   --warning-foreground: #04120c;
