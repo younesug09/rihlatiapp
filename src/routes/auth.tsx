@@ -112,8 +112,9 @@ function AuthPage() {
 
         <div className="w-full max-w-md">
           <div className="text-center mb-5 lg:hidden animate-fade-in">
-            <div className="h-24 w-24 mx-auto rounded-3xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-glow mb-3 border border-white/20">
-              <img src={logo} alt="Rihlaty" className="h-16 w-16 object-contain" />
+            <div className="h-28 w-28 mx-auto rounded-3xl bg-white/10 backdrop-blur-md flex flex-col items-center justify-center shadow-glow mb-3 border border-white/25">
+              <img src={logo} alt="Rihlaty" className="h-16 w-16 object-contain brightness-0 invert" />
+              <span className="text-[9px] font-semibold tracking-[0.35em] text-white font-latin">RIHLATY</span>
             </div>
             <h1 className="text-3xl font-black text-white">{t("appName")}</h1>
           </div>

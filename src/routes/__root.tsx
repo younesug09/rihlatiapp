@@ -74,7 +74,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1" },
-      { name: "theme-color", content: "#1e3a8a" },
+      { name: "theme-color", content: "#06201a" },
+      { name: "color-scheme", content: "dark" },
       { title: "رحلتي — منصة السياحة والتواصل الإعلامي" },
       { name: "description", content: "اكتشف أجمل الوجهات السياحية في الجزائر والعالم. منصة سياحية وإعلامية حديثة." },
       { property: "og:title", content: "رحلتي — منصة السياحة والتواصل الإعلامي" },
@@ -102,9 +103,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className="dark" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: `try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}` }} />
       </head>
       <body>
         {children}

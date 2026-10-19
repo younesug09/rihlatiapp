@@ -124,32 +124,35 @@
 }
 
 .dark {
-  --background: #07140f;
-  --foreground: #f1ede4;
-  --card: #0e2019;
-  --card-foreground: #f1ede4;
-  --popover: #0e2019;
-  --popover-foreground: #f1ede4;
-  --primary: #27ae8f;
+  color-scheme: dark;
+  --background: #06171a;
+  --foreground: #eef5f2;
+  --card: #0c2226;
+  --card-foreground: #eef5f2;
+  --popover: #0c2226;
+  --popover-foreground: #eef5f2;
+  --primary: #2fc49f;
   --primary-foreground: #04120c;
   --primary-glow: #0e7a5b;
-  --secondary: #16302a;
-  --secondary-foreground: #f1ede4;
-  --muted: #13291f;
-  --muted-foreground: #a3b1aa;
+  --secondary: #133136;
+  --secondary-foreground: #eef5f2;
+  --muted: #10292d;
+  --muted-foreground: #a9bdb8;
   --accent: #27ae8f;
   --accent-foreground: #04120c;
   --success: #27ae8f;
   --success-foreground: #04120c;
   --warning: #f59e0b;
   --warning-foreground: #04120c;
-  --border: #ffffff1a;
-  --input: #ffffff24;
-  --ring: #10b981;
-  --gradient-hero: #07140f;
-  --gradient-primary: #10b981;
-  --gradient-sky: #07140f;
+  --border: #ffffff1f;
+  --input: #ffffff26;
+  --ring: #2fc49f;
+  --gradient-hero: radial-gradient(120% 80% at 50% 0%, #0b3a36 0%, #06201d 55%, #041214 100%);
+  --gradient-primary: linear-gradient(135deg, #0e7a5b, #27ae8f);
+  --gradient-sky: #06171a;
 }
+.dark header.sticky { background-color: color-mix(in oklab, var(--card) 85%, transparent) !important; }
+.dark nav .bg-white\/80 { background-color: color-mix(in oklab, var(--card) 88%, transparent) !important; border-color: var(--border) !important; }
 
 @layer base {
   * { border-color: var(--color-border); }
